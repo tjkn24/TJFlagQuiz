@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blur_splash">
+    android:background="@drawable/blur_splash"
+    android:elevation="8dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -13,6 +14,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:foregroundGravity="center"
+        app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,9 +33,10 @@
                 android:layout_marginBottom="24dp"
                 android:backgroundTintMode="screen"
                 android:gravity="center"
-                android:text="Welcome!"
+                android:text="Welcome to \nWorld Flag Quiz!"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textSize="38sp" />
+                android:textSize="38sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/editTextTextPersonName2"
@@ -46,7 +49,9 @@
                 android:ems="10"
                 android:hint="Please enter your name here"
                 android:inputType="textPersonName"
+                android:paddingStart="5dp"
                 android:paddingTop="5dp"
+                android:paddingEnd="5dp"
                 android:paddingBottom="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
