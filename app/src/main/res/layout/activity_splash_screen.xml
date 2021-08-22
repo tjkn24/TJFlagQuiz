@@ -38,22 +38,19 @@
                 android:textSize="38sp"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextTextPersonName2"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="32dp"
-                android:background="@drawable/edittext_bg"
-                android:ems="10"
-                android:hint="Please enter your name here"
-                android:inputType="textPersonName"
-                android:paddingStart="5dp"
-                android:paddingTop="5dp"
-                android:paddingEnd="5dp"
-                android:paddingBottom="5dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Please enter your name here.." />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/button"
