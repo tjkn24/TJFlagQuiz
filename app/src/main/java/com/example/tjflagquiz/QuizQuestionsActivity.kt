@@ -15,7 +15,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentPosition = 1
     private lateinit var mQuestionList: ArrayList<Question>
-    private var selectedOptionPosition: Int = 0 //answer tv 1 to 4
+    private var mSelectedOptionPosition: Int = 0 //answer tv 1 to 4
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +60,21 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    override fun onClick(p0: View?) {
-
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.tv_option_one -> {optionViewSelected(tv_option_one, 1)}
+            R.id.tv_option_two -> {optionViewSelected(tv_option_two, 2)}
+            R.id.tv_option_three -> {optionViewSelected(tv_option_three, 3)}
+            R.id.tv_option_four-> {optionViewSelected(tv_option_four, 4)}
+        }
     }
 
-    private fun OptionViewSelected (tv: TextView, optionNumber: Int){
+    private fun optionViewSelected (tv: TextView, optionNumber: Int){
+        setDefaultOptionsView()
+        mSelectedOptionPosition = optionNumber
+        tv.setTextColor(Color.parseColor("#3634a3"))
+        tv.setTypeface(tv.typeface, Typeface.BOLD)
+        tv.background = ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
 
     }
 }
