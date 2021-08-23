@@ -6,7 +6,7 @@ object Constants {
         val questionList = ArrayList<Question>()
 
         val que1 =
-            Question(1, QUESTIONTEXT, R.drawable.samoa, "Malaysia", "Benin", "Samoa", "syria", 3)
+            Question(1, QUESTIONTEXT, R.drawable.samoa, "Malaysia", "Benin", "Samoa", "Syria", 3)
         val que2 = Question(2, QUESTIONTEXT, R.drawable.lebanon, "Lebanon", "Fiji", "Angola", "Myanmar", 1)
         val que3 = Question(3, QUESTIONTEXT, R.drawable.peru, "Slovenia", "Peru", "Tibet", "Honduras", 2)
         val que4 = Question(4, QUESTIONTEXT, R.drawable.norfolk_island, "Senegal", "Chad", "Guam", "Norfolk Island", 4)

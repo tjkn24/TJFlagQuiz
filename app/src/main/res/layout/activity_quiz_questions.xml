@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textColorHint="@color/purple_700"
+                android:textColorHint="@color/colorPrimary"
                 android:textSize="14sp"
                 android:text="0/10"
                 />
@@ -120,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="@color/orange"
+            android:background="@color/colorPrimary"
             android:textColor="@color/design_default_color_background"
             android:text="SUBMIT"
             android:textStyle="bold"
