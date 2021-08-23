@@ -1,90 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundPage"
-    tools:context=".QuizQuestionsActivity">
+    tools:context=".QuizQuestionsActivity"
+    android:fillViewport="true">
 
-
-    <ImageView
-        android:id="@+id/flags"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/zimbabwe"
-        android:gravity="center" />
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/flags"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/round_corner"
-        android:elevation="4dp"
-        android:padding="20dp">
-
-        <LinearLayout
-            android:id="@+id/btnGroup"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="10dp">
-
-            <Button
-                android:id="@+id/btnPlay"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="#AD1457"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:text="PLAY"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnScore"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:background="#FF8A80"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:text="SCORE"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center"
+        android:background="@color/light_grey"
+        >
+        <TextView
+            android:id="@+id/tv_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btnGroup"
-            android:orientation="vertical">
+            android:gravity="center"
+            android:layout_margin="4dp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="What country's flag is this?"
+            />
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_marginTop="0dp"
+            android:src="@drawable/saint_vicent_and_the_grenadines"></ImageView>
 
-            <SeekBar
-                android:id="@+id/seekBar"
-                android:layout_width="300dp"
+        <LinearLayout
+            android:id="@+id/ll_progress_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="0dp"
+            android:gravity="center_vertical">
+            <ProgressBar
+                android:id="@+id/my_progress_bar"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:max="3" />
-
+                android:minHeight="50dp"
+                android:max="10"
+                android:layout_weight="1"
+                android:progress="0"
+                android:indeterminate="false"
+                style="?android:attr/progressBarStyleHorizontal"
+                />
             <TextView
-                android:id="@+id/txtMode"
+                android:id="@+id/tv_progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="EASY" />
-
+                android:gravity="center"
+                android:padding="10dp"
+                android:textColorHint="@color/purple_700"
+                android:textSize="14sp"
+                android:text="0/10"
+                />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_option_one"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/tv_border"
+            android:text="MINERMA"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:padding="4dp"/>
 
-    </RelativeLayout>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_option_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/tv_border"
+            android:text="MINERMA"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:padding="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_option_three"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/tv_border"
+            android:text="MINERMA"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:padding="4dp"/>
+
+        <TextView
+            android:id="@+id/tv_option_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@drawable/tv_border"
+            android:text="MINERMA"
+            android:textColor="@color/grey"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:padding="4dp"/>
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="@color/orange"
+            android:textColor="@color/design_default_color_background"
+            android:text="SUBMIT"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            />
+
+    </LinearLayout>
+
+</ScrollView>

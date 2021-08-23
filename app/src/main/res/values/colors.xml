@@ -11,4 +11,7 @@
     <color name="colorPrimaryDark">#242E38</color>
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundPage">#242E38</color>
+    <color name="grey">#808080</color>
+    <color name="light_grey">#efefef</color>
+    <color name="orange">#ffaa00</color>
 </resources>
