@@ -33,6 +33,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setQuestion() {
         setDefaultOptionsView()
+        enableOptions(true)
 
         mQuestionList = Constants.getQuestions()
 
@@ -114,12 +115,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
                     }
                     setAnswerColor(question.correctAnswer, R.drawable.tv_border_correct)
+                    enableOptions(false)
                     if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit.text = "FINISH"
                         mSelectedOptionPosition = 999 // quit the app
                     } else {
-                        btn_submit.text = "GO TO THE NEXT QUESTION"
+                        btn_submit.text = "NEXT QUESTION"
                         mSelectedOptionPosition = 99 // user have submitted his decision
+
                     }
 
                 }
@@ -135,6 +138,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             3 -> tv_option_three.background = ContextCompat.getDrawable(this, optionViewResID)
             4 -> tv_option_four.background = ContextCompat.getDrawable(this, optionViewResID)
         }
+    }
+
+    private fun enableOptions(clickable: Boolean) {
+        tv_option_one.setClickable(clickable)
+        tv_option_two.setClickable(clickable)
+        tv_option_three.setClickable(clickable)
+        tv_option_four.setClickable(clickable)
     }
 
 
