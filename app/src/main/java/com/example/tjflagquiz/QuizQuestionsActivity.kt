@@ -141,14 +141,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mQuestionList[mCurrentQuestionNumber - 1].optionOne,
                     android.R.color.black
                 )
-                tv_option_one.setTypeface(tv_option_one.getTypeface(), Typeface.BOLD)
-
-                if (isCorrect == true) {
-                    tv_option_one.customAppend("   \u2714", android.R.color.holo_green_light)
-                } else {
-                    tv_option_one.customAppend("   \u2716", android.R.color.holo_red_light)
-                }
-
+                formatAnswerText(isCorrect, tv_option_one)
             }
             2 -> {
                 tv_option_two.text = "" // Remove old text
@@ -156,13 +149,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mQuestionList[mCurrentQuestionNumber - 1].optionTwo,
                     android.R.color.black
                 )
-                tv_option_two.setTypeface(tv_option_two.getTypeface(), Typeface.BOLD)
-
-                if (isCorrect == true) {
-                    tv_option_two.customAppend("   \u2714", android.R.color.holo_green_light)
-                } else {
-                    tv_option_two.customAppend("   \u2716", android.R.color.holo_red_light)
-                }
+                formatAnswerText(isCorrect, tv_option_two)
             }
             3 -> {
                 tv_option_three.text = "" // Remove old text
@@ -170,13 +157,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mQuestionList[mCurrentQuestionNumber - 1].optionThree,
                     android.R.color.black
                 )
-                tv_option_three.setTypeface(tv_option_three.getTypeface(), Typeface.BOLD)
-
-                if (isCorrect == true) {
-                    tv_option_three.customAppend("   \u2714", android.R.color.holo_green_light)
-                } else {
-                    tv_option_three.customAppend("   \u2716", android.R.color.holo_red_light)
-                }
+                formatAnswerText(isCorrect, tv_option_three)
             }
             4 -> {
                 tv_option_four.text = "" // Remove old text
@@ -184,14 +165,17 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mQuestionList[mCurrentQuestionNumber - 1].optionFour,
                     android.R.color.black
                 )
-                tv_option_four.setTypeface(tv_option_four.getTypeface(), Typeface.BOLD)
-
-                if (isCorrect == true) {
-                    tv_option_four.customAppend("   \u2714", android.R.color.holo_green_light)
-                } else {
-                    tv_option_four.customAppend("   \u2716", android.R.color.holo_red_light)
-                }
+                formatAnswerText(isCorrect, tv_option_four)
             }
+        }
+    }
+
+    private fun formatAnswerText(isCorrect: Boolean, optionView: TextView) {
+        optionView.setTypeface(optionView.getTypeface(), Typeface.BOLD)
+        if (isCorrect == true) {
+            optionView.customAppend("   \u2714", android.R.color.holo_green_light)
+        } else {
+            optionView.customAppend("   \u2716", android.R.color.holo_red_light)
         }
     }
 
