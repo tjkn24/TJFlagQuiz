@@ -112,9 +112,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                 } else {
                     val question = mQuestionList[mCurrentQuestionNumber - 1]
                     if (mSelectedOptionPosition != question.correctAnswer) {
+                        setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
                     }
                     setAnswerColor(question.correctAnswer, R.drawable.tv_border_correct)
+                    setAnswerText(question.correctAnswer, true)
                     enableOptions(false)
                     if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit.text = "FINISH"
@@ -129,6 +131,68 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
+    }
+
+    private fun setAnswerText(answer: Int, isCorrect: Boolean) {
+        when (answer) {
+            1 -> {
+                tv_option_one.text = "" // Remove old text
+                tv_option_one.customAppend(
+                    mQuestionList[mCurrentQuestionNumber - 1].optionOne,
+                    android.R.color.black
+                )
+                tv_option_one.setTypeface(tv_option_one.getTypeface(), Typeface.BOLD)
+
+                if (isCorrect == true) {
+                    tv_option_one.customAppend("   \u2714", android.R.color.holo_green_light)
+                } else {
+                    tv_option_one.customAppend("   \u2716", android.R.color.holo_red_light)
+                }
+
+            }
+            2 -> {
+                tv_option_two.text = "" // Remove old text
+                tv_option_two.customAppend(
+                    mQuestionList[mCurrentQuestionNumber - 1].optionTwo,
+                    android.R.color.black
+                )
+                tv_option_two.setTypeface(tv_option_two.getTypeface(), Typeface.BOLD)
+
+                if (isCorrect == true) {
+                    tv_option_two.customAppend("   \u2714", android.R.color.holo_green_light)
+                } else {
+                    tv_option_two.customAppend("   \u2716", android.R.color.holo_red_light)
+                }
+            }
+            3 -> {
+                tv_option_three.text = "" // Remove old text
+                tv_option_three.customAppend(
+                    mQuestionList[mCurrentQuestionNumber - 1].optionThree,
+                    android.R.color.black
+                )
+                tv_option_three.setTypeface(tv_option_three.getTypeface(), Typeface.BOLD)
+
+                if (isCorrect == true) {
+                    tv_option_three.customAppend("   \u2714", android.R.color.holo_green_light)
+                } else {
+                    tv_option_three.customAppend("   \u2716", android.R.color.holo_red_light)
+                }
+            }
+            4 -> {
+                tv_option_four.text = "" // Remove old text
+                tv_option_four.customAppend(
+                    mQuestionList[mCurrentQuestionNumber - 1].optionFour,
+                    android.R.color.black
+                )
+                tv_option_four.setTypeface(tv_option_four.getTypeface(), Typeface.BOLD)
+
+                if (isCorrect == true) {
+                    tv_option_four.customAppend("   \u2714", android.R.color.holo_green_light)
+                } else {
+                    tv_option_four.customAppend("   \u2716", android.R.color.holo_red_light)
+                }
+            }
+        }
     }
 
     private fun setAnswerColor(answer: Int, optionViewResID: Int) {
