@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -14,7 +15,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
     private lateinit var mQuestionList: ArrayList<Question>
-    private var mSelectedOptionPosition: Int = 0 //answer tv 1 to 4
+    private var mSelectedOptionPosition: Int = 0 //0 = no options selected
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +36,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         mQuestionList = Constants.getQuestions()
 
-        if(mCurrentQuestionNumber == mQuestionList.size){
-            btn_submit.text = "FINISH"
-        } else {
-            btn_submit.text = "SUBMIT"
-        }
+        btn_submit.text = "SUBMIT"
+
+//        if (mCurrentQuestionNumber == mQuestionList.size) {
+//            btn_submit.text = "FINISH"
+//        } else {
+//        btn_submit.text = "SUBMIT"
+//        }
 
         var currentQuestion: Question = mQuestionList[mCurrentQuestionNumber - 1]
 
@@ -91,7 +94,12 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                 optionViewSelected(tv_option_four, 4)
             }
             R.id.btn_submit -> {
-                if (mSelectedOptionPosition == 0) {
+                if (mSelectedOptionPosition == 999) {
+                    finish()
+                } else if (mSelectedOptionPosition == 0) {
+                    Toast.makeText(this, "Please choose your answer", Toast.LENGTH_SHORT)
+                        .show()
+                } else if (mSelectedOptionPosition == 99) {
                     mCurrentQuestionNumber++
                     if (mCurrentQuestionNumber <= mQuestionList.size) {
                         setQuestion()
@@ -99,21 +107,25 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         Toast.makeText(this, "You have finished this quiz", Toast.LENGTH_SHORT)
                             .show()
                     }
+                    mSelectedOptionPosition = 0
                 } else {
                     val question = mQuestionList[mCurrentQuestionNumber - 1]
-                    if(mSelectedOptionPosition != question.correctAnswer){
+                    if (mSelectedOptionPosition != question.correctAnswer) {
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
                     }
                     setAnswerColor(question.correctAnswer, R.drawable.tv_border_correct)
-                    if(mCurrentQuestionNumber == mQuestionList.size){
+                    if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit.text = "FINISH"
+                        mSelectedOptionPosition = 999 // quit the app
                     } else {
                         btn_submit.text = "GO TO THE NEXT QUESTION"
+                        mSelectedOptionPosition = 99 // user have submitted his decision
                     }
-                    mSelectedOptionPosition = 0
+
                 }
             }
         }
+        Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
     }
 
     private fun setAnswerColor(answer: Int, optionViewResID: Int) {
