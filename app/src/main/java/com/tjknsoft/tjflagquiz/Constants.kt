@@ -1,4 +1,4 @@
-package com.example.tjflagquiz
+package com.tjknsoft.tjflagquiz
 
 object Constants {
     const val QUESTIONTEXT = "This is the flag of..."

@@ -1,4 +1,4 @@
-package com.example.tjflagquiz
+package com.tjknsoft.tjflagquiz
 
 import android.content.Intent
 import android.os.Bundle

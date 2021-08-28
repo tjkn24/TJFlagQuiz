@@ -1,4 +1,4 @@
-package com.example.tjflagquiz
+package com.tjknsoft.tjflagquiz
 
 import android.graphics.Color
 import android.graphics.Typeface

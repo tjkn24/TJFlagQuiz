@@ -1,4 +1,4 @@
-package com.example.tjflagquiz
+package com.tjknsoft.tjflagquiz
 
 import android.text.Spannable
 import android.text.SpannableString
