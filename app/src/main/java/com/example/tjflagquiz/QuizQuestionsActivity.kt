@@ -10,12 +10,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_questions.*
+import java.text.DecimalFormat
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
     private lateinit var mQuestionList: ArrayList<Question>
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
+    private var mScoreAbsolute: Int = 0
+    private var mScorePercentage: Float = 0.0F
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,17 +43,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_submit.text = "SUBMIT"
 
-//        if (mCurrentQuestionNumber == mQuestionList.size) {
-//            btn_submit.text = "FINISH"
-//        } else {
-//        btn_submit.text = "SUBMIT"
-//        }
+        Log.i("PANJUTA", "mScoreAbsolute: $mScoreAbsolute, mScorePercentage: $mScorePercentage")
 
         var currentQuestion: Question = mQuestionList[mCurrentQuestionNumber - 1]
 
-        my_progress_bar.progress = mCurrentQuestionNumber
-        tv_progress.text = mCurrentQuestionNumber.toString() + "/${mQuestionList.size}"
+        question_progress_bar.progress = mCurrentQuestionNumber
+        tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
         tv_question.text = currentQuestion.question
+
         iv_image.setImageResource(currentQuestion.image)
         tv_option_one.text = currentQuestion.optionOne
         tv_option_two.text = currentQuestion.optionTwo
@@ -77,7 +78,6 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv.setTextColor(Color.parseColor("#3634a3"))
         tv.setTypeface(tv.typeface, Typeface.BOLD)
         tv.background = ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
-
     }
 
     override fun onClick(v: View?) {
@@ -114,10 +114,27 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     if (mSelectedOptionPosition != question.correctAnswer) {
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
+                    } else {
+                        mScoreAbsolute++
+                        score_progress_bar.progress = mScoreAbsolute
                     }
+
+                    mScorePercentage =
+                        (mScoreAbsolute.toFloat() / mCurrentQuestionNumber.toFloat()) * 100
+
+                    val myDecimalFormat = DecimalFormat("#.##")
+                    tv_score_progress.text = (myDecimalFormat.format(mScorePercentage))
+                    tv_score_progress.text =
+                        "${mScoreAbsolute.toString()} of $mCurrentQuestionNumber"
+                    Log.i(
+                        "PANJUTA",
+                        "mScoreAbsolute: $mScoreAbsolute,  mCurrentQuestionNumber: $mCurrentQuestionNumber, mScorePercentage: ${mScorePercentage.toString()}"
+                    )
+
                     setAnswerColor(question.correctAnswer, R.drawable.tv_border_correct)
                     setAnswerText(question.correctAnswer, true)
                     enableOptions(false)
+
                     if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit.text = "FINISH"
                         mSelectedOptionPosition = 999 // quit the app

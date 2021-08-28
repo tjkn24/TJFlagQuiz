@@ -1,71 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundPage"
-    tools:context=".QuizQuestionsActivity"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    tools:context=".QuizQuestionsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:gravity="center"
         android:background="@color/light_grey"
-        >
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
         <TextView
             android:id="@+id/tv_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:gravity="center"
-            android:layout_margin="4dp"
+            android:text="What country's flag is this?"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:text="What country's flag is this?"
-            />
+            android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
+            android:layout_margin="16dp"
             android:scaleType="centerInside"
-            android:layout_marginTop="0dp"
             android:src="@drawable/saint_vicent_and_the_grenadines"></ImageView>
 
-        <LinearLayout
-            android:id="@+id/ll_progress_details"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="0dp"
-            android:gravity="center_vertical">
-            <ProgressBar
-                android:id="@+id/my_progress_bar"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:minHeight="50dp"
-                android:max="10"
-                android:layout_weight="1"
-                android:progress="0"
-                android:indeterminate="false"
-                style="?android:attr/progressBarStyleHorizontal"
-                />
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="24dp"
+            android:gravity="center">
+
             <TextView
-                android:id="@+id/tv_progress"
+                android:id="@+id/tv_game_progress_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp"
+                android:text="Progress "
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/question_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/tv_game_progress_title"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toEndOf="@id/tv_game_progress_title"
+                android:indeterminate="false"
+                android:max="10"
+                android:minHeight="20dp"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/tv_question_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/question_progress_bar"
                 android:gravity="center"
-                android:padding="10dp"
+                android:text="1 of 10"
                 android:textColorHint="@color/light_grey"
                 android:textSize="14sp"
-                android:text="0/10"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_score_progress_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_game_progress_title"
+                android:layout_alignStart="@id/tv_game_progress_title"
+                android:text="Score"
+                android:textStyle="bold" />
+
+            <ProgressBar
+                android:id="@+id/score_progress_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="225dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/question_progress_bar"
+                android:layout_alignStart="@id/question_progress_bar"
+                android:layout_alignTop="@id/tv_score_progress_title"
+                android:layout_toEndOf="@id/tv_score_progress_title"
+                android:indeterminate="false"
+                android:max="10"
+                android:minHeight="20dp"
+                android:progress="0" />
+
+            <TextView
+                android:id="@+id/tv_score_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_question_progress"
+                android:layout_alignStart="@id/tv_question_progress"
+                android:layout_alignTop="@id/tv_score_progress_title"
+                android:layout_toEndOf="@id/score_progress_bar"
+                android:layout_alignLeft="@id/tv_score_progress"
+                android:gravity="center"
+                android:text="0 of 0"
+                android:textColorHint="@color/light_grey"
+                android:textSize="14sp"
+                android:textStyle="bold"
+
                 />
 
-        </LinearLayout>
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/tv_option_one"
@@ -77,6 +129,7 @@
             android:padding="4dp"
             android:textColor="@color/grey"
             android:textSize="18sp"
+            android:textStyle="bold"
             tools:text="One" />
 
         <TextView
@@ -85,11 +138,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/tv_border"
-            tools:text = "Two"
-            android:textColor="@color/grey"
             android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@color/grey"
             android:textSize="18sp"
-            android:padding="4dp"/>
+            android:textStyle="bold"
+            tools:text="Two" />
 
         <TextView
             android:id="@+id/tv_option_three"
@@ -97,11 +151,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/tv_border"
-            tools:text = "Three"
-            android:textColor="@color/grey"
             android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@color/grey"
             android:textSize="18sp"
-            android:padding="4dp"/>
+            android:textStyle="bold"
+            tools:text="Three" />
 
         <TextView
             android:id="@+id/tv_option_four"
@@ -109,11 +164,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@drawable/tv_border"
-            tools:text = "Four"
-            android:textColor="@color/grey"
             android:gravity="center"
+            android:padding="4dp"
+            android:textColor="@color/grey"
             android:textSize="18sp"
-            android:padding="4dp"/>
+            android:textStyle="bold"
+            tools:text="Four" />
 
         <Button
             android:id="@+id/btn_submit"
@@ -121,11 +177,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/design_default_color_background"
             android:text="SUBMIT"
-            android:textStyle="bold"
+            android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
-            />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
