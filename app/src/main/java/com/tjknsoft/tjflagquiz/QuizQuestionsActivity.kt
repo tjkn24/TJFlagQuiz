@@ -20,6 +20,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
     private var mScoreAbsolute: Int = 0
     private var mScorePercentage: Float = 0.0F
+    private val allFlags: MutableList<Int> = mutableListOf()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +28,10 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_quiz_questions)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
+        onCreateHelper() // when user restart, call this (do not call onCreate() according to documentation)
+    }
+
+    private fun onCreateHelper() {
         setQuestion()
 
         tv_option_one.setOnClickListener(this)
@@ -215,11 +220,15 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_four.setClickable(clickable)
     }
 
-    fun loadDrawables() {
-        for (identifier in R.drawable.flag_a_afghanistan ..R.drawable.flag_z_zimbabwe) {
+    private fun loadDrawables() {
+        for (identifier in R.drawable.flag_a_afghanistan..R.drawable.flag_z_zimbabwe) {
             val name = resources.getResourceEntryName(identifier.toInt())
             //name is the file name without the extension, indentifier is the resource ID
-            Log.i("PANJUTA", name)
+            allFlags.add(identifier)
+            Log.i("PANJUTA", "$name $identifier")
+        }
+        for (flagIdentifier in allFlags) {
+            Log.i("PANJUTA", flagIdentifier.toString())
         }
     }
 
