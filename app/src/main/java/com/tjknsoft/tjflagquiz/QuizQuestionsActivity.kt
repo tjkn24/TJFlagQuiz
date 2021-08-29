@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_questions.*
 import java.text.DecimalFormat
 
+
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
@@ -33,6 +34,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_three.setOnClickListener(this)
         tv_option_four.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
+
+        loadDrawables()
     }
 
     private fun setQuestion() {
@@ -212,5 +215,12 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_four.setClickable(clickable)
     }
 
+    fun loadDrawables() {
+        for (identifier in R.drawable.flag_a_afghanistan ..R.drawable.flag_z_zimbabwe) {
+            val name = resources.getResourceEntryName(identifier.toInt())
+            //name is the file name without the extension, indentifier is the resource ID
+            Log.i("PANJUTA", name)
+        }
+    }
 
 }
