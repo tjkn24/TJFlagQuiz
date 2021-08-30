@@ -11,6 +11,11 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_questions.*
 import java.text.DecimalFormat
+import kotlin.random.Random
+import android.util.TypedValue
+
+
+
 
 
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,7 +25,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
     private var mScoreAbsolute: Int = 0
     private var mScorePercentage: Float = 0.0F
-    private val allFlags: MutableList<Int> = mutableListOf()
+    private val mAllFlags: MutableList<Int> = mutableListOf()
+    private var mQuestionSize: Int = 10
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +38,10 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onCreateHelper() {
+
+        loadDrawables()
+        selectRandomFlags(mAllFlags, mQuestionSize)
+
         setQuestion()
 
         tv_option_one.setOnClickListener(this)
@@ -40,7 +50,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_four.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
 
-        loadDrawables()
+
     }
 
     private fun setQuestion() {
@@ -220,16 +230,49 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_four.setClickable(clickable)
     }
 
+    // load only flag pngs from drawables
     private fun loadDrawables() {
         for (identifier in R.drawable.flag_a_afghanistan..R.drawable.flag_z_zimbabwe) {
             val name = resources.getResourceEntryName(identifier.toInt())
-            //name is the file name without the extension, indentifier is the resource ID
-            allFlags.add(identifier)
-            Log.i("PANJUTA", "$name $identifier")
+            //name is the file name without the extension, identifier is the resource ID
+            mAllFlags.add(identifier)
+            Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
         }
-        for (flagIdentifier in allFlags) {
-            Log.i("PANJUTA", flagIdentifier.toString())
+        for (flagIdentifier in mAllFlags) {
+            Log.i("PANJUTA", "All resource ID: $flagIdentifier")
         }
+    }
+
+    // get some unique random flags to be used in the game
+
+    private fun selectRandomFlags(allFlags: MutableList<Int>, questionSize: Int): MutableList<Int> {
+
+        // Avoid a deadlock
+        if (questionSize >= allFlags.size) {
+            return allFlags
+        }
+        val selectedFlags: MutableList<Int> = mutableListOf()
+
+        // Get a random item until we got the requested amount
+        while (selectedFlags.size < questionSize) {
+            val randomIndex = (0..allFlags.size).random()
+            Log.i("PANJUTA", "random index: $randomIndex")
+            val element = allFlags[randomIndex]
+            if (!selectedFlags.contains(element)) {
+                selectedFlags.add(element)
+            }
+        }
+
+        Log.i("PANJUTA", "selected flags size: ${selectedFlags.size}")
+
+        var value = TypedValue()
+
+        for ((i, f) in selectedFlags.withIndex()) {
+            resources.getValue(f, value, true)
+            Log.i("PANJUTA", "#$i: $f, filename: ${value.string.toString()}")
+
+        }
+        return selectedFlags
     }
 
 }
