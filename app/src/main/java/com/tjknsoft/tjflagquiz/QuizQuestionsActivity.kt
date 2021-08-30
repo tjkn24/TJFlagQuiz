@@ -15,9 +15,6 @@ import kotlin.random.Random
 import android.util.TypedValue
 
 
-
-
-
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
@@ -232,7 +229,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     // load only flag pngs from drawables
     private fun loadDrawables() {
-        for (identifier in R.drawable.flag_a_afghanistan..R.drawable.flag_z_zimbabwe) {
+        for (identifier in R.drawable.flag_afghanistan..R.drawable.flag_zimbabwe) {
             val name = resources.getResourceEntryName(identifier.toInt())
             //name is the file name without the extension, identifier is the resource ID
             mAllFlags.add(identifier)
@@ -265,12 +262,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         Log.i("PANJUTA", "selected flags size: ${selectedFlags.size}")
 
-        var value = TypedValue()
-
+        // display selected flags filename (with its directory) in logcat
+        val value = TypedValue()
         for ((i, f) in selectedFlags.withIndex()) {
             resources.getValue(f, value, true)
-            Log.i("PANJUTA", "#$i: $f, filename: ${value.string.toString()}")
-
+            Log.i("PANJUTA", "#$i: $f, filename: ${value.string}")
         }
         return selectedFlags
     }
