@@ -24,6 +24,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mScorePercentage: Float = 0.0F
     private val mAllFlags: MutableList<Int> = mutableListOf()
     private var mQuestionSize: Int = 10
+    private var mMapFlagToCountry = mutableMapOf<Int, String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         loadDrawables()
         selectRandomFlags(mAllFlags, mQuestionSize)
+        mapFlagImageToCountryName(mAllFlags)
 
         setQuestion()
 
@@ -252,7 +254,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         // Get a random item until we got the requested amount
         while (selectedFlags.size < questionSize) {
-            val randomIndex = (0..allFlags.size).random()
+            val randomIndex = (0..allFlags.size-1).random()
             Log.i("PANJUTA", "random index: $randomIndex")
             val element = allFlags[randomIndex]
             if (!selectedFlags.contains(element)) {
@@ -269,6 +271,17 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             Log.i("PANJUTA", "#$i: $f, filename: ${value.string}")
         }
         return selectedFlags
+    }
+
+    private fun mapFlagImageToCountryName(allFlags : MutableList<Int>){
+        Log.i("PANJUTA", "Entering mapFlagImageToCountryName()")
+        for ((i,j) in allFlags.withIndex()){
+            Log.i("PANJUTA", "i: $i, j: $j")
+            mMapFlagToCountry.put(j, Constants.CountryNames[i])
+        }
+        Log.i("PANJUTA", "mMapFlagToCountry size: ${mMapFlagToCountry.size}")
+        Log.i("PANJUTA", "mMapFlagToCountry[2131165288]: ${mMapFlagToCountry[2131165288]}")
+        Log.i("PANJUTA", "mMapFlagToCountry[2131165291]: ${mMapFlagToCountry[2131165291]}")
     }
 
 }
