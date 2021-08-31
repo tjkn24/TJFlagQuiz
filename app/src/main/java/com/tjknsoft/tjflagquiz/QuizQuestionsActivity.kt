@@ -17,7 +17,7 @@ import android.util.TypedValue
 class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
-    private lateinit var mQuestionList: ArrayList<Question>
+    private var mQuestionList: ArrayList<Question> = arrayListOf()
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
     private var mScoreAbsolute: Int = 0
     private var mScorePercentage: Float = 0.0F
@@ -277,21 +277,23 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private fun mapFlagImageToCountryName(allFlags : MutableList<Int>){
         Log.i("PANJUTA", "Entering mapFlagImageToCountryName()")
         for ((i,j) in allFlags.withIndex()){
-            Log.i("PANJUTA", "i: $i, j: $j")
+            // Log.i("PANJUTA", "i: $i, j: $j")
             mMapFlagToCountry.put(j, Constants.CountryNames[i])
         }
         Log.i("PANJUTA", "mMapFlagToCountry size: ${mMapFlagToCountry.size}")
-        Log.i("PANJUTA", "mMapFlagToCountry[2131165288]: ${mMapFlagToCountry[2131165288]}")
-        Log.i("PANJUTA", "mMapFlagToCountry[2131165291]: ${mMapFlagToCountry[2131165291]}")
+        // Log.i("PANJUTA", "mMapFlagToCountry[2131165288]: ${mMapFlagToCountry[2131165288]}")
+        // Log.i("PANJUTA", "mMapFlagToCountry[2131165291]: ${mMapFlagToCountry[2131165291]}")
     }
 
     private fun createQuestionsData(selectedFlags: ArrayList<Int>) {
+
         selectedFlags.forEachIndexed { index, flag ->
-            val (correctAnswer, answers) = createAnswers(flag)
+            Log.i("PANJUTA", "forEachIndexed index: $index")
+            val (correctPosition, answers) = createAnswers(flag)
             mQuestionList.add(
                 Question(
                     index, "Flag #$index", flag,
-                    answers, correctAnswer
+                    answers, correctPosition
                 )
             )
         }
