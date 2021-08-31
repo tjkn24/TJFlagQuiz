@@ -11,7 +11,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_questions.*
 import java.text.DecimalFormat
-import kotlin.random.Random
 import android.util.TypedValue
 
 
@@ -22,7 +21,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
     private var mScoreAbsolute: Int = 0
     private var mScorePercentage: Float = 0.0F
-    private val mAllFlags: MutableList<Int> = mutableListOf()
+    private val mAllFlags: ArrayList<Int> = arrayListOf()
+    private var mSelectedFlags: ArrayList<Int> = arrayListOf()
     private var mQuestionSize: Int = 10
     private var mMapFlagToCountry = mutableMapOf<Int, String>()
 
@@ -38,8 +38,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         loadDrawables()
-        selectRandomFlags(mAllFlags, mQuestionSize)
+        mSelectedFlags = selectRandomFlags(mAllFlags, mQuestionSize)
         mapFlagImageToCountryName(mAllFlags)
+        createQuestionsData(mSelectedFlags)
 
         setQuestion()
 
@@ -69,23 +70,23 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_question.text = currentQuestion.question
 
         iv_image.setImageResource(currentQuestion.image)
-        tv_option_one.text = currentQuestion.optionOne
-        tv_option_two.text = currentQuestion.optionTwo
-        tv_option_three.text = currentQuestion.optionThree
-        tv_option_four.text = currentQuestion.optionFour
+        tv_option_one.text = currentQuestion.options[0]
+        tv_option_two.text = currentQuestion.options[1]
+        tv_option_three.text = currentQuestion.options[2]
+        tv_option_four.text = currentQuestion.options[3]
     }
 
     private fun setDefaultOptionsView() {
-        val options = ArrayList<TextView>()
-        options.add(0, tv_option_one)
-        options.add(1, tv_option_two)
-        options.add(2, tv_option_three)
-        options.add(3, tv_option_four)
+        val optiontvs = ArrayList<TextView>()
+        optiontvs.add(0, tv_option_one)
+        optiontvs.add(1, tv_option_two)
+        optiontvs.add(2, tv_option_three)
+        optiontvs.add(3, tv_option_four)
 
-        for (option in options) {
-            option.setTextColor(Color.parseColor("#808080"))
-            option.typeface = Typeface.DEFAULT
-            option.background = ContextCompat.getDrawable(this, R.drawable.tv_border)
+        for (optiontv in optiontvs) {
+            optiontv.setTextColor(Color.parseColor("#808080"))
+            optiontv.typeface = Typeface.DEFAULT
+            optiontv.background = ContextCompat.getDrawable(this, R.drawable.tv_border)
         }
     }
 
@@ -128,7 +129,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mSelectedOptionPosition = 0
                 } else {
                     val question = mQuestionList[mCurrentQuestionNumber - 1]
-                    if (mSelectedOptionPosition != question.correctAnswer) {
+                    if (mSelectedOptionPosition != question.correctPosition) {
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
                     } else {
@@ -148,8 +149,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         "mScoreAbsolute: $mScoreAbsolute,  mCurrentQuestionNumber: $mCurrentQuestionNumber, mScorePercentage: ${mScorePercentage.toString()}"
                     )
 
-                    setAnswerColor(question.correctAnswer, R.drawable.tv_border_correct)
-                    setAnswerText(question.correctAnswer, true)
+                    setAnswerColor(question.correctPosition, R.drawable.tv_border_correct)
+                    setAnswerText(question.correctPosition, true)
                     enableOptions(false)
 
                     if (mCurrentQuestionNumber == mQuestionList.size) {
@@ -172,7 +173,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             1 -> {
                 tv_option_one.text = "" // Remove old text
                 tv_option_one.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionOne,
+                    mQuestionList[mCurrentQuestionNumber - 1].options[0],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_one)
@@ -180,7 +181,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             2 -> {
                 tv_option_two.text = "" // Remove old text
                 tv_option_two.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionTwo,
+                    mQuestionList[mCurrentQuestionNumber - 1].options[1],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_two)
@@ -188,7 +189,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             3 -> {
                 tv_option_three.text = "" // Remove old text
                 tv_option_three.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionThree,
+                    mQuestionList[mCurrentQuestionNumber - 1].options[2],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_three)
@@ -196,7 +197,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             4 -> {
                 tv_option_four.text = "" // Remove old text
                 tv_option_four.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionFour,
+                    mQuestionList[mCurrentQuestionNumber - 1].options[3],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_four)
@@ -244,13 +245,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     // get some unique random flags to be used in the game
 
-    private fun selectRandomFlags(allFlags: MutableList<Int>, questionSize: Int): MutableList<Int> {
+    private fun selectRandomFlags(allFlags: ArrayList<Int>, questionSize: Int): ArrayList<Int> {
 
         // Avoid a deadlock
         if (questionSize >= allFlags.size) {
             return allFlags
         }
-        val selectedFlags: MutableList<Int> = mutableListOf()
+        val selectedFlags : ArrayList<Int> = arrayListOf()
 
         // Get a random item until we got the requested amount
         while (selectedFlags.size < questionSize) {
@@ -282,6 +283,32 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         Log.i("PANJUTA", "mMapFlagToCountry size: ${mMapFlagToCountry.size}")
         Log.i("PANJUTA", "mMapFlagToCountry[2131165288]: ${mMapFlagToCountry[2131165288]}")
         Log.i("PANJUTA", "mMapFlagToCountry[2131165291]: ${mMapFlagToCountry[2131165291]}")
+    }
+
+    private fun createQuestionsData(selectedFlags: ArrayList<Int>) {
+        selectedFlags.forEachIndexed { index, flag ->
+            val (correctAnswer, answers) = createAnswers(flag)
+            mQuestionList.add(
+                Question(
+                    index, "Flag #$index", flag,
+                    answers, correctAnswer
+                )
+            )
+        }
+    }
+
+    private fun createAnswers(flag: Int): Pair<Int, ArrayList<String>> {
+
+        // get correct Country Name from its resource ID
+        val correctString = mMapFlagToCountry[flag]
+        Log.i("PANJUTA", "correctString: $correctString")
+
+        val correctPosition: Int = 0
+
+        // pick 3 random flags from AllFlags
+        val answers: ArrayList<String> = arrayListOf()
+
+        return Pair(correctPosition, answers)
     }
 
 }
