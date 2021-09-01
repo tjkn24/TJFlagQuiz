@@ -51,14 +51,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_four.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
 
-
     }
 
     private fun setQuestion() {
         setDefaultOptionsView()
         enableOptions(true)
 
-        mQuestionList = Constants.getQuestions()
+        // mQuestionList is not hardcoded anymore
+        // mQuestionList = Constants.getQuestions()
 
         btn_submit.text = "SUBMIT"
 
@@ -66,9 +66,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         var currentQuestion: Question = mQuestionList[mCurrentQuestionNumber - 1]
 
+        Log.i("PANJUTA", "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestion")
+
+
         question_progress_bar.progress = mCurrentQuestionNumber
         tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
-        tv_question.text = currentQuestion.question
+        // v_question.text = "Your Score: ${myDecimalFormat.format(mScorePercentage)}%"
+
 
         iv_image.setImageResource(currentQuestion.image)
         tv_option_one.text = currentQuestion.options[0]
@@ -141,10 +145,13 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     mScorePercentage =
                         (mScoreAbsolute.toFloat() / mCurrentQuestionNumber.toFloat()) * 100
 
+                    tv_question.text = "Your Score: "
+
                     val myDecimalFormat = DecimalFormat("#.##")
-                    tv_score_progress.text = (myDecimalFormat.format(mScorePercentage))
+                    tv_question.text = "Your Score: ${myDecimalFormat.format(mScorePercentage)}%"
                     tv_score_progress.text =
                         "${mScoreAbsolute.toString()} of $mCurrentQuestionNumber"
+
                     Log.i(
                         "PANJUTA",
                         "mScoreAbsolute: $mScoreAbsolute,  mCurrentQuestionNumber: $mCurrentQuestionNumber, mScorePercentage: ${mScorePercentage.toString()}"
