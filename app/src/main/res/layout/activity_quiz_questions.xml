@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_game_progress_title"
                 android:layout_alignStart="@id/tv_game_progress_title"
-                android:text="Score"
+                android:text="Correct"
                 android:textStyle="bold" />
 
             <ProgressBar
