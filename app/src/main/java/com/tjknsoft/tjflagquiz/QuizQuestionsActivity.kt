@@ -237,11 +237,11 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             val name = resources.getResourceEntryName(identifier.toInt())
             //name is the file name without the extension, identifier is the resource ID
             mAllFlags.add(identifier)
-            Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
+            // Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
         }
-        for (flagIdentifier in mAllFlags) {
-            Log.i("PANJUTA", "All resource ID: $flagIdentifier")
-        }
+        // for (flagIdentifier in mAllFlags) {
+            // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
+        // }
     }
 
     // get some unique random flags to be used in the game
@@ -261,26 +261,26 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         // Get a random item until we got the requested amount
         while (selectedFlags.size < questionSize) {
             val randomIndex = (0..allFlags.size - 1).random()
-            Log.i("PANJUTA", "random index: $randomIndex")
+            // Log.i("PANJUTA", "random index: $randomIndex")
             val element = allFlags[randomIndex]
             if (!selectedFlags.contains(element) && (element != excludedFlag)) {
                 selectedFlags.add(element)
             }
         }
 
-        Log.i("PANJUTA", "selected flags size: ${selectedFlags.size}")
+        // Log.i("PANJUTA", "selected flags size: ${selectedFlags.size}")
 
         // display selected flags filename (with its directory) in logcat
         val value = TypedValue()
         for ((i, f) in selectedFlags.withIndex()) {
             resources.getValue(f, value, true)
-            Log.i("PANJUTA", "#$i: $f, filename: ${value.string}")
+            // Log.i("PANJUTA", "#$i: $f, filename: ${value.string}")
         }
         return selectedFlags
     }
 
     private fun mapFlagImageToCountryName(allFlags: MutableList<Int>) {
-        Log.i("PANJUTA", "Entering mapFlagImageToCountryName()")
+        // Log.i("PANJUTA", "Entering mapFlagImageToCountryName()")
         for ((i, j) in allFlags.withIndex()) {
             // Log.i("PANJUTA", "i: $i, j: $j")
             mMapFlagToCountry.put(j, Constants.CountryNames[i])
@@ -297,10 +297,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             val (correctPosition, answers) = createAnswers(questionFlag)
             mQuestionList.add(
                 Question(
-                    index, "Flag #$index", questionFlag,
+                    index, "Your Score: $mScorePercentage", questionFlag,
                     answers, correctPosition
                 )
             )
+            for ((index, question) in mQuestionList.withIndex()){
+                Log.i("PANJUTA", "question: ${mQuestionList[index]}, Question Flag: ${mMapFlagToCountry[selectedFlags[index]]}")
+            }
+
         }
     }
 
@@ -312,26 +316,36 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         val answersBeforeShuffle: ArrayList<String> = arrayListOf()
         // pick 3 unique random flags from AllFlags;
-        // check that this 3 is different from the correct flag
+        // check that this 3 is different from the correct flag, ie. wrong answers
         val wrongAnswersID = selectRandomFlags(mAllFlags, mAnswerSize - 1, questionFlag)
-//        val wrongAnswersString = arrayListOf<String>()
+
+        // add 3 wrong answers to an array of answers
         for (wrongAnswerID in wrongAnswersID) {
             answersBeforeShuffle.add(mMapFlagToCountry[wrongAnswerID]!!)
         }
+        // afterwards, add 1 correct flag to this into the array
         if (correctString != null) {
             answersBeforeShuffle.add(correctString)
         }
+
+        // check answers array before shuffled
         for (answer in answersBeforeShuffle) {
             Log.i("PANJUTA", "answer before shuffle: $answer")
         }
 
-        // afterwards, add 1 correct flag to these 3 random flags into a collection
-        // then, shuffle the selection
-        // afterwards, find the position of correct answer (remember: position = zero-based index + 1)
-        // get the position (=index+1) of the correct flag -> 'correctPosition'
-        val correctPosition: Int = 0
+        // then, shuffle the array
+        val answersAfterShuffle: ArrayList<String> =
+            answersBeforeShuffle.shuffled() as ArrayList<String>
 
-        val answersAfterShuffle = arrayListOf<String>()
+        // check answers array after shuffled
+        // afterwards, check the position number (index + 1) of the correct answer
+        var correctPosition = 0
+        for ((index, answer) in answersAfterShuffle.withIndex()) {
+            Log.i("PANJUTA", "answer after shuffle: $answer")
+            if (answer == correctString) correctPosition = index + 1
+        }
+        Log.i("PANJUTA", "correctPosition: $correctPosition")
+
         return Pair(correctPosition, answersAfterShuffle)
     }
 
