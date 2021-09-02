@@ -77,7 +77,6 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         Log.i("PANJUTA", "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestion")
 
-
         question_progress_bar.progress = mCurrentQuestionNumber
         tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
         tv_score_progress.text =
