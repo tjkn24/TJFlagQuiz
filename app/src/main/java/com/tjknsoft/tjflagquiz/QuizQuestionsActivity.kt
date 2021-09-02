@@ -19,7 +19,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentQuestionNumber = 1
     private var mQuestionList: ArrayList<Question> = arrayListOf()
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
-    private var mScoreAbsolute: Int = 0
+    private var mScoreAbsolute: Int  = 0
     private var mScorePercentage: Float = 0.0F
     private val mAllFlags: ArrayList<Int> = arrayListOf()
     private var mSelectedFlags: ArrayList<Int> = arrayListOf()
@@ -33,15 +33,21 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_quiz_questions)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
+        loadDrawables()
         onCreateHelper() // when user restart, call this (do not call onCreate() according to documentation)
     }
 
     private fun onCreateHelper() {
 
-        loadDrawables()
+        mQuestionList.clear()
+        mCurrentQuestionNumber = 1
         mSelectedFlags = selectRandomFlags(mAllFlags, mQuestionSize, null)
         mapFlagImageToCountryName(mAllFlags)
         createQuestionsData(mSelectedFlags)
+        mScoreAbsolute = 0
+        mScorePercentage = 0.0F
+        score_progress_bar.progress = mScoreAbsolute
+        tv_question.text = "What country's flag is this?"
 
         setQuestion()
 
@@ -50,7 +56,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         tv_option_three.setOnClickListener(this)
         tv_option_four.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
-
+        btn_quit.setOnClickListener(this)
+        btn_restart.setOnClickListener(this)
     }
 
     private fun setQuestion() {
@@ -60,7 +67,9 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         // mQuestionList is not hardcoded anymore
         // mQuestionList = Constants.getQuestions()
 
-        btn_submit.text = "SUBMIT"
+        ll_restartOrQuit.setVisibility(View.GONE)
+        btn_submit.setVisibility(View.VISIBLE)
+        btn_submit.text = "CHECK ANSWER"
 
         Log.i("PANJUTA", "mScoreAbsolute: $mScoreAbsolute, mScorePercentage: $mScorePercentage")
 
@@ -71,7 +80,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         question_progress_bar.progress = mCurrentQuestionNumber
         tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
-        // v_question.text = "Your Score: ${myDecimalFormat.format(mScorePercentage)}%"
+        tv_score_progress.text =
+            "${mScoreAbsolute.toString()} of ${mCurrentQuestionNumber-1}"
 
 
         iv_image.setImageResource(currentQuestion.image)
@@ -162,8 +172,10 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     enableOptions(false)
 
                     if (mCurrentQuestionNumber == mQuestionList.size) {
-                        btn_submit.text = "FINISH"
-                        mSelectedOptionPosition = 999 // quit the app
+                        btn_submit.setVisibility(View.GONE)
+                        ll_restartOrQuit.setVisibility(View.VISIBLE)
+                        // btn_submit.text = "FINISH"    `
+                        // mSelectedOptionPosition = 999 // quit the app
                     } else {
                         btn_submit.text = "NEXT QUESTION"
                         mSelectedOptionPosition = 99 // user have submitted his decision
@@ -172,6 +184,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
             }
+            R.id.btn_quit -> finish()
+            R.id.btn_restart -> onCreateHelper()
         }
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
     }
@@ -245,10 +259,12 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             //name is the file name without the extension, identifier is the resource ID
             mAllFlags.add(identifier)
             // Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
+
         }
         // for (flagIdentifier in mAllFlags) {
             // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
-        // }
+        // };
+        Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
     }
 
     // get some unique random flags to be used in the game
