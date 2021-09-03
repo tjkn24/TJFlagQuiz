@@ -2,20 +2,20 @@ package com.tjknsoft.tjflagquiz
 
 object Constants {
     const val QUESTIONTEXT ="This is the flag of..."
-    fun getQuestions(): ArrayList<Question> {
-        val questionList = ArrayList<Question>()
+    fun getQuestions(): ArrayList<QuestionName> {
+        val questionList = ArrayList<QuestionName>()
 
         val que1 =
-            Question(1, QUESTIONTEXT, R.drawable.flag_samoa, arrayListOf("Malaysia", "Benin", "Samoa", "Syria"), 3)
-        val que2 = Question(2, QUESTIONTEXT, R.drawable.flag_lebanon, arrayListOf("Lebanon", "Fiji", "Angola", "Myanmar"), 1)
-        val que3 = Question(3, QUESTIONTEXT, R.drawable.flag_peru, arrayListOf("Slovenia", "Peru", "Tibet", "Honduras"), 2)
-        val que4 = Question(4, QUESTIONTEXT, R.drawable.flag_norfolk_island, arrayListOf("Senegal", "Chad", "Guam", "Norfolk Island"), 4)
-        val que5 = Question(5, QUESTIONTEXT, R.drawable.flag_jordan, arrayListOf("Jordan", "Malta", "Greenland", "Poland"), 1)
-        val que6 = Question(6, QUESTIONTEXT, R.drawable.flag_finland, arrayListOf("Ecuador", "Jamaica", "Finland", "Lithuania"), 3)
-        val que7 = Question(7, QUESTIONTEXT, R.drawable.flag_uganda, arrayListOf("Nepal", "Uganda", "Nauru", "Sierra Leone"), 2)
-        val que8 = Question(8, QUESTIONTEXT, R.drawable.flag_tonga, arrayListOf("Vanuatu", "Tonga", "Cook Islands", "Djibouti"), 2)
-        val que9 = Question(9, QUESTIONTEXT, R.drawable.flag_kenya, arrayListOf("Kenya", "Kazakhstan", "Estonia", "Cape Verde"), 1)
-        val que10 = Question(10, QUESTIONTEXT, R.drawable.flag_san_marino, arrayListOf("Sudan", "Hong Kong", "San Marino", "Chile"), 3)
+            QuestionName(1, QUESTIONTEXT, R.drawable.flag_samoa, arrayListOf("Malaysia", "Benin", "Samoa", "Syria"), 3)
+        val que2 = QuestionName(2, QUESTIONTEXT, R.drawable.flag_lebanon, arrayListOf("Lebanon", "Fiji", "Angola", "Myanmar"), 1)
+        val que3 = QuestionName(3, QUESTIONTEXT, R.drawable.flag_peru, arrayListOf("Slovenia", "Peru", "Tibet", "Honduras"), 2)
+        val que4 = QuestionName(4, QUESTIONTEXT, R.drawable.flag_norfolk_island, arrayListOf("Senegal", "Chad", "Guam", "Norfolk Island"), 4)
+        val que5 = QuestionName(5, QUESTIONTEXT, R.drawable.flag_jordan, arrayListOf("Jordan", "Malta", "Greenland", "Poland"), 1)
+        val que6 = QuestionName(6, QUESTIONTEXT, R.drawable.flag_finland, arrayListOf("Ecuador", "Jamaica", "Finland", "Lithuania"), 3)
+        val que7 = QuestionName(7, QUESTIONTEXT, R.drawable.flag_uganda, arrayListOf("Nepal", "Uganda", "Nauru", "Sierra Leone"), 2)
+        val que8 = QuestionName(8, QUESTIONTEXT, R.drawable.flag_tonga, arrayListOf("Vanuatu", "Tonga", "Cook Islands", "Djibouti"), 2)
+        val que9 = QuestionName(9, QUESTIONTEXT, R.drawable.flag_kenya, arrayListOf("Kenya", "Kazakhstan", "Estonia", "Cape Verde"), 1)
+        val que10 = QuestionName(10, QUESTIONTEXT, R.drawable.flag_san_marino, arrayListOf("Sudan", "Hong Kong", "San Marino", "Chile"), 3)
 
         questionList.add(que1)
         questionList.add(que2)

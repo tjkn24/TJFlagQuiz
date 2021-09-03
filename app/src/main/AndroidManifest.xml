@@ -17,7 +17,7 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".QuizQuestionsActivity"
+            android:name=".QuizChooseNameActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">

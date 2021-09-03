@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/backgroundPage"
     android:fillViewport="true"
-    tools:context=".QuizQuestionsActivity">
+    tools:context=".QuizChooseNameActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

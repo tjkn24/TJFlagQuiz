@@ -14,10 +14,10 @@ import java.text.DecimalFormat
 import android.util.TypedValue
 
 
-class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
+class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mCurrentQuestionNumber = 1
-    private var mQuestionList: ArrayList<Question> = arrayListOf()
+    private var mQuestionNameList: ArrayList<QuestionName> = arrayListOf()
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
     private var mScoreAbsolute: Int  = 0
     private var mScorePercentage: Float = 0.0F
@@ -39,7 +39,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        mQuestionList.clear()
+        mQuestionNameList.clear()
         mCurrentQuestionNumber = 1
         mSelectedFlags = selectRandomFlags(mAllFlags, mQuestionSize, null)
         mapFlagImageToCountryName(mAllFlags)
@@ -64,8 +64,8 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         setDefaultOptionsView()
         enableOptions(true)
 
-        // mQuestionList is not hardcoded anymore
-        // mQuestionList = Constants.getQuestions()
+        // mQuestionNameList is not hardcoded anymore
+        // mQuestionNameList = Constants.getQuestions()
 
         ll_restartOrQuit.setVisibility(View.GONE)
         btn_submit.setVisibility(View.VISIBLE)
@@ -73,22 +73,22 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
         Log.i("PANJUTA", "mScoreAbsolute: $mScoreAbsolute, mScorePercentage: $mScorePercentage")
 
-        var currentQuestion: Question = mQuestionList[mCurrentQuestionNumber - 1]
+        var currentQuestionName: QuestionName = mQuestionNameList[mCurrentQuestionNumber - 1]
 
-        Log.i("PANJUTA", "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestion")
+        Log.i("PANJUTA", "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestionName")
 
 
         question_progress_bar.progress = mCurrentQuestionNumber
-        tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
+        tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionNameList.size}"
         tv_score_progress.text =
             "${mScoreAbsolute.toString()} of ${mCurrentQuestionNumber-1}"
 
 
-        iv_image.setImageResource(currentQuestion.image)
-        tv_option_one.text = currentQuestion.options[0]
-        tv_option_two.text = currentQuestion.options[1]
-        tv_option_three.text = currentQuestion.options[2]
-        tv_option_four.text = currentQuestion.options[3]
+        iv_image.setImageResource(currentQuestionName.image)
+        tv_option_one.text = currentQuestionName.options[0]
+        tv_option_two.text = currentQuestionName.options[1]
+        tv_option_three.text = currentQuestionName.options[2]
+        tv_option_four.text = currentQuestionName.options[3]
     }
 
     private fun setDefaultOptionsView() {
@@ -135,7 +135,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                         .show()
                 } else if (mSelectedOptionPosition == 99) {
                     mCurrentQuestionNumber++
-                    if (mCurrentQuestionNumber <= mQuestionList.size) {
+                    if (mCurrentQuestionNumber <= mQuestionNameList.size) {
                         setQuestion()
                     } else {
                         Toast.makeText(this, "You have finished this quiz", Toast.LENGTH_SHORT)
@@ -143,7 +143,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     }
                     mSelectedOptionPosition = 0
                 } else {
-                    val question = mQuestionList[mCurrentQuestionNumber - 1]
+                    val question = mQuestionNameList[mCurrentQuestionNumber - 1]
                     if (mSelectedOptionPosition != question.correctPosition) {
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
@@ -171,7 +171,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
                     setAnswerText(question.correctPosition, true)
                     enableOptions(false)
 
-                    if (mCurrentQuestionNumber == mQuestionList.size) {
+                    if (mCurrentQuestionNumber == mQuestionNameList.size) {
                         btn_submit.setVisibility(View.GONE)
                         ll_restartOrQuit.setVisibility(View.VISIBLE)
                         // btn_submit.text = "FINISH"    `
@@ -195,7 +195,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             1 -> {
                 tv_option_one.text = "" // Remove old text
                 tv_option_one.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].options[0],
+                    mQuestionNameList[mCurrentQuestionNumber - 1].options[0],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_one)
@@ -203,7 +203,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             2 -> {
                 tv_option_two.text = "" // Remove old text
                 tv_option_two.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].options[1],
+                    mQuestionNameList[mCurrentQuestionNumber - 1].options[1],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_two)
@@ -211,7 +211,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             3 -> {
                 tv_option_three.text = "" // Remove old text
                 tv_option_three.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].options[2],
+                    mQuestionNameList[mCurrentQuestionNumber - 1].options[2],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_three)
@@ -219,7 +219,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
             4 -> {
                 tv_option_four.text = "" // Remove old text
                 tv_option_four.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].options[3],
+                    mQuestionNameList[mCurrentQuestionNumber - 1].options[3],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_four)
@@ -318,14 +318,14 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
         selectedFlags.forEachIndexed { index, questionFlag ->
             Log.i("PANJUTA", "forEachIndexed index: $index")
             val (correctPosition, answers) = createAnswers(questionFlag)
-            mQuestionList.add(
-                Question(
+            mQuestionNameList.add(
+                QuestionName(
                     index, "Your Score: $mScorePercentage", questionFlag,
                     answers, correctPosition
                 )
             )
-            for ((index, question) in mQuestionList.withIndex()){
-                Log.i("PANJUTA", "question: ${mQuestionList[index]}, Question Flag: ${mMapFlagToCountry[selectedFlags[index]]}")
+            for ((index, question) in mQuestionNameList.withIndex()){
+                Log.i("PANJUTA", "question: ${mQuestionNameList[index]}, QuestionName Flag: ${mMapFlagToCountry[selectedFlags[index]]}")
             }
 
         }

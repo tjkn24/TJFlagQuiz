@@ -1,6 +1,6 @@
 package com.tjknsoft.tjflagquiz
 
-data class Question(
+data class QuestionName(
     val id: Int,
     val question: String,
     val image: Int,
