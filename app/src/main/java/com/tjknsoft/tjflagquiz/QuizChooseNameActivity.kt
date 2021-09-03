@@ -1,5 +1,6 @@
 package com.tjknsoft.tjflagquiz
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
@@ -191,7 +192,11 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.btn_quit -> finish()
-            R.id.btn_restart -> onCreateHelper()
+            R.id.btn_restart -> {// onCreateHelper()
+                val intent = Intent(this, SplashScreenActivity::class.java)
+                startActivity(intent)
+                finish()
+             }
         }
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
     }

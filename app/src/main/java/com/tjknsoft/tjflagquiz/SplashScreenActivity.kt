@@ -12,23 +12,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     companion object {
         val context = App.context
-
         val mAllFlags: ArrayList<Int> = arrayListOf()
-
-        // load only flag pngs from drawables
-        private fun loadDrawables() {
-            for (identifier in R.drawable.flag_afghanistan..R.drawable.flag_zimbabwe) {
-                val name = context?.resources?.getResourceEntryName(identifier.toInt())
-                //name is the file name without the extension, identifier is the resource ID
-                mAllFlags.add(identifier)
-                // Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
-
-            }
-            // for (flagIdentifier in mAllFlags) {
-            // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
-            // };
-            Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
-        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,9 +27,23 @@ class SplashScreenActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-
-
         }
         loadDrawables()
+    }
+
+    // load only flag pngs from drawables
+    private fun loadDrawables() {
+        mAllFlags.clear()
+        for (identifier in R.drawable.flag_afghanistan..R.drawable.flag_zimbabwe) {
+            val name = context?.resources?.getResourceEntryName(identifier.toInt())
+            //name is the file name without the extension, identifier is the resource ID
+            mAllFlags.add(identifier)
+            // Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
+
+        }
+        // for (flagIdentifier in mAllFlags) {
+        // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
+        // };
+        Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
     }
 }
