@@ -19,9 +19,9 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentQuestionNumber = 1
     private var mQuestionNameList: ArrayList<QuestionName> = arrayListOf()
     private var mSelectedOptionPosition: Int = 0 //0 = no options selected
-    private var mScoreAbsolute: Int  = 0
+    private var mScoreAbsolute: Int = 0
     private var mScorePercentage: Float = 0.0F
-    private val mAllFlags: ArrayList<Int> = arrayListOf()
+    private var mAllFlags: ArrayList<Int> = arrayListOf()
     private var mSelectedFlags: ArrayList<Int> = arrayListOf()
     private var mQuestionSize: Int = 10
     private var mAnswerSize: Int = 4
@@ -33,7 +33,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_quiz_choosename)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
-        loadDrawables()
+        // loadDrawables()
         onCreateHelper() // when user restart, call this (do not call onCreate() according to documentation)
     }
 
@@ -41,6 +41,8 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         mQuestionNameList.clear()
         mCurrentQuestionNumber = 1
+        mAllFlags = SplashScreenActivity.mAllFlags
+        Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
         mSelectedFlags = selectRandomFlags(mAllFlags, mQuestionSize, null)
         mapFlagImageToCountryName(mAllFlags)
         createQuestionsData(mSelectedFlags)
@@ -75,13 +77,17 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         var currentQuestionName: QuestionName = mQuestionNameList[mCurrentQuestionNumber - 1]
 
-        Log.i("PANJUTA", "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestionName")
+        Log.i(
+            "PANJUTA",
+            "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestionName"
+        )
 
 
         question_progress_bar.progress = mCurrentQuestionNumber
-        tv_question_progress.text = mCurrentQuestionNumber.toString() + " of ${mQuestionNameList.size}"
+        tv_question_progress.text =
+            mCurrentQuestionNumber.toString() + " of ${mQuestionNameList.size}"
         tv_score_progress.text =
-            "${mScoreAbsolute.toString()} of ${mCurrentQuestionNumber-1}"
+            "${mScoreAbsolute.toString()} of ${mCurrentQuestionNumber - 1}"
 
 
         iv_image.setImageResource(currentQuestionName.image)
@@ -262,7 +268,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         }
         // for (flagIdentifier in mAllFlags) {
-            // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
+        // Log.i("PANJUTA", "All resource ID: $flagIdentifier")
         // };
         Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
     }
@@ -324,8 +330,11 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                     answers, correctPosition
                 )
             )
-            for ((index, question) in mQuestionNameList.withIndex()){
-                Log.i("PANJUTA", "question: ${mQuestionNameList[index]}, QuestionName Flag: ${mMapFlagToCountry[selectedFlags[index]]}")
+            for ((index, question) in mQuestionNameList.withIndex()) {
+                Log.i(
+                    "PANJUTA",
+                    "question: ${mQuestionNameList[index]}, QuestionName Flag: ${mMapFlagToCountry[selectedFlags[index]]}"
+                )
             }
 
         }
