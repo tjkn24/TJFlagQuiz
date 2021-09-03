@@ -9,7 +9,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_quiz_questions.*
+import kotlinx.android.synthetic.main.activity_quiz_choosename.*
 import java.text.DecimalFormat
 import android.util.TypedValue
 
@@ -30,7 +30,7 @@ class QuizQuestionsActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz_questions)
+        setContentView(R.layout.activity_quiz_choosename)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
         loadDrawables()
