@@ -17,7 +17,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tv_question_title"
+            android:id="@+id/tv_title2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -28,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_question_text"
+            android:id="@+id/tv_question_countryname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="24dp"
@@ -55,7 +55,7 @@
                 android:textStyle="bold" />
 
             <ProgressBar
-                android:id="@+id/question_progress_bar"
+                android:id="@+id/question_progress_bar2"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
@@ -69,10 +69,10 @@
                 android:progress="0" />
 
             <TextView
-                android:id="@+id/tv_question_progress"
+                android:id="@+id/tv_question_progress2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/question_progress_bar"
+                android:layout_toEndOf="@id/question_progress_bar2"
                 android:gravity="center"
                 android:text="1 of 10"
                 android:textColorHint="@color/light_grey"
@@ -89,12 +89,12 @@
                 android:textStyle="bold" />
 
             <ProgressBar
-                android:id="@+id/score_progress_bar"
+                android:id="@+id/score_progress_bar2"
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="225dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/question_progress_bar"
-                android:layout_alignStart="@id/question_progress_bar"
+                android:layout_below="@id/question_progress_bar2"
+                android:layout_alignStart="@id/question_progress_bar2"
                 android:layout_alignTop="@id/tv_score_progress_title"
                 android:layout_toEndOf="@id/tv_score_progress_title"
                 android:indeterminate="false"
@@ -103,14 +103,14 @@
                 android:progress="0" />
 
             <TextView
-                android:id="@+id/tv_score_progress"
+                android:id="@+id/tv_score_progress2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_question_progress"
-                android:layout_alignStart="@id/tv_question_progress"
-                android:layout_alignLeft="@id/tv_score_progress"
+                android:layout_below="@id/tv_question_progress2"
+                android:layout_alignStart="@id/tv_question_progress2"
+                android:layout_alignLeft="@id/tv_score_progress2"
                 android:layout_alignTop="@id/tv_score_progress_title"
-                android:layout_toEndOf="@id/score_progress_bar"
+                android:layout_toEndOf="@id/score_progress_bar2"
                 android:gravity="center"
                 android:text="0 of 0"
                 android:textColorHint="@color/light_grey"
@@ -135,6 +135,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="8dp"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:cropToPadding="false"
                 android:scaleType="fitXY"
                 android:src="@drawable/flag_macedonia" />
 
@@ -142,10 +145,13 @@
                 android:id="@+id/iv_option_2"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
-                android:layout_toRightOf="@id/iv_option_1"
                 android:layout_alignTop="@id/iv_option_1"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="24dp"
+                android:layout_toRightOf="@id/iv_option_1"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:cropToPadding="false"
                 android:scaleType="fitXY"
                 android:src="@drawable/flag_united_states_of_america" />
 
@@ -157,6 +163,9 @@
                 android:layout_alignStart="@id/iv_option_1"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
+                android:cropToPadding="false"
                 android:scaleType="fitXY"
                 android:src="@drawable/flag_comoros" />
 
@@ -164,59 +173,60 @@
                 android:id="@+id/iv_option_4"
                 android:layout_width="150dp"
                 android:layout_height="100dp"
-                android:layout_alignTop="@id/iv_option_3"
-                android:layout_alignStart="@id/iv_option_2"
                 android:layout_below="@id/iv_option_2"
-               android:layout_marginBottom="16dp"
+                android:layout_alignStart="@id/iv_option_2"
+                android:layout_alignTop="@id/iv_option_3"
+                android:layout_marginBottom="16dp"
                 android:layout_toEndOf="@id/iv_option_3"
+                android:background="@color/colorPrimary"
+                android:clickable="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/flag_zambia" />
-
-
 
         </RelativeLayout>
 
 
         <Button
-            android:id="@+id/btn_submit"
+            android:id="@+id/btn_submit2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="47dp"
             android:layout_margin="8dp"
-            android:visibility="visible"
             android:background="@color/colorPrimary"
             android:text="CHECK ANSWER"
             android:textColor="@color/design_default_color_background"
             android:textSize="18sp"
             android:textStyle="bold"
-            />
+            android:visibility="visible" />
 
         <LinearLayout
-            android:id="@+id/ll_restartOrQuit"
+            android:id="@+id/ll_restartOrQuit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone">
+
             <Button
-                android:id="@+id/btn_restart"
+                android:id="@+id/btn_restart2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginEnd="4dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
+                android:text="RESTART"
                 android:textColor="@color/design_default_color_background"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="RESTART" />
+                android:textStyle="bold" />
+
             <Button
-                android:id="@+id/btn_quit"
+                android:id="@+id/btn_quit2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="4dp"
+                android:layout_weight="1"
                 android:background="@color/colorPrimary"
+                android:text="QUIT"
                 android:textColor="@color/design_default_color_background"
                 android:textSize="18sp"
-                android:textStyle="bold"
-                android:text="QUIT" />
+                android:textStyle="bold" />
 
         </LinearLayout>
 

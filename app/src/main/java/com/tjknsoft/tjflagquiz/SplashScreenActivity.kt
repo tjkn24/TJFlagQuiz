@@ -28,6 +28,11 @@ class SplashScreenActivity : AppCompatActivity() {
                 finish()
             }
         }
+        btn_start2.setOnClickListener {
+            val intent = Intent(this, QuizChooseFlagActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         loadDrawables()
     }
 
