@@ -92,10 +92,10 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
 
         iv_image.setImageResource(currentQuestion.image)
-        tv_option_one.text = currentQuestion.optionsName[0]
-        tv_option_two.text = currentQuestion.optionsName[1]
-        tv_option_three.text = currentQuestion.optionsName[2]
-        tv_option_four.text = currentQuestion.optionsName[3]
+        tv_option_one.text = currentQuestion.optionNames[0]
+        tv_option_two.text = currentQuestion.optionNames[1]
+        tv_option_three.text = currentQuestion.optionNames[2]
+        tv_option_four.text = currentQuestion.optionNames[3]
     }
 
     private fun setDefaultOptionsView() {
@@ -207,7 +207,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
             1 -> {
                 tv_option_one.text = "" // Remove old text
                 tv_option_one.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionsName[0],
+                    mQuestionList[mCurrentQuestionNumber - 1].optionNames[0],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_one)
@@ -215,7 +215,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
             2 -> {
                 tv_option_two.text = "" // Remove old text
                 tv_option_two.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionsName[1],
+                    mQuestionList[mCurrentQuestionNumber - 1].optionNames[1],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_two)
@@ -223,7 +223,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
             3 -> {
                 tv_option_three.text = "" // Remove old text
                 tv_option_three.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionsName[2],
+                    mQuestionList[mCurrentQuestionNumber - 1].optionNames[2],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_three)
@@ -231,7 +231,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
             4 -> {
                 tv_option_four.text = "" // Remove old text
                 tv_option_four.customAppend(
-                    mQuestionList[mCurrentQuestionNumber - 1].optionsName[3],
+                    mQuestionList[mCurrentQuestionNumber - 1].optionNames[3],
                     android.R.color.black
                 )
                 formatAnswerText(isCorrect, tv_option_four)

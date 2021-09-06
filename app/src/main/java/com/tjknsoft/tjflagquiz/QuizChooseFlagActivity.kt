@@ -1,21 +1,21 @@
 package com.tjknsoft.tjflagquiz
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
-import kotlinx.android.synthetic.main.activity_quiz_choosename.*
 import java.text.DecimalFormat
+import android.graphics.ColorMatrixColorFilter
+
+import android.graphics.ColorMatrix
+
 
 class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -67,6 +67,9 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
         setDefaultOptionsView()
         enableOptions(true)
+        for (iv in mOptionImageViews) {
+            clearGreyTint(iv)
+        }
 
         ll_restartOrQuit2.visibility = View.GONE
         btn_submit2.visibility = View.VISIBLE
@@ -81,15 +84,16 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
             "$mScoreAbsolute of ${mCurrentQuestionNumber - 1}"
 
         tv_question_countryname.text = currentQuestion.countryName
-        iv_option_1.setImageResource(currentQuestion.optionsImage[0])
-        iv_option_2.setImageResource(currentQuestion.optionsImage[1])
-        iv_option_3.setImageResource(currentQuestion.optionsImage[2])
-        iv_option_4.setImageResource(currentQuestion.optionsImage[3])
+        iv_option_1.setImageResource(currentQuestion.optionImages[0])
+        iv_option_2.setImageResource(currentQuestion.optionImages[1])
+        iv_option_3.setImageResource(currentQuestion.optionImages[2])
+        iv_option_4.setImageResource(currentQuestion.optionImages[3])
 
     }
 
     private fun setDefaultOptionsView() {
 
+        mOptionImageViews.clear()
         mOptionImageViews.add(0, iv_option_1)
         mOptionImageViews.add(1, iv_option_2)
         mOptionImageViews.add(2, iv_option_3)
@@ -175,12 +179,24 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
                     Log.i(
                         "PANJUTA",
-                        "question.correctPosition: ${question.correctPosition}")
-                    setAnswerColor(question.correctPosition,
-                    android.R.color.holo_green_light
+                        "question.correctPosition: ${question.correctPosition}"
+                    )
+                    setAnswerColor(
+                        question.correctPosition,
+                        android.R.color.holo_green_light
                     ) // correct answer color
                     // setAnswerText(question.correctPosition, true)
                     enableOptions(false)
+
+                    for ((index, optionImage) in mOptionImageViews.withIndex()) {
+                        Log.i(
+                            "PANJUTA",
+                            "index: $index"
+                        )
+                        if (index != (question.correctPosition - 1)) {
+                            setGreyTint(mOptionImageViews[index])
+                        }
+                    }
 
                     if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit2.visibility = View.GONE
@@ -219,12 +235,26 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
             3 -> {
                 iv_option_3.background = ContextCompat.getDrawable(this, optionBackgroundResID)
                 iv_option_3.setPadding(16)
+
             }
             4 -> {
                 iv_option_4.background = ContextCompat.getDrawable(this, optionBackgroundResID)
                 iv_option_4.setPadding(16)
             }
         }
+    }
+
+    private fun setGreyTint(v: ImageView) {
+        val matrix = ColorMatrix()
+        matrix.setSaturation(0f) //0 means grayscale
+        val cf = ColorMatrixColorFilter(matrix)
+        v.colorFilter = cf
+        v.imageAlpha = 128 // 128 = 0.5
+    }
+
+    fun clearGreyTint(v: ImageView) {
+        v.colorFilter = null
+        v.imageAlpha = 255
     }
 
     private fun enableOptions(clickable: Boolean) {

@@ -5,7 +5,7 @@ data class Question(
     val title: String,
     val image: Int = 0,
     val countryName: String = "",
-    val optionsName: ArrayList<String>,
-    val optionsImage: ArrayList<Int>,
+    val optionNames: ArrayList<String>,
+    val optionImages: ArrayList<Int>,
     val correctPosition: Int,
 )
