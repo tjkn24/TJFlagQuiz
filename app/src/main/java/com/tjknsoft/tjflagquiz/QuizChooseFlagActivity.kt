@@ -101,7 +101,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
         for (optionimg in mOptionImageViews) {
             optionimg.setPadding(0)
-            optionimg.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            optionimg.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
         }
     }
 
@@ -155,7 +155,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                         // setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(
                             mSelectedOptionPosition,
-                            android.R.color.holo_red_light
+                            R.drawable.tv_border
                         ) // wrong answer color
                     } else {
                         mScoreAbsolute++
@@ -183,7 +183,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                     )
                     setAnswerColor(
                         question.correctPosition,
-                        android.R.color.holo_green_light
+                        R.drawable.tv_border_correct
                     ) // correct answer color
                     // setAnswerText(question.correctPosition, true)
                     enableOptions(false)
@@ -225,21 +225,21 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
         when (answer) {
             1 -> {
                 iv_option_1.background = ContextCompat.getDrawable(this, optionBackgroundResID)
-                iv_option_1.setPadding(16)
+                // iv_option_1.setPadding(16)
             }
             2 -> {
                 iv_option_2.background = ContextCompat.getDrawable(this, optionBackgroundResID)
-                iv_option_2.setPadding(16)
+                // iv_option_2.setPadding(16)
             }
 
             3 -> {
                 iv_option_3.background = ContextCompat.getDrawable(this, optionBackgroundResID)
-                iv_option_3.setPadding(16)
+                // iv_option_3.setPadding(16)
 
             }
             4 -> {
                 iv_option_4.background = ContextCompat.getDrawable(this, optionBackgroundResID)
-                iv_option_4.setPadding(16)
+                // iv_option_4.setPadding(16)
             }
         }
     }
