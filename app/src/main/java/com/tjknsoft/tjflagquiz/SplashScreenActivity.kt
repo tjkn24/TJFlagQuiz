@@ -43,7 +43,7 @@ class SplashScreenActivity : AppCompatActivity() {
             val name = context?.resources?.getResourceEntryName(identifier.toInt())
             //name is the file name without the extension, identifier is the resource ID
             mAllFlags.add(identifier)
-            // Log.i("PANJUTA", "All File name & Resource Id: $name $identifier")
+            Log.i("PANJUTA", "Splash Activity; File name & Resource Id: $name $identifier")
 
         }
         // for (flagIdentifier in mAllFlags) {

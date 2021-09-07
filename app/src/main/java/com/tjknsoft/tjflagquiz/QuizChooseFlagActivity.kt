@@ -249,7 +249,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
         matrix.setSaturation(0f) //0 means grayscale
         val cf = ColorMatrixColorFilter(matrix)
         v.colorFilter = cf
-        v.imageAlpha = 128 // 128 = 0.5
+        v.imageAlpha = 64 // 128 = 0.5
     }
 
     fun clearGreyTint(v: ImageView) {
@@ -369,6 +369,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
     private fun mapCountryNameToFlagImage(mAllNames: ArrayList<String>) {
         for ((index, name) in mAllNames.withIndex()) {
             mMapCountryToFlag.put(name, SplashScreenActivity.mAllFlags[index])
+            Log.i("PANJUTA", "country name: $name, ID: ${SplashScreenActivity.mAllFlags[index]}")
         }
     }
 

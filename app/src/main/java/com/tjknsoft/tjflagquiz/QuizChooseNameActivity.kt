@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_choosename.*
 import java.text.DecimalFormat
 import android.util.TypedValue
+import android.widget.ImageView
+import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 
 
 class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
@@ -27,7 +29,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     private var mQuestionSize: Int = 10
     private var mAnswerSize: Int = 4
     private var mMapFlagToCountry = mutableMapOf<Int, String>()
-
+    private var mOptionTextViews: ArrayList<TextView> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +56,14 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         setQuestion()
 
-        tv_option_one.setOnClickListener(this)
-        tv_option_two.setOnClickListener(this)
-        tv_option_three.setOnClickListener(this)
-        tv_option_four.setOnClickListener(this)
+//        tv_option_one.setOnClickListener(this)
+//        tv_option_two.setOnClickListener(this)
+//        tv_option_three.setOnClickListener(this)
+//        tv_option_four.setOnClickListener(this)
+
+        for (optiontv in mOptionTextViews) {
+            optiontv.setOnClickListener(this)
+        }
         btn_submit.setOnClickListener(this)
         btn_quit.setOnClickListener(this)
         btn_restart.setOnClickListener(this)
@@ -66,6 +72,9 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     private fun setQuestion() {
         setDefaultOptionsView()
         enableOptions(true)
+        for (tv in mOptionTextViews) {
+            tv.setBackgroundColor(ContextCompat.getColor(this,android.R.color.white))
+        }
 
         // mQuestionList is not hardcoded anymore
         // mQuestionList = Constants.getQuestions()
@@ -99,13 +108,19 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setDefaultOptionsView() {
-        val optiontvs = ArrayList<TextView>()
-        optiontvs.add(0, tv_option_one)
-        optiontvs.add(1, tv_option_two)
-        optiontvs.add(2, tv_option_three)
-        optiontvs.add(3, tv_option_four)
+//        val optiontvs = ArrayList<TextView>()
+//        optiontvs.add(0, tv_option_one)
+//        optiontvs.add(1, tv_option_two)
+//        optiontvs.add(2, tv_option_three)
+//        optiontvs.add(3, tv_option_four)
 
-        for (optiontv in optiontvs) {
+        mOptionTextViews.clear()
+        mOptionTextViews.add(0, tv_option_one)
+        mOptionTextViews.add(1, tv_option_two)
+        mOptionTextViews.add(2, tv_option_three)
+        mOptionTextViews.add(3, tv_option_four)
+
+        for (optiontv in mOptionTextViews) {
             optiontv.setTextColor(Color.parseColor("#808080"))
             optiontv.typeface = Typeface.DEFAULT
             optiontv.background = ContextCompat.getDrawable(this, R.drawable.tv_border)
@@ -177,6 +192,16 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                     setAnswerColor(question.correctPosition, R.drawable.tv_border_correct)
                     setAnswerText(question.correctPosition, true)
                     enableOptions(false)
+
+                    for ((index, optionText) in mOptionTextViews.withIndex()) {
+                        Log.i(
+                            "PANJUTA",
+                            "index: $index"
+                        )
+                        if (index != (question.correctPosition - 1)) {
+                            mOptionTextViews[index].setBackgroundColor(ContextCompat.getColor(this,android.R.color.darker_gray))
+                        }
+                    }
 
                     if (mCurrentQuestionNumber == mQuestionList.size) {
                         btn_submit.setVisibility(View.GONE)
@@ -258,10 +283,14 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun enableOptions(clickable: Boolean) {
-        tv_option_one.setClickable(clickable)
-        tv_option_two.setClickable(clickable)
-        tv_option_three.setClickable(clickable)
-        tv_option_four.setClickable(clickable)
+//        tv_option_one.setClickable(clickable)
+//        tv_option_two.setClickable(clickable)
+//        tv_option_three.setClickable(clickable)
+//        tv_option_four.setClickable(clickable)
+
+        for (optiontv in mOptionTextViews) {
+            optiontv.setClickable(clickable)
+        }
     }
 
     // load only flag pngs from drawables
