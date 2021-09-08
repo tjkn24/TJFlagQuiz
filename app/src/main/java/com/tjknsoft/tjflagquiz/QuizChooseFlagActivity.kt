@@ -15,6 +15,14 @@ import java.text.DecimalFormat
 import android.graphics.ColorMatrixColorFilter
 
 import android.graphics.ColorMatrix
+import android.view.animation.Animation
+
+import android.view.animation.LinearInterpolator
+
+import android.view.animation.AlphaAnimation
+
+
+
 
 
 class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
@@ -30,6 +38,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
     private var mAnswerSize: Int = 4
     private var mMapCountryToFlag = mutableMapOf<String, Int>()
     private var mOptionImageViews: ArrayList<ImageView> = arrayListOf()
+    private lateinit var mSound: SoundPoolPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +60,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
         mScorePercentage = 0.0F
         score_progress_bar2.progress = mScoreAbsolute
         tv_title2.text = "What is the flag of this country?"
+        mSound = SoundPoolPlayer(this)
 
         setQuestion()
 
@@ -109,7 +119,8 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
         setDefaultOptionsView()
         mSelectedOptionPosition = optionNumber
         iv.setPadding(16)
-        iv.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_orange_light))
+//        iv.setBackgroundColor(ContextCompat.getColor(this, android.R.color.holo_orange_light))
+        setAnswerColor(optionNumber, R.drawable.tv_border_selected)
     }
 
     override fun onClick(v: View?) {
@@ -140,7 +151,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                 } else if (mSelectedOptionPosition == 0) {
                     Toast.makeText(this, "Please choose your answer", Toast.LENGTH_SHORT)
                         .show()
-                } else if (mSelectedOptionPosition == 99) { // corect & wrong answer have been shown
+                } else if (mSelectedOptionPosition == 99) { // corect & wrong answer have been shown (submit button has been pressed once)
                     mCurrentQuestionNumber++
                     if (mCurrentQuestionNumber <= mQuestionList.size) {
                         setQuestion()
@@ -149,15 +160,20 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                             .show()
                     }
                     mSelectedOptionPosition = 0
-                } else { // user has selected one of the options
+                } else { // user has selected one of the options but has not pressed the submit button yet
                     val question = mQuestionList[mCurrentQuestionNumber - 1]
                     if (mSelectedOptionPosition != question.correctPosition) {
-                        // setAnswerText(mSelectedOptionPosition, false)
+
                         setAnswerColor(
                             mSelectedOptionPosition,
-                            R.drawable.tv_border
+                            R.drawable.tv_border_wrong
                         ) // wrong answer color
+
+                        blinkImageView(question.correctPosition)
+                        mSound.playShortResource(R.raw.wrong)
+
                     } else {
+                        mSound.playShortResource(R.raw.correct)
                         mScoreAbsolute++
                         score_progress_bar2.progress = mScoreAbsolute
                     }
@@ -210,9 +226,12 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                     }
                 }
             }
-            R.id.btn_quit2 -> finish()
+            R.id.btn_quit2 -> {
+                mSound.release()
+                finish()}
             R.id.btn_restart2 -> {// onCreateHelper()
                 mQuestionList.clear()
+                mSound.release()
                 val intent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -220,9 +239,23 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun setAnswerColor(answer: Int, optionBackgroundResID: Int) {
+    private fun blinkImageView(position: Int) {
+        val animation: Animation = AlphaAnimation(1.0F, 0.0F) // to change visibility from visible (1.0) to invisible (0.0)
 
-        when (answer) {
+        animation.duration = 350 // miliseconds duration for each animation cycle
+
+        // animation.interpolator = LinearInterpolator()
+        animation.repeatCount = 1
+
+        animation.repeatMode = Animation.RESTART //animation will start from start point once ended
+
+        mOptionImageViews[position-1].startAnimation(animation) //to start animation
+
+    }
+
+    private fun setAnswerColor(answerPosition: Int, optionBackgroundResID: Int) {
+
+        when (answerPosition) {
             1 -> {
                 iv_option_1.background = ContextCompat.getDrawable(this, optionBackgroundResID)
                 // iv_option_1.setPadding(16)

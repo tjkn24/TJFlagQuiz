@@ -13,6 +13,8 @@ import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_quiz_choosename.*
 import java.text.DecimalFormat
 import android.util.TypedValue
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 
@@ -30,6 +32,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
     private var mAnswerSize: Int = 4
     private var mMapFlagToCountry = mutableMapOf<Int, String>()
     private var mOptionTextViews: ArrayList<TextView> = arrayListOf()
+    private lateinit var mSound: SoundPoolPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         mScorePercentage = 0.0F
         score_progress_bar.progress = mScoreAbsolute
         tv_title.text = "What country's flag is this?"
+        mSound = SoundPoolPlayer(this)
 
         setQuestion()
 
@@ -155,21 +159,24 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                 } else if (mSelectedOptionPosition == 0) {
                     Toast.makeText(this, "Please choose your answer", Toast.LENGTH_SHORT)
                         .show()
-                } else if (mSelectedOptionPosition == 99) { // corect & wrong answer have been shown
+                } else if (mSelectedOptionPosition == 99) { // corect & wrong answer have been shown (submit button has been pressed once)
                     mCurrentQuestionNumber++
                     if (mCurrentQuestionNumber <= mQuestionList.size) {
                         setQuestion()
-                    } else { // user has selected one of the options
+                    } else {
                         Toast.makeText(this, "You have finished this quiz", Toast.LENGTH_SHORT)
                             .show()
                     }
                     mSelectedOptionPosition = 0
-                } else {
+                } else { // user has selected one of the options but has not pressed the submit button yet
                     val question = mQuestionList[mCurrentQuestionNumber - 1]
-                    if (mSelectedOptionPosition != question.correctPosition) {
+                    if (mSelectedOptionPosition != question.correctPosition) { //wrong naswer
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
+                        blinkTextView(question.correctPosition)
+                        mSound.playShortResource(R.raw.wrong)
                     } else {
+                        mSound.playShortResource(R.raw.correct)
                         mScoreAbsolute++
                         score_progress_bar.progress = mScoreAbsolute
                     }
@@ -216,15 +223,32 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
             }
-            R.id.btn_quit -> finish()
+            R.id.btn_quit -> {
+                mSound.release()
+                finish()
+            }
             R.id.btn_restart -> {// onCreateHelper()
                 mQuestionList.clear()
+                mSound.release()
                 val intent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(intent)
                 finish()
             }
         }
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
+    }
+
+    private fun blinkTextView(position: Int) {
+        val animation: Animation = AlphaAnimation(1.0F, 0.25F) // to change visibility from visible (1.0) to invisible (0.0)
+
+        animation.duration = 350 // miliseconds duration for each animation cycle
+
+        // animation.interpolator = LinearInterpolator()
+        animation.repeatCount = 1
+
+        animation.repeatMode = Animation.RESTART //animation will start from start point once ended
+
+        mOptionTextViews[position-1].startAnimation(animation) //to start animation
     }
 
     private fun setAnswerText(answer: Int, isCorrect: Boolean) {
