@@ -77,7 +77,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         setDefaultOptionsView()
         enableOptions(true)
         for (tv in mOptionTextViews) {
-            tv.setBackgroundColor(ContextCompat.getColor(this,android.R.color.white))
+            tv.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white))
         }
 
         // mQuestionList is not hardcoded anymore
@@ -173,7 +173,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                     if (mSelectedOptionPosition != question.correctPosition) { //wrong naswer
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
-                        blinkTextView(question.correctPosition)
+                        blinkTextViewAnswer(question.correctPosition)
                         mSound.playShortResource(R.raw.wrong)
                     } else {
                         mSound.playShortResource(R.raw.correct)
@@ -206,7 +206,12 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                             "index: $index"
                         )
                         if (index != (question.correctPosition - 1)) {
-                            mOptionTextViews[index].setBackgroundColor(ContextCompat.getColor(this,android.R.color.darker_gray))
+                            mOptionTextViews[index].setBackgroundColor(
+                                ContextCompat.getColor(
+                                    this,
+                                    android.R.color.darker_gray
+                                )
+                            )
                         }
                     }
 
@@ -238,8 +243,11 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
     }
 
-    private fun blinkTextView(position: Int) {
-        val animation: Animation = AlphaAnimation(1.0F, 0.25F) // to change visibility from visible (1.0) to invisible (0.0)
+    private fun blinkTextViewAnswer(position: Int = 0) {
+        val animation: Animation = AlphaAnimation(
+            1.0F,
+            0.25F
+        ) // to change visibility from visible (1.0) to invisible (0.0)
 
         animation.duration = 350 // miliseconds duration for each animation cycle
 
@@ -248,7 +256,8 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 
-        mOptionTextViews[position-1].startAnimation(animation) //to start animation
+        if (position > 0) mOptionTextViews[position - 1].startAnimation(animation) //to start animation
+
     }
 
     private fun setAnswerText(answer: Int, isCorrect: Boolean) {
@@ -360,8 +369,8 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         // display selected flags filename (with its directory) in logcat
         val value = TypedValue()
-        for ((i, f) in selectedFlags.withIndex()) {
-            resources.getValue(f, value, true)
+        for ((index, flag) in selectedFlags.withIndex()) {
+            resources.getValue(flag, value, true)
             // Log.i("PANJUTA", "#$i: $f, filename: ${value.string}")
         }
         return selectedFlags

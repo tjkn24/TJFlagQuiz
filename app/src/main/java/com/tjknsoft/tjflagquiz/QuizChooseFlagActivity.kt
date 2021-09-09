@@ -20,9 +20,7 @@ import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 
 import android.view.animation.AlphaAnimation
-
-
-
+import android.widget.TextView
 
 
 class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
@@ -170,18 +168,30 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                         ) // wrong answer color
 
                         blinkImageView(question.correctPosition)
+                        Log.i(
+                            "PANJUTA",
+                            "playing R.raw.wrong"
+                        )
                         mSound.playShortResource(R.raw.wrong)
 
                     } else {
-                        mSound.playShortResource(R.raw.correct)
                         mScoreAbsolute++
                         score_progress_bar2.progress = mScoreAbsolute
+                        if (mScoreAbsolute == 10) {
+                            mSound.playShortResource(R.raw.perfect)
+                            Log.i(
+                                "PANJUTA",
+                                "mScoreAbsolute: $mScoreAbsolute"
+                            )
+                            blinkTextViewTitle(tv_title2)
+
+                        } else {
+                            mSound.playShortResource(R.raw.correct)
+                        }
                     }
 
                     mScorePercentage =
                         (mScoreAbsolute.toFloat() / mCurrentQuestionNumber.toFloat()) * 100
-
-                    tv_title2.text = "Your Score: "
 
                     val myDecimalFormat = DecimalFormat("#.##")
                     tv_title2.text = "Your Score: ${myDecimalFormat.format(mScorePercentage)}%"
@@ -219,6 +229,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                         ll_restartOrQuit2.visibility = View.VISIBLE
                         // btn_submit.text = "FINISH"    `
                         // mSelectedOptionPosition = 999 // quit the app
+
                     } else {
                         btn_submit2.text = "NEXT QUESTION"
                         mSelectedOptionPosition = 99 // user have submitted his decision
@@ -228,7 +239,8 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_quit2 -> {
                 mSound.release()
-                finish()}
+                finish()
+            }
             R.id.btn_restart2 -> {// onCreateHelper()
                 mQuestionList.clear()
                 mSound.release()
@@ -240,7 +252,10 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun blinkImageView(position: Int) {
-        val animation: Animation = AlphaAnimation(1.0F, 0.0F) // to change visibility from visible (1.0) to invisible (0.0)
+        val animation: Animation = AlphaAnimation(
+            1.0F,
+            0.25F
+        ) // to change visibility from visible (1.0) to invisible (0.0)
 
         animation.duration = 350 // miliseconds duration for each animation cycle
 
@@ -249,7 +264,24 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 
-        mOptionImageViews[position-1].startAnimation(animation) //to start animation
+        mOptionImageViews[position - 1].startAnimation(animation) //to start animation
+
+    }
+
+    private fun blinkTextViewTitle(tv: TextView?) {
+        val animation: Animation = AlphaAnimation(
+            1.0F,
+            0.0F
+        ) // to change visibility from visible (1.0) to invisible (0.0)
+
+        animation.duration = 350 // miliseconds duration for each animation cycle
+
+        // animation.interpolator = LinearInterpolator()
+        animation.repeatCount = 2
+
+        animation.repeatMode = Animation.RESTART //animation will start from start point once ended
+
+        if (tv != null) tv.startAnimation(animation)
 
     }
 
