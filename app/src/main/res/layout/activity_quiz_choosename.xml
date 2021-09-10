@@ -32,7 +32,7 @@
             android:layout_width="225dp"
             android:layout_height="150dp"
             android:layout_margin="16dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
             android:src="@drawable/flag_saint_vicent_and_the_grenadines"></ImageView>
 
         <RelativeLayout

@@ -109,7 +109,8 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
         for (optionimg in mOptionImageViews) {
             optionimg.setPadding(0)
-            optionimg.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+            // optionimg.setBackgroundColor(ContextCompat.getColor(this, android.R.color.darker_gray))
+            optionimg.setBackgroundColor(getResources().getColor(android.R.color.transparent))
         }
     }
 
@@ -124,10 +125,6 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.iv_option_1 -> {
-                Log.i(
-                    "PANJUTA",
-                    "R.id.iv_option_1 clicked"
-                )
                 optionImageViewSelected(iv_option_1, 1)
             }
             R.id.iv_option_2 -> {

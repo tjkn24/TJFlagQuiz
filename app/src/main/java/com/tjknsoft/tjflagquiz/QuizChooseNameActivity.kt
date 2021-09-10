@@ -95,7 +95,6 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
             "mCurrentQuestionNumber: $mCurrentQuestionNumber, currentQuestion: $currentQuestion"
         )
 
-
         question_progress_bar.progress = mCurrentQuestionNumber
         tv_question_progress.text =
             mCurrentQuestionNumber.toString() + " of ${mQuestionList.size}"
@@ -249,13 +248,13 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         Log.i("PANJUTA", "entering blinkTextView")
         val animation: Animation = AlphaAnimation(
             1.0F,
-            0.25F
+            0.0F
         ) // to change visibility from visible (1.0) to invisible (0.0)
 
         animation.duration = 350 // miliseconds duration for each animation cycle
 
         // animation.interpolator = LinearInterpolator()
-        animation.repeatCount = 1
+        animation.repeatCount = 2
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 

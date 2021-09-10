@@ -136,10 +136,9 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="8dp"
-                android:background="@color/colorPrimary"
                 android:clickable="true"
                 android:cropToPadding="false"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/flag_macedonia" />
 
             <ImageView
@@ -150,10 +149,9 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="24dp"
                 android:layout_toRightOf="@id/iv_option_1"
-                android:background="@color/colorPrimary"
                 android:clickable="true"
                 android:cropToPadding="false"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/flag_united_states_of_america" />
 
             <ImageView
@@ -164,10 +162,9 @@
                 android:layout_alignStart="@id/iv_option_1"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorPrimary"
                 android:clickable="true"
                 android:cropToPadding="false"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/flag_comoros" />
 
             <ImageView
@@ -179,9 +176,8 @@
                 android:layout_alignTop="@id/iv_option_3"
                 android:layout_marginBottom="16dp"
                 android:layout_toEndOf="@id/iv_option_3"
-                android:background="@color/colorPrimary"
                 android:clickable="true"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@drawable/flag_zambia" />
 
         </RelativeLayout>

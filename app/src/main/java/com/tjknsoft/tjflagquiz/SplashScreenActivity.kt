@@ -20,13 +20,13 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         btn_start.setOnClickListener {
-            if (et_name.text.toString().isEmpty()) {
-                Toast.makeText(this, "Please Enter Your Name", Toast.LENGTH_LONG).show()
-            } else {
+//            if (et_name.text.toString().isEmpty()) {
+//                Toast.makeText(this, "Please Enter Your Name", Toast.LENGTH_LONG).show()
+//            } else {
                 val intent = Intent(this, QuizChooseNameActivity::class.java)
                 startActivity(intent)
                 finish()
-            }
+//            }
         }
         btn_start2.setOnClickListener {
             val intent = Intent(this, QuizChooseFlagActivity::class.java)
