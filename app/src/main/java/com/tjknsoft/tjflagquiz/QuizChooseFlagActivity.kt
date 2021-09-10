@@ -168,21 +168,13 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
                         ) // wrong answer color
 
                         blinkImageView(question.correctPosition)
-                        Log.i(
-                            "PANJUTA",
-                            "playing R.raw.wrong"
-                        )
                         mSound.playShortResource(R.raw.wrong)
 
                     } else {
                         mScoreAbsolute++
                         score_progress_bar2.progress = mScoreAbsolute
-                        if (mScoreAbsolute == 10) {
+                        if (mScoreAbsolute == mQuestionSize) {
                             mSound.playShortResource(R.raw.perfect)
-                            Log.i(
-                                "PANJUTA",
-                                "mScoreAbsolute: $mScoreAbsolute"
-                            )
                             blinkTextViewTitle(tv_title2)
 
                         } else {

@@ -15,7 +15,6 @@ import java.text.DecimalFormat
 import android.util.TypedValue
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 
 
@@ -173,18 +172,21 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
                     if (mSelectedOptionPosition != question.correctPosition) { //wrong naswer
                         setAnswerText(mSelectedOptionPosition, false)
                         setAnswerColor(mSelectedOptionPosition, R.drawable.tv_border_wrong)
-                        blinkTextViewAnswer(question.correctPosition)
+                        blinkTextView(question.correctPosition, null)
                         mSound.playShortResource(R.raw.wrong)
                     } else {
-                        mSound.playShortResource(R.raw.correct)
                         mScoreAbsolute++
                         score_progress_bar.progress = mScoreAbsolute
+                        if (mScoreAbsolute == mQuestionSize) {
+                            mSound.playShortResource(R.raw.perfect)
+                            blinkTextView(tv_title = tv_title)
+                        } else {
+                            mSound.playShortResource(R.raw.correct)
+                        }
                     }
 
                     mScorePercentage =
                         (mScoreAbsolute.toFloat() / mCurrentQuestionNumber.toFloat()) * 100
-
-                    tv_title.text = "Your Score: "
 
                     val myDecimalFormat = DecimalFormat("#.##")
                     tv_title.text = "Your Score: ${myDecimalFormat.format(mScorePercentage)}%"
@@ -243,7 +245,8 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         Log.i("PANJUTA", "mSelectedOptionPosition: $mSelectedOptionPosition")
     }
 
-    private fun blinkTextViewAnswer(position: Int = 0) {
+    private fun blinkTextView(position: Int = 0, tv_title: TextView?) {
+        Log.i("PANJUTA", "entering blinkTextView")
         val animation: Animation = AlphaAnimation(
             1.0F,
             0.25F
@@ -256,7 +259,12 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 
-        if (position > 0) mOptionTextViews[position - 1].startAnimation(animation) //to start animation
+        Log.i("PANJUTA", "inside blinkTextView, position: $position, tv_title: $tv_title")
+        if (position == 0) {
+            tv_title?.startAnimation(animation)
+        } else {
+            mOptionTextViews[position - 1].startAnimation(animation)
+        } //to start animation
 
     }
 
