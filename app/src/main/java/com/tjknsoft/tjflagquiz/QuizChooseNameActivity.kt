@@ -254,14 +254,15 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         animation.duration = 350 // miliseconds duration for each animation cycle
 
         // animation.interpolator = LinearInterpolator()
-        animation.repeatCount = 2
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 
         Log.i("PANJUTA", "inside blinkTextView, position: $position, tv_title: $tv_title")
-        if (position == 0) {
+        if (position == 0) { // animate Title textview
+            animation.repeatCount = 2
             tv_title?.startAnimation(animation)
-        } else {
+        } else { // animate the wrong selected answer textview
+            animation.repeatCount = 1
             mOptionTextViews[position - 1].startAnimation(animation)
         } //to start animation
 
