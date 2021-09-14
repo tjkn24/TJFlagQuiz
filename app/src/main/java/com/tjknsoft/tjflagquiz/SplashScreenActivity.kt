@@ -33,6 +33,11 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        btn_start3.setOnClickListener {
+            val intent = Intent(this, QuizTimeAttackActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         loadDrawables()
     }
 
