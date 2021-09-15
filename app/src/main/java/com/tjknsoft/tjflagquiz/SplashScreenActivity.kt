@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
@@ -34,7 +33,7 @@ class SplashScreenActivity : AppCompatActivity() {
             finish()
         }
         btn_start3.setOnClickListener {
-            val intent = Intent(this, QuizTimeAttackActivity::class.java)
+            val intent = Intent(this, QuizFlagMastermindActivity::class.java)
             startActivity(intent)
             finish()
         }
