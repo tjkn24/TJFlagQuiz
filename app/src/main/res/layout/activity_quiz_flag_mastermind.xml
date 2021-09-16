@@ -11,11 +11,54 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_title_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:padding="4dp"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="00:00:00" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:padding="4dp"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Moves: " />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            >
+
 
             <ImageView
                 android:id="@+id/iv_tile_01"
@@ -56,16 +99,28 @@
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:layout_marginEnd="416dp"
+                android:layout_marginEnd="0dp"
                 android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flag_united_kingdom"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_03"
                 app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
 
-
             <ImageView
                 android:id="@+id/iv_tile_05"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:layout_marginEnd="416dp"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_pakistan"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_04"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
+
+
+            <ImageView
+                android:id="@+id/iv_tile_06"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
                 android:layout_marginTop="@dimen/flag_horizontal_gap"
@@ -76,26 +131,15 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_tile_01" />
 
             <ImageView
-                android:id="@+id/iv_tile_06"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_tunisia"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_05"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_05" />
-
-            <ImageView
                 android:id="@+id/iv_tile_07"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_oman"
+                android:src="@drawable/flag_tunisia"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_06"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_05" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
 
             <ImageView
                 android:id="@+id/iv_tile_08"
@@ -104,20 +148,20 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_bhutan"
+                android:src="@drawable/flag_oman"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_07"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_05" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
 
             <ImageView
                 android:id="@+id/iv_tile_09"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_sao_tome_and_principe"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_05" />
+                android:src="@drawable/flag_bhutan"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_08"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
 
             <ImageView
                 android:id="@+id/iv_tile_10"
@@ -126,21 +170,20 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_mongolia"
+                android:src="@drawable/flag_cambodia"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_09"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_09" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
 
             <ImageView
                 android:id="@+id/iv_tile_11"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_sierra_leone"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_10"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_09" />
-
+                android:src="@drawable/flag_sao_tome_and_principe"
+                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_06" />
 
             <ImageView
                 android:id="@+id/iv_tile_12"
@@ -149,21 +192,21 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_wallis_and_futuna"
+                android:src="@drawable/flag_mongolia"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_11"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_09" />
-
+                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
 
             <ImageView
                 android:id="@+id/iv_tile_13"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_poland"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_09" />
+                android:src="@drawable/flag_sierra_leone"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_12"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
+
 
             <ImageView
                 android:id="@+id/iv_tile_14"
@@ -172,9 +215,9 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_trinidad_and_tobago"
+                android:src="@drawable/flag_wallis_and_futuna"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_13"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_13" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
 
             <ImageView
                 android:id="@+id/iv_tile_15"
@@ -183,32 +226,32 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_djibouti"
+                android:src="@drawable/flag_uruguay"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_14"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_13" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
 
 
             <ImageView
                 android:id="@+id/iv_tile_16"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_mauritius"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_15"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_13" />
+                android:src="@drawable/flag_poland"
+                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_11" />
 
             <ImageView
                 android:id="@+id/iv_tile_17"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_south_africa"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_13" />
+                android:src="@drawable/flag_trinidad_and_tobago"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_16"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
 
             <ImageView
                 android:id="@+id/iv_tile_18"
@@ -217,9 +260,10 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_libya"
+                android:src="@drawable/flag_djibouti"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_17"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_17" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
+
 
             <ImageView
                 android:id="@+id/iv_tile_19"
@@ -228,10 +272,9 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_gabon"
+                android:src="@drawable/flag_mauritius"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_18"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_17" />
-
+                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
 
             <ImageView
                 android:id="@+id/iv_tile_20"
@@ -240,9 +283,9 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_united_states_of_america"
+                android:src="@drawable/flag_hungary"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_19"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_17" />
+                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
 
             <ImageView
                 android:id="@+id/iv_tile_21"
@@ -251,9 +294,9 @@
                 android:layout_marginTop="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_rwanda"
+                android:src="@drawable/flag_south_africa"
                 app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_17" />
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_16" />
 
             <ImageView
                 android:id="@+id/iv_tile_22"
@@ -262,7 +305,7 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_saint_vincent_and_the_grenadines"
+                android:src="@drawable/flag_libya"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_21"
                 app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
 
@@ -273,7 +316,7 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_vatican_city"
+                android:src="@drawable/flag_gabon"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_22"
                 app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
 
@@ -285,7 +328,7 @@
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_zimbabwe"
+                android:src="@drawable/flag_united_states_of_america"
                 app:layout_constraintStart_toEndOf="@id/iv_tile_23"
                 app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
 
@@ -293,114 +336,42 @@
                 android:id="@+id/iv_tile_25"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_uganda"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_21" />
-
-            <ImageView
-                android:id="@+id/iv_tile_26"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
                 android:layout_marginStart="@dimen/flag_horizontal_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
-                android:src="@drawable/flag_equatorial_guinea"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_25"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_25" />
+                android:src="@drawable/flag_anguilla"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_24"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
 
-            <ImageView
-                android:id="@+id/iv_tile_27"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_saint_kitts_and_nevis"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_26"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_25" />
-
-
-            <ImageView
-                android:id="@+id/iv_tile_28"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_botswana"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_27"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_25" />
-
-            <ImageView
-                android:id="@+id/iv_tile_29"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_qatar"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_25" />
-
-            <ImageView
-                android:id="@+id/iv_tile_30"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_saint_vincent_and_the_grenadines"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_29"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_29" />
-
-            <ImageView
-                android:id="@+id/iv_tile_31"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_hong_kong"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_30"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_29" />
-
-            <ImageView
-                android:id="@+id/iv_tile_32"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_laos"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_31"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_29" />
 
             <TextView
                 android:id="@+id/tv_name_01"
                 android:layout_width="@dimen/name_width"
                 android:layout_height="@dimen/name_height"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:background="@color/white"
-                app:layout_constraintLeft_toLeftOf="@id/iv_tile_29"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_29"
+                android:gravity="center"
                 android:text="Democratic Republic of the_Congo"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                app:layout_constraintEnd_toStartOf="@+id/tv_name_02"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_21" />
 
             <TextView
                 android:id="@+id/tv_name_02"
                 android:layout_width="@dimen/name_width"
                 android:layout_height="@dimen/name_height"
-                app:layout_constraintTop_toTopOf="@id/tv_name_01"
-                app:layout_constraintStart_toEndOf="@id/tv_name_01"
                 android:layout_marginStart="@dimen/name_horizontal_gap"
                 android:background="@color/white"
+                android:gravity="center"
                 android:text="Saint Vincent and the Grenadines"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_name_01"
+                app:layout_constraintTop_toTopOf="@id/tv_name_01" />
 
             <TextView
                 android:id="@+id/tv_name_03"
@@ -408,27 +379,23 @@
                 android:layout_height="@dimen/name_height"
                 android:layout_marginTop="@dimen/name_vertical_gap"
                 android:background="@color/white"
-                app:layout_constraintLeft_toLeftOf="@id/tv_name_01"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_01"
+                android:gravity="center"
                 android:text="Sao Tome and Príncipe"
                 android:textStyle="bold"
-                android:gravity="center"/>
+                app:layout_constraintLeft_toLeftOf="@id/tv_name_01"
+                app:layout_constraintTop_toBottomOf="@id/tv_name_01" />
 
             <TextView
                 android:id="@+id/tv_name_04"
                 android:layout_width="@dimen/name_width"
                 android:layout_height="@dimen/name_height"
-                app:layout_constraintTop_toTopOf="@id/tv_name_03"
-                app:layout_constraintStart_toEndOf="@id/tv_name_03"
                 android:layout_marginStart="@dimen/name_horizontal_gap"
                 android:background="@color/white"
+                android:gravity="center"
                 android:text="United States of America"
                 android:textStyle="bold"
-                android:gravity="center"/>
-
-
-
-
+                app:layout_constraintStart_toEndOf="@id/tv_name_03"
+                app:layout_constraintTop_toTopOf="@id/tv_name_03" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
