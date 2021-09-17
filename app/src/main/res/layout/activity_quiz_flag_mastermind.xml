@@ -15,7 +15,46 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/ll_title_block"
+            android:id="@+id/ll_best_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:padding="4dp"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="00:00:00" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:elevation="4dp"
+                android:padding="4dp"
+                android:layout_margin="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Moves: " />
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_current_block"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -56,7 +95,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
             >
 
 
@@ -123,7 +163,7 @@
                 android:id="@+id/iv_tile_06"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flag_ethiopia"
@@ -178,7 +218,7 @@
                 android:id="@+id/iv_tile_11"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flag_sao_tome_and_principe"
@@ -235,7 +275,7 @@
                 android:id="@+id/iv_tile_16"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flag_poland"
@@ -291,7 +331,7 @@
                 android:id="@+id/iv_tile_21"
                 android:layout_width="@dimen/flag_width"
                 android:layout_height="@dimen/flag_height"
-                android:layout_marginTop="@dimen/flag_horizontal_gap"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
                 android:clickable="true"
                 android:scaleType="fitCenter"
                 android:src="@drawable/flag_south_africa"
@@ -343,62 +383,213 @@
                 app:layout_constraintStart_toEndOf="@id/iv_tile_24"
                 app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
 
-
-            <TextView
-                android:id="@+id/tv_name_01"
-                android:layout_width="@dimen/name_width"
-                android:layout_height="@dimen/name_height"
-                android:layout_marginTop="40dp"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="Democratic Republic of the_Congo"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/tv_name_02"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
+            <ImageView
+                android:id="@+id/iv_tile_26"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_madagascar"
+                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
                 app:layout_constraintTop_toBottomOf="@id/iv_tile_21" />
 
-            <TextView
-                android:id="@+id/tv_name_02"
-                android:layout_width="@dimen/name_width"
-                android:layout_height="@dimen/name_height"
-                android:layout_marginStart="@dimen/name_horizontal_gap"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="Saint Vincent and the Grenadines"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/tv_name_01"
-                app:layout_constraintTop_toTopOf="@id/tv_name_01" />
+            <ImageView
+                android:id="@+id/iv_tile_27"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_puerto_rico"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_26"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
 
-            <TextView
-                android:id="@+id/tv_name_03"
-                android:layout_width="@dimen/name_width"
-                android:layout_height="@dimen/name_height"
-                android:layout_marginTop="@dimen/name_vertical_gap"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="Sao Tome and Príncipe"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/tv_name_01"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_01" />
+            <ImageView
+                android:id="@+id/iv_tile_28"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_united_arab_emirates"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_27"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
 
-            <TextView
-                android:id="@+id/tv_name_04"
-                android:layout_width="@dimen/name_width"
-                android:layout_height="@dimen/name_height"
-                android:layout_marginStart="@dimen/name_horizontal_gap"
-                android:background="@color/white"
-                android:gravity="center"
-                android:text="United States of America"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_name_03"
-                app:layout_constraintTop_toTopOf="@id/tv_name_03" />
+
+            <ImageView
+                android:id="@+id/iv_tile_29"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_kiribati"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_28"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+
+            <ImageView
+                android:id="@+id/iv_tile_30"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_central_african_republic"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_29"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+
+            <ImageView
+                android:id="@+id/iv_tile_31"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_belgium"
+                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_26" />
+
+            <ImageView
+                android:id="@+id/iv_tile_32"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_new_zealand"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_31"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+
+            <ImageView
+                android:id="@+id/iv_tile_33"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_india"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_32"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+
+
+            <ImageView
+                android:id="@+id/iv_tile_34"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_japan"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_33"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+
+            <ImageView
+                android:id="@+id/iv_tile_35"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_nauru"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_34"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+
+            <ImageView
+                android:id="@+id/iv_tile_36"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_canada"
+                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/iv_tile_31" />
+
+            <ImageView
+                android:id="@+id/iv_tile_37"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_qatar"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_36"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+
+            <ImageView
+                android:id="@+id/iv_tile_38"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_grenada"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_37"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+
+
+            <ImageView
+                android:id="@+id/iv_tile_39"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_republic_of_the_congo"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_38"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+
+            <ImageView
+                android:id="@+id/iv_tile_40"
+                android:layout_width="@dimen/flag_width"
+                android:layout_height="@dimen/flag_height"
+                android:layout_marginStart="@dimen/flag_horizontal_gap"
+                android:clickable="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/flag_fiji"
+                app:layout_constraintStart_toEndOf="@id/iv_tile_39"
+                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_restartOrQuit2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/btn_restart3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="RESTART"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/btn_quit3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="12dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="QUIT"
+                android:textColor="@color/design_default_color_background"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 

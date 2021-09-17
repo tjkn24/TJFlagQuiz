@@ -3,7 +3,7 @@
     <dimen name="flag_width">60dp</dimen>
     <dimen name="flag_height">48dp</dimen>
     <dimen name="flag_horizontal_gap">16dp</dimen>
-    <dimen name="flag_vertical_gap">16dp</dimen>
+    <dimen name="flag_vertical_gap">8dp</dimen>
 
     <dimen name="name_width">180dp</dimen>
     <dimen name="name_height">40dp</dimen>
