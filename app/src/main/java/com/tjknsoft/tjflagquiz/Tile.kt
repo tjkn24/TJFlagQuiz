@@ -5,6 +5,7 @@ data class Tile(
     val isFlagImage: Boolean,
     val isFaceUp: Boolean,
     val flagResId: Int,
+    val tileBackResID: Int,
     val countryCode: String,
     val countryName: String,
     )
