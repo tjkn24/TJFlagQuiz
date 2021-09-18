@@ -17,8 +17,6 @@ import android.graphics.ColorMatrixColorFilter
 import android.graphics.ColorMatrix
 import android.view.animation.Animation
 
-import android.view.animation.LinearInterpolator
-
 import android.view.animation.AlphaAnimation
 import android.widget.TextView
 
@@ -422,8 +420,8 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun mapCountryNameToFlagImage(mAllNames: ArrayList<String>) {
         for ((index, name) in mAllNames.withIndex()) {
-            mMapCountryToFlag.put(name, SplashScreenActivity.mAllFlags[index])
-            Log.i("PANJUTA", "country name: $name, ID: ${SplashScreenActivity.mAllFlags[index]}")
+            mMapCountryToFlag.put(name, SplashScreenActivity.mAllFlagsResID[index])
+            Log.i("PANJUTA", "country name: $name, ID: ${SplashScreenActivity.mAllFlagsResID[index]}")
         }
     }
 

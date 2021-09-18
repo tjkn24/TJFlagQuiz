@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".QuizFlagMastermindActivity"
+            android:name=".QuizFlagMemoryActivity"
             android:exported="true">
         </activity>
         <activity

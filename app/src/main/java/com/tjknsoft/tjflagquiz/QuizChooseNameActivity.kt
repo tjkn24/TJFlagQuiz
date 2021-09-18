@@ -15,7 +15,6 @@ import java.text.DecimalFormat
 import android.util.TypedValue
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 
 
 class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
@@ -46,7 +45,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
 
         mQuestionList.clear()
         mCurrentQuestionNumber = 1
-        mAllFlags = SplashScreenActivity.mAllFlags
+        mAllFlags = SplashScreenActivity.mAllFlagsResID
         // Log.i("PANJUTA", "mAllFlags.size: ${mAllFlags.size}")
         mSelectedFlags = selectRandomFlags(mAllFlags, mQuestionSize, null)
         mapFlagImageToCountryName(mAllFlags)
