@@ -3,6 +3,7 @@ package com.tjknsoft.tjflagquiz
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 
@@ -37,6 +38,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         btn_quit3.setOnClickListener(this)
         btn_restart3.setOnClickListener(this)
+
+        iv_tile_01.setOnClickListener(this)
+        tv_tile_01.setOnClickListener(this)
     }
 
     private fun selectRandomDataToFillTiles(
@@ -60,6 +64,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 val intent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(intent)
                 finish()
+            }
+            R.id.iv_tile_01 -> {
+                Log.i("PANJUTA", "imageview 01 clicked")
+            }
+            R.id.tv_tile_01 -> {
+                Log.i("PANJUTA", "textview 01 clicked")
             }
         }
 

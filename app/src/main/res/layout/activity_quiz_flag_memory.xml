@@ -18,16 +18,15 @@
             android:id="@+id/ll_best_block"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:elevation="4dp"
-                android:padding="4dp"
-                android:layout_margin="8dp">
+                android:padding="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -39,10 +38,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:elevation="4dp"
-                android:padding="4dp"
-                android:layout_margin="8dp">
+                android:padding="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,16 +56,15 @@
             android:id="@+id/ll_current_block"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:elevation="4dp"
-                android:padding="4dp"
-                android:layout_margin="8dp">
+                android:padding="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -78,10 +76,10 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="8dp"
                 android:layout_weight="1"
                 android:elevation="4dp"
-                android:padding="4dp"
-                android:layout_margin="8dp">
+                android:padding="4dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -96,461 +94,705 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
-            >
+            android:layout_marginBottom="25dp">
 
-
-            <ImageView
-                android:id="@+id/iv_tile_01"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_01"
+                style="@style/CardViewTileStyle"
                 android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_american_samoa"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/iv_tile_02"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_indonesia"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_01"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
+                <ImageView
+                    android:id="@+id/iv_tile_01"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_american_samoa" />
 
-            <ImageView
-                android:id="@+id/iv_tile_03"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_democratic_republic_of_the_congo"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_02"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
-
-            <ImageView
-                android:id="@+id/iv_tile_04"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:layout_marginEnd="0dp"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_united_kingdom"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_03"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
-
-            <ImageView
-                android:id="@+id/iv_tile_05"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:layout_marginEnd="416dp"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_pakistan"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_04"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_01" />
+                <TextView
+                    android:id="@+id/tv_tile_01"
+                    style="@style/TextViewTileStyle"
+                    android:text="ASM" />
+            </com.google.android.material.card.MaterialCardView>
 
 
-            <ImageView
-                android:id="@+id/iv_tile_06"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_02"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_01"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_01">
+
+                <ImageView
+                    android:id="@+id/iv_tile_02"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_indonesia" />
+
+                <TextView
+                    android:id="@+id/tv_tile_02"
+                    style="@style/TextViewTileStyle"
+                    android:text="IDN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_03"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_02"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_01">
+
+                <ImageView
+                    android:id="@+id/iv_tile_03"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_democratic_republic_of_the_congo" />
+
+                <TextView
+                    android:id="@+id/tv_tile_03"
+                    style="@style/TextViewTileStyle"
+                    android:text="COG" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_04"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_03"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_01">
+
+                <ImageView
+                    android:id="@+id/iv_tile_04"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_united_kingdom" />
+
+                <TextView
+                    android:id="@+id/tv_tile_04"
+                    style="@style/TextViewTileStyle"
+                    android:text="UKD" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_05"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_04"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_01">
+
+                <ImageView
+                    android:id="@+id/iv_tile_05"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_pakistan" />
+
+                <TextView
+                    android:id="@+id/tv_tile_05"
+                    style="@style/TextViewTileStyle"
+                    android:text="PKS" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_06"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_ethiopia"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_01" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_01">
 
-            <ImageView
-                android:id="@+id/iv_tile_07"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_tunisia"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_06"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
+                <ImageView
+                    android:id="@+id/iv_tile_06"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_ethiopia" />
 
-            <ImageView
-                android:id="@+id/iv_tile_08"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_oman"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_07"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
+                <TextView
+                    android:id="@+id/tv_tile_06"
+                    style="@style/TextViewTileStyle"
+                    android:text="ETP" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/iv_tile_09"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_bhutan"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_08"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_07"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_06"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_06">
 
-            <ImageView
-                android:id="@+id/iv_tile_10"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_cambodia"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_09"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_06" />
+                <ImageView
+                    android:id="@+id/iv_tile_07"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_tunisia" />
 
-            <ImageView
-                android:id="@+id/iv_tile_11"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+                <TextView
+                    android:id="@+id/tv_tile_07"
+                    style="@style/TextViewTileStyle"
+                    android:text="TNS" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_08"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_07"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_06">
+
+                <ImageView
+                    android:id="@+id/iv_tile_08"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_oman" />
+
+                <TextView
+                    android:id="@+id/tv_tile_08"
+                    style="@style/TextViewTileStyle"
+                    android:text="OMN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_09"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_08"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_06">
+
+                <ImageView
+                    android:id="@+id/iv_tile_09"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_bhutan" />
+
+                <TextView
+                    android:id="@+id/tv_tile_09"
+                    style="@style/TextViewTileStyle"
+                    android:text="BHT" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_10"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_09"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_06">
+
+                <ImageView
+                    android:id="@+id/iv_tile_10"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_cambodia" />
+
+                <TextView
+                    android:id="@+id/tv_tile_10"
+                    style="@style/TextViewTileStyle"
+                    android:text="CMB" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_11"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_sao_tome_and_principe"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_06" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_06">
 
-            <ImageView
-                android:id="@+id/iv_tile_12"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_mongolia"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_11"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
+                <ImageView
+                    android:id="@+id/iv_tile_11"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_sao_tome_and_principe" />
 
-            <ImageView
-                android:id="@+id/iv_tile_13"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_sierra_leone"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_12"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
+                <TextView
+                    android:id="@+id/tv_tile_11"
+                    style="@style/TextViewTileStyle"
+                    android:text="STP" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_12"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_11"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_11">
 
-            <ImageView
-                android:id="@+id/iv_tile_14"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_wallis_and_futuna"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_13"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
+                <ImageView
+                    android:id="@+id/iv_tile_12"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_mongolia" />
 
-            <ImageView
-                android:id="@+id/iv_tile_15"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_uruguay"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_14"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_11" />
+                <TextView
+                    android:id="@+id/tv_tile_12"
+                    style="@style/TextViewTileStyle"
+                    android:text="MGL" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_13"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_12"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_11">
 
-            <ImageView
-                android:id="@+id/iv_tile_16"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+                <ImageView
+                    android:id="@+id/iv_tile_13"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_sierra_leone" />
+
+                <TextView
+                    android:id="@+id/tv_tile_13"
+                    style="@style/TextViewTileStyle"
+                    android:text="SLN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_14"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_13"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_11">
+
+                <ImageView
+                    android:id="@+id/iv_tile_14"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_wallis_and_futuna" />
+
+                <TextView
+                    android:id="@+id/tv_tile_14"
+                    style="@style/TextViewTileStyle"
+                    android:text="WAF" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_15"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_14"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_11">
+
+                <ImageView
+                    android:id="@+id/iv_tile_15"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_uruguay" />
+
+                <TextView
+                    android:id="@+id/tv_tile_15"
+                    style="@style/TextViewTileStyle"
+                    android:text="URU" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_16"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_poland"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_11" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_11">
 
-            <ImageView
-                android:id="@+id/iv_tile_17"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_trinidad_and_tobago"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_16"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
+                <ImageView
+                    android:id="@+id/iv_tile_16"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_poland" />
 
-            <ImageView
-                android:id="@+id/iv_tile_18"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_djibouti"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_17"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
+                <TextView
+                    android:id="@+id/tv_tile_16"
+                    style="@style/TextViewTileStyle"
+                    android:text="PLD" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_17"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_16"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_16">
 
-            <ImageView
-                android:id="@+id/iv_tile_19"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_mauritius"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_18"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
+                <ImageView
+                    android:id="@+id/iv_tile_17"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_trinidad_and_tobago" />
 
-            <ImageView
-                android:id="@+id/iv_tile_20"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_hungary"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_19"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_16" />
+                <TextView
+                    android:id="@+id/tv_tile_17"
+                    style="@style/TextViewTileStyle"
+                    android:text="TAT" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/iv_tile_21"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_18"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_17"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_16">
+
+                <ImageView
+                    android:id="@+id/iv_tile_18"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_djibouti" />
+
+                <TextView
+                    android:id="@+id/tv_tile_18"
+                    style="@style/TextViewTileStyle"
+                    android:text="DJB" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_19"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_18"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_16">
+
+                <ImageView
+                    android:id="@+id/iv_tile_19"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_mauritius" />
+
+                <TextView
+                    android:id="@+id/tv_tile_19"
+                    style="@style/TextViewTileStyle"
+                    android:text="MRT" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_20"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_19"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_16">
+
+                <ImageView
+                    android:id="@+id/iv_tile_20"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_hungary" />
+
+                <TextView
+                    android:id="@+id/tv_tile_20"
+                    style="@style/TextViewTileStyle"
+                    android:text="HUN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_21"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_south_africa"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_16" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_16">
 
-            <ImageView
-                android:id="@+id/iv_tile_22"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_libya"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_21"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
+                <ImageView
+                    android:id="@+id/iv_tile_21"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_south_africa" />
 
-            <ImageView
-                android:id="@+id/iv_tile_23"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_gabon"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_22"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
+                <TextView
+                    android:id="@+id/tv_tile_21"
+                    style="@style/TextViewTileStyle"
+                    android:text="SAF" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_22"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_21"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_21">
 
-            <ImageView
-                android:id="@+id/iv_tile_24"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_united_states_of_america"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_23"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
+                <ImageView
+                    android:id="@+id/iv_tile_22"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_libya" />
 
-            <ImageView
-                android:id="@+id/iv_tile_25"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_anguilla"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_24"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_21" />
+                <TextView
+                    android:id="@+id/tv_tile_22"
+                    style="@style/TextViewTileStyle"
+                    android:text="LIB" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/iv_tile_26"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_23"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_22"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_21">
+
+                <ImageView
+                    android:id="@+id/iv_tile_23"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_gabon" />
+
+                <TextView
+                    android:id="@+id/tv_tile_23"
+                    style="@style/TextViewTileStyle"
+                    android:text="GBN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_24"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_23"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_21">
+
+                <ImageView
+                    android:id="@+id/iv_tile_24"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_united_states_of_america" />
+
+                <TextView
+                    android:id="@+id/tv_tile_24"
+                    style="@style/TextViewTileStyle"
+                    android:text="USA" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_25"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_24"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_21">
+
+                <ImageView
+                    android:id="@+id/iv_tile_25"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_anguilla" />
+
+                <TextView
+                    android:id="@+id/tv_tile_25"
+                    style="@style/TextViewTileStyle"
+                    android:text="ANL" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_26"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_madagascar"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_21" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_21">
 
-            <ImageView
-                android:id="@+id/iv_tile_27"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_puerto_rico"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_26"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+                <ImageView
+                    android:id="@+id/iv_tile_26"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_madagascar" />
 
-            <ImageView
-                android:id="@+id/iv_tile_28"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_united_arab_emirates"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_27"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+                <TextView
+                    android:id="@+id/tv_tile_26"
+                    style="@style/TextViewTileStyle"
+                    android:text="MDG" />
 
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/iv_tile_29"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_kiribati"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_28"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_27"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_26"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_26">
 
-            <ImageView
-                android:id="@+id/iv_tile_30"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_central_african_republic"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_29"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_26" />
+                <ImageView
+                    android:id="@+id/iv_tile_27"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_puerto_rico" />
 
-            <ImageView
-                android:id="@+id/iv_tile_31"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+                <TextView
+                    android:id="@+id/tv_tile_27"
+                    style="@style/TextViewTileStyle"
+                    android:text="PRO" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_28"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_27"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_26">
+
+                <ImageView
+                    android:id="@+id/iv_tile_28"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_united_arab_emirates" />
+
+                <TextView
+                    android:id="@+id/tv_tile_28"
+                    style="@style/TextViewTileStyle"
+                    android:text="UAE" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_29"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_28"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_26">
+
+                <ImageView
+                    android:id="@+id/iv_tile_29"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_kiribati" />
+
+                <TextView
+                    android:id="@+id/tv_tile_29"
+                    style="@style/TextViewTileStyle"
+                    android:text="KRB" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_30"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_29"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_26">
+
+                <ImageView
+                    android:id="@+id/iv_tile_30"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_central_african_republic" />
+
+                <TextView
+                    android:id="@+id/tv_tile_30"
+                    style="@style/TextViewTileStyle"
+                    android:text="CAR" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_31"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_belgium"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_26" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_26">
 
-            <ImageView
-                android:id="@+id/iv_tile_32"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_new_zealand"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_31"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+                <ImageView
+                    android:id="@+id/iv_tile_31"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_belgium" />
 
-            <ImageView
-                android:id="@+id/iv_tile_33"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_india"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_32"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+                <TextView
+                    android:id="@+id/tv_tile_31"
+                    style="@style/TextViewTileStyle"
+                    android:text="BLG" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_32"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_31"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_31">
 
-            <ImageView
-                android:id="@+id/iv_tile_34"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_japan"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_33"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+                <ImageView
+                    android:id="@+id/iv_tile_32"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_new_zealand" />
 
-            <ImageView
-                android:id="@+id/iv_tile_35"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_nauru"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_34"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_31" />
+                <TextView
+                    android:id="@+id/tv_tile_32"
+                    style="@style/TextViewTileStyle"
+                    android:text="NZL" />
+            </com.google.android.material.card.MaterialCardView>
 
-            <ImageView
-                android:id="@+id/iv_tile_36"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_33"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_32"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_31">
+
+                <ImageView
+                    android:id="@+id/iv_tile_33"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_india" />
+
+                <TextView
+                    android:id="@+id/tv_tile_33"
+                    style="@style/TextViewTileStyle"
+                    android:text="IND" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_34"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_33"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_31">
+
+                <ImageView
+                    android:id="@+id/iv_tile_34"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_japan" />
+
+                <TextView
+                    android:id="@+id/tv_tile_34"
+                    style="@style/TextViewTileStyle"
+                    android:text="JPN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_35"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_34"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_31">
+
+                <ImageView
+                    android:id="@+id/iv_tile_35"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_nauru" />
+
+                <TextView
+                    android:id="@+id/tv_tile_35"
+                    style="@style/TextViewTileStyle"
+                    android:text="NRU" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_36"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_canada"
-                app:layout_constraintStart_toStartOf="@id/iv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/iv_tile_31" />
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_31">
 
-            <ImageView
-                android:id="@+id/iv_tile_37"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_qatar"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_36"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+                <ImageView
+                    android:id="@+id/iv_tile_36"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_canada" />
 
-            <ImageView
-                android:id="@+id/iv_tile_38"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_grenada"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_37"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+                <TextView
+                    android:id="@+id/tv_tile_36"
+                    style="@style/TextViewTileStyle"
+                    android:text="CND" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_37"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_36"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_36">
 
-            <ImageView
-                android:id="@+id/iv_tile_39"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_republic_of_the_congo"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_38"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+                <ImageView
+                    android:id="@+id/iv_tile_37"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_qatar" />
 
-            <ImageView
-                android:id="@+id/iv_tile_40"
-                android:layout_width="@dimen/flag_width"
-                android:layout_height="@dimen/flag_height"
-                android:layout_marginStart="@dimen/flag_horizontal_gap"
-                android:clickable="true"
-                android:scaleType="fitCenter"
-                android:src="@drawable/flag_fiji"
-                app:layout_constraintStart_toEndOf="@id/iv_tile_39"
-                app:layout_constraintTop_toTopOf="@id/iv_tile_36" />
+                <TextView
+                    android:id="@+id/tv_tile_37"
+                    style="@style/TextViewTileStyle"
+                    android:text="QTR" />
+            </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_38"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_37"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_36">
+
+                <ImageView
+                    android:id="@+id/iv_tile_38"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_grenada" />
+
+                <TextView
+                    android:id="@+id/tv_tile_38"
+                    style="@style/TextViewTileStyle"
+                    android:text="GRN" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_39"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_38"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_36">
+
+                <ImageView
+                    android:id="@+id/iv_tile_39"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_republic_of_the_congo" />
+
+                <TextView
+                    android:id="@+id/tv_tile_39"
+                    style="@style/TextViewTileStyle"
+                    android:text="ROC" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_40"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_39"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_36">
+
+                <ImageView
+                    android:id="@+id/iv_tile_40"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_fiji" />
+
+                <TextView
+                    android:id="@+id/tv_tile_40"
+                    style="@style/TextViewTileStyle"
+                    android:text="FJI" />
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -558,8 +800,8 @@
             android:id="@+id/ll_restartOrQuit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/btn_restart3"
@@ -572,8 +814,7 @@
                 android:text="RESTART"
                 android:textColor="@color/design_default_color_background"
                 android:textSize="14sp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/btn_quit3"
