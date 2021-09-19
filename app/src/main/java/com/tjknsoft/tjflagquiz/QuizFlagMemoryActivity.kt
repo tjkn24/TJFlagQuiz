@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -24,7 +27,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedCountryNames: ArrayList<String> = arrayListOf()
     private var mSelectedFlagResIDandCountryCode: MutableList<Any> = arrayListOf()
     private var mShuffledSelectedFlagResIDandCountryCode: ArrayList<Any> = arrayListOf()
-
+    private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
+    private var mTileTextViews: ArrayList<TextView> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +63,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         mShuffledSelectedFlagResIDandCountryCode =
             fisherYatesShuffle(mSelectedFlagResIDandCountryCode) as ArrayList<Any>
+
         for ((index, tileContent) in mShuffledSelectedFlagResIDandCountryCode.withIndex()) {
             Log.i(
                 "PANJUTA",
@@ -80,14 +85,107 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
             Log.i(
                 "PANJUTA",
-                "Tile: ${mTileList[index]}")
+                "${mTileList[index]}")
         }
         Log.i(
             "PANJUTA",
             "mTileList size: ${mTileList.size}"
         )
 
+        mTileImageViews.add(0, iv_tile_01)
+        mTileImageViews.add(0, iv_tile_02)
+        mTileImageViews.add(0, iv_tile_03)
+        mTileImageViews.add(0, iv_tile_04)
+        mTileImageViews.add(0, iv_tile_05)
+        mTileImageViews.add(0, iv_tile_06)
+        mTileImageViews.add(0, iv_tile_07)
+        mTileImageViews.add(0, iv_tile_08)
+        mTileImageViews.add(0, iv_tile_09)
+        mTileImageViews.add(0, iv_tile_10)
+        mTileImageViews.add(0, iv_tile_11)
+        mTileImageViews.add(0, iv_tile_12)
+        mTileImageViews.add(0, iv_tile_13)
+        mTileImageViews.add(0, iv_tile_14)
+        mTileImageViews.add(0, iv_tile_15)
+        mTileImageViews.add(0, iv_tile_16)
+        mTileImageViews.add(0, iv_tile_17)
+        mTileImageViews.add(0, iv_tile_18)
+        mTileImageViews.add(0, iv_tile_19)
+        mTileImageViews.add(0, iv_tile_20)
+        mTileImageViews.add(0, iv_tile_21)
+        mTileImageViews.add(0, iv_tile_22)
+        mTileImageViews.add(0, iv_tile_23)
+        mTileImageViews.add(0, iv_tile_24)
+        mTileImageViews.add(0, iv_tile_25)
+        mTileImageViews.add(0, iv_tile_26)
+        mTileImageViews.add(0, iv_tile_27)
+        mTileImageViews.add(0, iv_tile_28)
+        mTileImageViews.add(0, iv_tile_29)
+        mTileImageViews.add(0, iv_tile_30)
+        mTileImageViews.add(0, iv_tile_31)
+        mTileImageViews.add(0, iv_tile_32)
+        mTileImageViews.add(0, iv_tile_33)
+        mTileImageViews.add(0, iv_tile_34)
+        mTileImageViews.add(0, iv_tile_35)
+        mTileImageViews.add(0, iv_tile_36)
+        mTileImageViews.add(0, iv_tile_37)
+        mTileImageViews.add(0, iv_tile_38)
+        mTileImageViews.add(0, iv_tile_39)
+        mTileImageViews.add(0, iv_tile_40)
 
+        mTileTextViews.add(0, tv_tile_01)
+        mTileTextViews.add(0, tv_tile_02)
+        mTileTextViews.add(0, tv_tile_03)
+        mTileTextViews.add(0, tv_tile_04)
+        mTileTextViews.add(0, tv_tile_05)
+        mTileTextViews.add(0, tv_tile_06)
+        mTileTextViews.add(0, tv_tile_07)
+        mTileTextViews.add(0, tv_tile_08)
+        mTileTextViews.add(0, tv_tile_09)
+        mTileTextViews.add(0, tv_tile_10)
+        mTileTextViews.add(0, tv_tile_11)
+        mTileTextViews.add(0, tv_tile_12)
+        mTileTextViews.add(0, tv_tile_13)
+        mTileTextViews.add(0, tv_tile_14)
+        mTileTextViews.add(0, tv_tile_15)
+        mTileTextViews.add(0, tv_tile_16)
+        mTileTextViews.add(0, tv_tile_17)
+        mTileTextViews.add(0, tv_tile_18)
+        mTileTextViews.add(0, tv_tile_19)
+        mTileTextViews.add(0, tv_tile_20)
+        mTileTextViews.add(0, tv_tile_21)
+        mTileTextViews.add(0, tv_tile_22)
+        mTileTextViews.add(0, tv_tile_23)
+        mTileTextViews.add(0, tv_tile_24)
+        mTileTextViews.add(0, tv_tile_25)
+        mTileTextViews.add(0, tv_tile_26)
+        mTileTextViews.add(0, tv_tile_27)
+        mTileTextViews.add(0, tv_tile_28)
+        mTileTextViews.add(0, tv_tile_29)
+        mTileTextViews.add(0, tv_tile_30)
+        mTileTextViews.add(0, tv_tile_31)
+        mTileTextViews.add(0, tv_tile_32)
+        mTileTextViews.add(0, tv_tile_33)
+        mTileTextViews.add(0, tv_tile_34)
+        mTileTextViews.add(0, tv_tile_35)
+        mTileTextViews.add(0, tv_tile_36)
+        mTileTextViews.add(0, tv_tile_37)
+        mTileTextViews.add(0, tv_tile_38)
+        mTileTextViews.add(0, tv_tile_39)
+        mTileTextViews.add(0, tv_tile_40)
+        
+        // draw tiles
+        for ((index, tile) in mTileList.withIndex()){
+            if (tile.countryCode == ""){ // tile displays flag image
+                mTileTextViews[index].setVisibility(View.GONE)
+                mTileImageViews[index].setVisibility(View.VISIBLE)
+                mTileImageViews[index].setImageResource(tile.flagResId)
+            } else {
+                mTileImageViews[index].setVisibility(View.GONE)
+                mTileTextViews[index].setVisibility(View.VISIBLE)
+                mTileTextViews[index].text = tile.countryCode
+            }
+        }
 
         btn_quit3.setOnClickListener(this)
         btn_restart3.setOnClickListener(this)

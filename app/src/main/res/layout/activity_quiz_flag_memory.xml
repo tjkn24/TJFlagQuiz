@@ -94,7 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp">
+            android:layout_marginBottom="25dp"
+            >
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_tile_01"
@@ -713,7 +714,8 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
                 app:layout_constraintStart_toStartOf="@id/cv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/cv_tile_31">
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_31"
+                >
 
                 <ImageView
                     android:id="@+id/iv_tile_36"
