@@ -15,7 +15,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mAllCountryCodes: ArrayList<String> = arrayListOf()
     private var mAllCountryNames: ArrayList<String> = arrayListOf()
     private val mNumberOfTiles: Int = 40
-        private var mMapFlagResIDtoCountryCode = mutableMapOf<Int, String>()
+    private var mMapFlagResIDtoCountryCode = mutableMapOf<Int, String>()
     private var mMapCountryCodeToCountryName = mutableMapOf<String, String>()
     private var mSelectedFlagsResID: ArrayList<Int> = arrayListOf()
     private var mSelectedCountryCodes: ArrayList<String> = arrayListOf()
@@ -38,11 +38,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //        )
 
         mapFlagResIDToCountryCode(mAllFlagsResID)
+
         mapCountryCodeToCountryName(mAllCountryCodes)
 
         // select random 20 flag resID (20 is 40/2 ie. half of number of tiles; the other half is filled with country codes associated with those 20 flags
         mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID,mNumberOfTiles/2, null)
-
+        Log.i(
+            "PANJUTA",
+            "mMapFlagResIDtoCountryCode size: ${mMapFlagResIDtoCountryCode.size}"
+        )
+        Log.i(
+            "PANJUTA",
+            "mSelectedFlagsResID size: ${mSelectedFlagsResID.size}"
+        )
+        findSelectedCountryCodes(mSelectedFlagsResID)
+        findSelectedCountryNames(mSelectedCountryCodes)
 
 
         btn_quit3.setOnClickListener(this)
@@ -51,8 +61,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         iv_tile_01.setOnClickListener(this)
         tv_tile_01.setOnClickListener(this)
     }
-
-
 
     private fun mapFlagResIDToCountryCode(allFlagsResID: ArrayList<Int>) {
         for ((index, flagResID) in allFlagsResID.withIndex()) {
@@ -93,6 +101,26 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         return selectedFlagsResID
+    }
+
+    private fun findSelectedCountryCodes(selectedFlagsResID: ArrayList<Int>) {
+        // Log.i("PANJUTA", "inside findSelectedCountryCode, parameter size is ${selectedFlagsResID.size}")
+        for ((index, flagResID) in selectedFlagsResID.withIndex()){
+            //Log.i("PANJUTA", "mMapFlagResIDtoCountryCode[flagResID]: ${mMapFlagResIDtoCountryCode[flagResID]!!}")
+            val countryCode = mMapFlagResIDtoCountryCode[flagResID]!!
+            mSelectedCountryCodes.add(countryCode)
+            Log.i("PANJUTA", "Selected country codes: $countryCode")
+        }
+        Log.i("PANJUTA", "mSelectedCountryCodes size: ${mSelectedCountryCodes.size}")
+    }
+
+    private fun findSelectedCountryNames(selectedCountryCodes: ArrayList<String>) {
+        for ((index, countryCode) in selectedCountryCodes.withIndex()){
+            val countryName = mMapCountryCodeToCountryName[countryCode]!!
+            mSelectedCountryNames.add(countryName)
+            Log.i("PANJUTA", "Selected country names: $countryName")
+        }
+        Log.i("PANJUTA", "mSelectedCountryNames size: ${mSelectedCountryNames.size}")
     }
 
 
