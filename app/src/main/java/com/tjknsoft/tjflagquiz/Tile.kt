@@ -1,9 +1,9 @@
 package com.tjknsoft.tjflagquiz
 
 data class Tile(
-    val position: Int,
+    val position: Int, // start with 1
     val isFaceUp: Boolean,
-    val isFlagImage: Boolean,
+    // val isFlagImage: Boolean,
     val flagResId: Int,
     // val tileBackResID: Int,
     val countryCode: String,
