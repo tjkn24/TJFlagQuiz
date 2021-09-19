@@ -387,7 +387,7 @@ class QuizChooseNameActivity : AppCompatActivity(), View.OnClickListener {
         // Log.i("PANJUTA", "Entering mapFlagImageToCountryName()")
         for ((index, flag) in allFlags.withIndex()) {
             // Log.i("PANJUTA", "i: $i, j: $j")
-            mMapFlagToCountry.put(flag, Constants.CountryNames[index])
+            mMapFlagToCountry.put(flag, Constants.allCountryNames[index])
         }
         Log.i("PANJUTA", "mMapFlagToCountry size: ${mMapFlagToCountry.size}")
         // Log.i("PANJUTA", "mMapFlagToCountry[2131165288]: ${mMapFlagToCountry[2131165288]}")

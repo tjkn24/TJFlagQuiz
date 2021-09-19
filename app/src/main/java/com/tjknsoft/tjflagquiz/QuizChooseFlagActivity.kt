@@ -47,7 +47,7 @@ class QuizChooseFlagActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         mCurrentQuestionNumber = 1
-        mAllNames = Constants.CountryNames
+        mAllNames = Constants.allCountryNames
         mSelectedNames = selectRandomNames(mAllNames, mQuestionSize, null)
         Log.i("PANJUTA", "mSelectedNames size: ${mSelectedNames.size}")
         mapCountryNameToFlagImage(mAllNames)
