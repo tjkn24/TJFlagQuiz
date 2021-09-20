@@ -1,6 +1,7 @@
 package com.tjknsoft.tjflagquiz
 
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -348,6 +349,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
         val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        val view: View? = toast.getView()
+        view?.setBackgroundResource(R.drawable.toast_background)
+        val toastview = toast.view!!.findViewById<View>(android.R.id.message) as TextView
+        toastview.setTextColor(Color.YELLOW)
+        toastview.setTextSize(20.0F)
         toast.setGravity(Gravity.CENTER, xOffset, yOffset)
         toast.show()
     }
