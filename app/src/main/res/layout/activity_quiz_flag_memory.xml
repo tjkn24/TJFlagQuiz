@@ -91,6 +91,7 @@
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_tile_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
@@ -795,6 +796,15 @@
                     style="@style/TextViewTileStyle"
                     android:text="FJI" />
             </com.google.android.material.card.MaterialCardView>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                app:layout_constraintStart_toStartOf="@id/cl_tile_board"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_36"
+                app:layout_constraintEnd_toEndOf="@id/cl_tile_board"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_quiz_chooseflag.*
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
@@ -52,7 +51,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         findSelectedCountryCodes(mSelectedFlagsResID)
         findSelectedCountryNames(mSelectedCountryCodes)
 
-        mSelectedFlagResIDandCountryCode = combine(mSelectedFlagsResID, mSelectedCountryCodes)
+        mSelectedFlagResIDandCountryCode = combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedCountryCodes)
         Log.i(
             "PANJUTA",
             "mSelectedFlagResIDandCountryCode size: ${mSelectedFlagResIDandCountryCode.size}"
@@ -180,18 +179,18 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
                 mTileImageViews[index].setImageResource(tile.flagResId)
+                mTileImageViews[index].setOnClickListener(this)
             } else {
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
                 mTileTextViews[index].text = tile.countryCode
+                mTileTextViews[index].setOnClickListener(this)
             }
         }
 
         btn_quit3.setOnClickListener(this)
         btn_restart3.setOnClickListener(this)
 
-        iv_tile_01.setOnClickListener(this)
-        tv_tile_01.setOnClickListener(this)
     }
 
     private fun mapFlagResIDToCountryCode(allFlagsResID: ArrayList<Int>) {
@@ -263,7 +262,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     // combine 2 arraylist of different types
     // from https://www.techiedelight.com/combine-two-arrays-different-types-kotlin/
-    fun <T, U> combine(first: ArrayList<T>, second: ArrayList<U>): MutableList<Any> {
+    private fun <T, U> combineArrayListOfDifferentTypes(first: ArrayList<T>, second: ArrayList<U>): MutableList<Any> {
         val list: MutableList<Any> = ArrayList()
         list.addAll(first.map { i -> i as Any })
         list.addAll(second.map { i -> i as Any })
@@ -299,6 +298,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.iv_tile_01 -> {
                 Log.i("PANJUTA", "imageview 01 clicked")
+
             }
             R.id.tv_tile_01 -> {
                 Log.i("PANJUTA", "textview 01 clicked")
