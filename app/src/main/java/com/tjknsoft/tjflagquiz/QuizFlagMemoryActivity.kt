@@ -1,15 +1,21 @@
 package com.tjknsoft.tjflagquiz
 
 import android.content.Intent
+import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
+import android.view.Gravity
+
+
+
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -173,24 +179,29 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mTileTextViews.add(0, tv_tile_39)
         mTileTextViews.add(0, tv_tile_40)
         
-        // draw tiles
+        drawTiles()
+
+        btn_quit3.setOnClickListener(this)
+        btn_restart3.setOnClickListener(this)
+
+    }
+
+    private fun drawTiles() {
         for ((index, tile) in mTileList.withIndex()){
             if (tile.countryCode == ""){ // tile displays flag image
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
                 mTileImageViews[index].setImageResource(tile.flagResId)
                 mTileImageViews[index].setOnClickListener(this)
-            } else {
+            } else { // tile displays country code
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
                 mTileTextViews[index].text = tile.countryCode
-                mTileTextViews[index].setOnClickListener(this)
+                mTileTextViews[index].setOnClickListener {
+                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
+                }
             }
         }
-
-        btn_quit3.setOnClickListener(this)
-        btn_restart3.setOnClickListener(this)
-
     }
 
     private fun mapFlagResIDToCountryCode(allFlagsResID: ArrayList<Int>) {
@@ -305,5 +316,39 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+    }
+
+    // v is the Button view that you want the Toast to appear above
+// and messageId is the id of your string resource for the message
+
+    // v is the Button view that you want the Toast to appear above
+    // and messageId is the id of your string resource for the message
+    private fun displayToastAboveButton(v: View, message: String) {
+        var xOffset = 0
+        var yOffset = 0
+        val gvr = Rect()
+        val parent = v.parent as View
+        val parentHeight = parent.height
+        if (v.getGlobalVisibleRect(gvr)) {
+            val root = v.rootView
+            val halfWidth = root.right / 2
+            val halfHeight = root.bottom / 2
+            val parentCenterX: Int = (gvr.right - gvr.left) / 2 + gvr.left
+            val parentCenterY: Int = (gvr.bottom - gvr.top) / 2 + gvr.top
+            yOffset = if (parentCenterY <= halfHeight) {
+                -(halfHeight - parentCenterY) - parentHeight
+            } else {
+                parentCenterY - halfHeight - parentHeight
+            }
+            if (parentCenterX < halfWidth) {
+                xOffset = -(halfWidth - parentCenterX)
+            }
+            if (parentCenterX >= halfWidth) {
+                xOffset = parentCenterX - halfWidth
+            }
+        }
+        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
+        toast.setGravity(Gravity.CENTER, xOffset, yOffset)
+        toast.show()
     }
 }
