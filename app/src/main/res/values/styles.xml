@@ -39,6 +39,7 @@
         <item name="android:clickable">true</item>
         <item name="android:scaleType">fitCenter</item>
         <item name="android:visibility">visible</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="TextViewTileStyle">
@@ -49,6 +50,8 @@
         <item name="android:gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:visibility">gone</item>
+        <item name="android:layout_margin">1dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
 
