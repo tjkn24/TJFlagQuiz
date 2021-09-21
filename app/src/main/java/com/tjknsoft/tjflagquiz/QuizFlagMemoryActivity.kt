@@ -35,6 +35,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
     private var mTileTextViews: ArrayList<TextView> = arrayListOf()
     private var mIsFlagActive: Boolean = false
+    private var mTappedFlagResID: Int = -1
+    private var mTappedCountryCode: String = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +72,26 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun drawTiles() {
         for ((index, tile) in mTileList.withIndex()) {
-            if (tile.countryCode == "") { // tile displays flag image
-                mIsFlagActive = false
+            if (tile.countryCode != "") { // tile displays country code
+                mTileImageViews[index].setVisibility(View.GONE)
+                mTileTextViews[index].setVisibility(View.VISIBLE)
+
+                // display country code in the tile
+                mTileTextViews[index].text = tile.countryCode
+                mTileTextViews[index].setOnClickListener {
+                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
+                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
+                    // show border or tapped tile
+                    mTileTextViews[index].background =
+                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
+                    // user can tap on closed flag tile after tapping country tile first
+                    mIsFlagActive = true
+
+                    mTappedCountryCode =
+                        tile.countryCode // needs to be compared with tapped flag image after this one
+                }
+            } else { // tile displays flag image
+                mIsFlagActive = false // user has to tap country tile for the very first time
 
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
@@ -82,8 +102,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
                 }
 
-                // disable all flag tile before user tap on country tile
-                // mTileImageViews[index].isEnabled = false
 
                 mTileImageViews[index].setOnClickListener {
 
@@ -93,10 +111,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             "Please tap a white tile first"
                         )
 
-                    } else {
+                    } else {  // user allowed to flip the closed flag tile after tapping country tile previously
+
                         // if user tap on face-down flag imageview, it will reveal face-up flag …
                         // …side for 2 seconds. After 2 seconds, flag is face-down again.
                         if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
+
                         val timer = object : CountDownTimer(2000, 1000) {
 
                             override fun onTick(millisUntilFinished: Long) {
@@ -108,24 +128,46 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                         timer.start()
-                        mIsFlagActive = false
+                        mIsFlagActive =
+                            false // after flipping flag tile, user has to tap country tile again
+                        mTappedFlagResID =
+                            tile.flagResId // tapped flag needs to be compared with tapped country code
+
+                        compareTappedTiles(
+                            mTappedCountryCode,
+                            mTappedFlagResID,
+                            mTileTextViews[index],
+                            mTileImageViews[index]
+                        )
                     }
                 }
-            } else { // tile displays country code
-                mTileImageViews[index].setVisibility(View.GONE)
-                mTileTextViews[index].setVisibility(View.VISIBLE)
-                mTileTextViews[index].text = tile.countryCode
-                mTileTextViews[index].setOnClickListener {
-                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
-                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
-                    // show border or tapped tile
-                    mTileTextViews[index].background =
-                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
-                    // user can tap on closed flag tile after tapping country tile first
-                    mIsFlagActive = true
-                }
+
             }
         }
+    }
+
+    private fun compareTappedTiles(
+        tappedCountryCode: String,
+        tappedFlagResID: Int,
+        tappedTextView: TextView,
+        tappedImageView: ImageView
+    ) {
+        Log.i(
+            "PANJUTA",
+            "inside Compare, tappedCountryCode: $tappedCountryCode, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoCountryCode[tappedFlagResID]: ${mMapFlagResIDtoCountryCode[tappedFlagResID]}"
+        )
+        if (mMapFlagResIDtoCountryCode[tappedFlagResID] == tappedCountryCode) {
+            Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
+            //tappedTextView.background = ContextCompat.getDrawable(this, R.drawable.tv_border_correct)
+        }
+
+
+
+
+        // reset tapped tiles
+        mTappedFlagResID = -1
+        mTappedCountryCode = "-1"
+
     }
 
     private fun selectAndShuffleTileContent() {
@@ -134,7 +176,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles / 2, null)
 
         findSelectedCountryCodes(mSelectedFlagsResID)
-        findSelectedCountryNames(mSelectedCountryCodes)
+        findSelectedCountryNames(mSelectedCountryCodes) // for toast that appears above tile containing country code
 
         mSelectedFlagResIDandCountryCode =
             combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedCountryCodes)
@@ -151,7 +193,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             fisherYatesShuffle(mSelectedFlagResIDandCountryCode) as ArrayList<Any>
     }
 
-    private fun populateTileList() {
+    private fun populateTileList() { // create tiles based on what is inside displayed tile on the screen
         for ((index, tileContent) in mShuffledSelectedFlagResIDandCountryCode.withIndex()) {
             Log.i(
                 "PANJUTA",
