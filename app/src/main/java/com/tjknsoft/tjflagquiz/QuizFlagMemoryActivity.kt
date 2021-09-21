@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -13,8 +14,6 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 import android.view.Gravity
-
-
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -43,15 +42,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onCreateHelper() {
-        mAllCountryCodes = Constants.allCountryCodes
-        mAllCountryNames = Constants.allCountryNames
-        mAllFlagsResID = SplashScreenActivity.mAllFlagsResID
 
-        mapFlagResIDToCountryCode(mAllFlagsResID)
+        getAndMapData()
 
-        mapCountryCodeToCountryName(mAllCountryCodes)
-
-        // select random 20 flag resID (20 is 40/2 ie. half of number of tiles; the other half is filled with country codes associated with those 20 flags
         selectAndShuffleTileContent()
 
         populateTileList()
@@ -64,19 +57,41 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun getAndMapData() {
+        mAllCountryCodes = Constants.allCountryCodes
+        mAllCountryNames = Constants.allCountryNames
+        mAllFlagsResID = SplashScreenActivity.mAllFlagsResID
+
+        mapFlagResIDToCountryCode(mAllFlagsResID)
+        mapCountryCodeToCountryName(mAllCountryCodes)
+    }
+
     private fun drawTiles() {
-        for ((index, tile) in mTileList.withIndex()){
-            if (tile.countryCode == ""){ // tile displays flag image
+        for ((index, tile) in mTileList.withIndex()) {
+            if (tile.countryCode == "") { // tile displays flag image
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
 
-                if(tile.isFaceUp == true) {
+                if (tile.isFaceUp == true) {
                     mTileImageViews[index].setImageResource(tile.flagResId)
                 } else {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
                 }
 
-                mTileImageViews[index].setOnClickListener(this)
+                mTileImageViews[index].setOnClickListener {
+                    if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
+                    val timer = object : CountDownTimer(2000, 1000) {
+
+                        override fun onTick(millisUntilFinished: Long) {
+                            // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
+                        }
+
+                        override fun onFinish() {
+                            mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                        }
+                    }
+                    timer.start()
+                }
             } else { // tile displays country code
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
@@ -89,12 +104,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun selectAndShuffleTileContent() {
+        // select random 20 flag resID (20 is 40/2 ie. half of number of tiles; the other half is filled with country codes associated with those 20 flags
+
         mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles / 2, null)
 
         findSelectedCountryCodes(mSelectedFlagsResID)
         findSelectedCountryNames(mSelectedCountryCodes)
 
-        mSelectedFlagResIDandCountryCode = combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedCountryCodes)
+        mSelectedFlagResIDandCountryCode =
+            combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedCountryCodes)
         Log.i(
             "PANJUTA",
             "mSelectedFlagResIDandCountryCode size: ${mSelectedFlagResIDandCountryCode.size}"
@@ -132,7 +150,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
             Log.i(
                 "PANJUTA",
-                "${mTileList[index]}")
+                "${mTileList[index]}"
+            )
         }
         Log.i(
             "PANJUTA",
@@ -214,7 +233,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     // combine 2 arraylist of different types
     // from https://www.techiedelight.com/combine-two-arrays-different-types-kotlin/
-    private fun <T, U> combineArrayListOfDifferentTypes(first: ArrayList<T>, second: ArrayList<U>): MutableList<Any> {
+    private fun <T, U> combineArrayListOfDifferentTypes(
+        first: ArrayList<T>,
+        second: ArrayList<U>
+    ): MutableList<Any> {
         val list: MutableList<Any> = ArrayList()
         list.addAll(first.map { i -> i as Any })
         list.addAll(second.map { i -> i as Any })
