@@ -34,6 +34,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mShuffledSelectedFlagResIDandCountryCode: ArrayList<Any> = arrayListOf()
     private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
     private var mTileTextViews: ArrayList<TextView> = arrayListOf()
+    private var mIsFlagActive: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +71,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun drawTiles() {
         for ((index, tile) in mTileList.withIndex()) {
             if (tile.countryCode == "") { // tile displays flag image
+                mIsFlagActive = false
+
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
 
@@ -79,21 +82,34 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
                 }
 
+                // disable all flag tile before user tap on country tile
+                // mTileImageViews[index].isEnabled = false
+
                 mTileImageViews[index].setOnClickListener {
-//                    if user tap on face-down flag imageview, it will reveal face-up flag …
-//                    …side for 2 seconds. After 2 seconds, flag is face-down again.
-                    if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
-                    val timer = object : CountDownTimer(2000, 1000) {
 
-                        override fun onTick(millisUntilFinished: Long) {
-                            // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
-                        }
+                    if (mIsFlagActive == false) { // if user prevented from tapping the flag tile
+                        displayToastAboveButton(
+                            mTileImageViews[index],
+                            "Please tap a white tile first"
+                        )
 
-                        override fun onFinish() {
-                            mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                    } else {
+                        // if user tap on face-down flag imageview, it will reveal face-up flag …
+                        // …side for 2 seconds. After 2 seconds, flag is face-down again.
+                        if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
+                        val timer = object : CountDownTimer(2000, 1000) {
+
+                            override fun onTick(millisUntilFinished: Long) {
+                                // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
+                            }
+
+                            override fun onFinish() {
+                                mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                            }
                         }
+                        timer.start()
+                        mIsFlagActive = false
                     }
-                    timer.start()
                 }
             } else { // tile displays country code
                 mTileImageViews[index].setVisibility(View.GONE)
@@ -103,7 +119,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     displayToastAboveButton(mTileTextViews[index], tile.countryName)
                     // show border or tapped tile
-                    mTileTextViews[index].background = ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
+                    mTileTextViews[index].background =
+                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
+                    // user can tap on closed flag tile after tapping country tile first
+                    mIsFlagActive = true
                 }
             }
         }
