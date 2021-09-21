@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 import android.view.Gravity
+import androidx.core.content.ContextCompat
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -79,6 +80,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 mTileImageViews[index].setOnClickListener {
+//                    if user tap on face-down flag imageview, it will reveal face-up flag …
+//                    …side for 2 seconds. After 2 seconds, flag is face-down again.
                     if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
                     val timer = object : CountDownTimer(2000, 1000) {
 
@@ -97,7 +100,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mTileTextViews[index].setVisibility(View.VISIBLE)
                 mTileTextViews[index].text = tile.countryCode
                 mTileTextViews[index].setOnClickListener {
+                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     displayToastAboveButton(mTileTextViews[index], tile.countryName)
+                    // show border or tapped tile
+                    mTileTextViews[index].background = ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
                 }
             }
         }
