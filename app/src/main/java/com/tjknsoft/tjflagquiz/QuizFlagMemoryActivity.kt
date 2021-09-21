@@ -1,7 +1,6 @@
 package com.tjknsoft.tjflagquiz
 
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -53,6 +52,43 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mapCountryCodeToCountryName(mAllCountryCodes)
 
         // select random 20 flag resID (20 is 40/2 ie. half of number of tiles; the other half is filled with country codes associated with those 20 flags
+        selectAndShuffleTileContent()
+
+        populateTileList()
+
+        addViewsToViewList()
+
+        drawTiles()
+
+        setOnClickListenerBottomButtons()
+
+    }
+
+    private fun drawTiles() {
+        for ((index, tile) in mTileList.withIndex()){
+            if (tile.countryCode == ""){ // tile displays flag image
+                mTileTextViews[index].setVisibility(View.GONE)
+                mTileImageViews[index].setVisibility(View.VISIBLE)
+
+                if(tile.isFaceUp == true) {
+                    mTileImageViews[index].setImageResource(tile.flagResId)
+                } else {
+                    mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                }
+
+                mTileImageViews[index].setOnClickListener(this)
+            } else { // tile displays country code
+                mTileImageViews[index].setVisibility(View.GONE)
+                mTileTextViews[index].setVisibility(View.VISIBLE)
+                mTileTextViews[index].text = tile.countryCode
+                mTileTextViews[index].setOnClickListener {
+                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
+                }
+            }
+        }
+    }
+
+    private fun selectAndShuffleTileContent() {
         mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles / 2, null)
 
         findSelectedCountryCodes(mSelectedFlagsResID)
@@ -64,12 +100,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "mSelectedFlagResIDandCountryCode size: ${mSelectedFlagResIDandCountryCode.size}"
         )
 
-//        mShuffledSelectedFlagResIDandCountryCode =
-//            mSelectedFlagResIDandCountryCode.shuffled() as ArrayList<Any>
+        //  mShuffledSelectedFlagResIDandCountryCode =
+        //  mSelectedFlagResIDandCountryCode.shuffled() as ArrayList<Any>
 
+        // shuffle
         mShuffledSelectedFlagResIDandCountryCode =
             fisherYatesShuffle(mSelectedFlagResIDandCountryCode) as ArrayList<Any>
+    }
 
+    private fun populateTileList() {
         for ((index, tileContent) in mShuffledSelectedFlagResIDandCountryCode.withIndex()) {
             Log.i(
                 "PANJUTA",
@@ -77,7 +116,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             )
             //check variable types:
             when (tileContent) {
-                is Int -> mTileList.add(Tile(index + 1, true, tileContent.toInt(), "", ""))
+                // flag image resID (int); face down
+                is Int -> mTileList.add(Tile(index + 1, false, tileContent.toInt(), "", ""))
+                // country code (string)
                 is String -> mTileList.add(
                     Tile(
                         index + 1, true, -1, tileContent.toString(),
@@ -97,33 +138,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "PANJUTA",
             "mTileList size: ${mTileList.size}"
         )
-
-        addViewsToViewList()
-
-        drawTiles()
-
-        btn_quit3.setOnClickListener(this)
-        btn_restart3.setOnClickListener(this)
-
     }
 
-
-    private fun drawTiles() {
-        for ((index, tile) in mTileList.withIndex()){
-            if (tile.countryCode == ""){ // tile displays flag image
-                mTileTextViews[index].setVisibility(View.GONE)
-                mTileImageViews[index].setVisibility(View.VISIBLE)
-                mTileImageViews[index].setImageResource(tile.flagResId)
-                mTileImageViews[index].setOnClickListener(this)
-            } else { // tile displays country code
-                mTileImageViews[index].setVisibility(View.GONE)
-                mTileTextViews[index].setVisibility(View.VISIBLE)
-                mTileTextViews[index].text = tile.countryCode
-                mTileTextViews[index].setOnClickListener {
-                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
-                }
-            }
-        }
+    private fun setOnClickListenerBottomButtons() {
+        btn_quit3.setOnClickListener(this)
+        btn_restart3.setOnClickListener(this)
     }
 
     private fun mapFlagResIDToCountryCode(allFlagsResID: ArrayList<Int>) {
