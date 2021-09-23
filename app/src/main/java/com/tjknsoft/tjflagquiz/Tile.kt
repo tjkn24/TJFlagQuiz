@@ -7,6 +7,7 @@ data class Tile(
     val flagResId: Int,
     // val tileBackResID: Int,
     // val countryCode: String,
+    val shortenedCountryName: String,
     val countryName: String,
 )
 

@@ -25,17 +25,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     // private var mAllCountryCodes: ArrayList<String> = arrayListOf()
     private var mAllCountryNames: ArrayList<String> = arrayListOf()
+    private var mAllShortenedCountryNames: ArrayList<String> = arrayListOf()
     private val mNumberOfTiles: Int = 40
     private var mMapFlagResIDtoCountryName = mutableMapOf<Int, String>()
+    private var mMapFlagResIDtoShortenedCountryName = mutableMapOf<Int, String>()
+    private var mMapShortenedCountryNameToCountryName = mutableMapOf<String, String>()
     private var mSelectedFlagsResID: ArrayList<Int> = arrayListOf()
     private var mSelectedCountryNames: ArrayList<String> = arrayListOf()
-    private var mSelectedFlagResIDandCountryName: MutableList<Any> = arrayListOf()
-    private var mShuffledSelectedFlagResIDandCountryName: ArrayList<Any> = arrayListOf()
+    private var mSelectedShortenedCountryNames: ArrayList<String> = arrayListOf()
+    private var mSelectedFlagResIDandShortenedCountryName: MutableList<Any> = arrayListOf()
+    private var mShuffledSelectedFlagResIDandShortenedCountryName: ArrayList<Any> = arrayListOf()
     private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
     private var mTileTextViews: ArrayList<TextView> = arrayListOf()
     private var mIsFlagActive: Boolean = false
     private var mTappedFlagResID: Int = -1
-    private var mTappedCountryName: String = "-1"
+    private var mTappedShortenedCountryName: String = "-1"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,22 +64,24 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+
     private fun getAndMapData() {
 
         mAllCountryNames = Constants.allCountryNames
+        mAllShortenedCountryNames = Constants.allShortenedCountryNames
         mAllFlagsResID = SplashScreenActivity.mAllFlagsResID
-        mapFlagResIDToCountryName(mAllFlagsResID)
-
+        mapFlagResIDToShortenedCountryName(mAllFlagsResID)
+        mapShortenedCountryNameToCountryName(mAllShortenedCountryNames)
     }
 
     private fun drawTiles() {
         for ((index, tile) in mTileList.withIndex()) {
-            if (tile.countryName != "") { // tile displays country name
+            if (tile.shortenedCountryName != "") { // tile displays shortened country name
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
 
-                // display country code in the tile
-                mTileTextViews[index].text = tile.countryName
+                // display shortened country name in the tile
+                mTileTextViews[index].text = tile.shortenedCountryName
                 mTileTextViews[index].setOnClickListener {
                     // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     displayToastAboveButton(mTileTextViews[index], tile.countryName)
@@ -85,8 +91,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // user can tap on closed flag tile after tapping country tile first
                     mIsFlagActive = true
 
-                    mTappedCountryName =
-                        tile.countryName // needs to be compared with tapped flag image after this one
+                    mTappedShortenedCountryName =
+                        tile.shortenedCountryName // needs to be compared with tapped flag image after this one
                 }
             } else { // tile displays flag image
                 mIsFlagActive = false // user has to tap country tile for the very first time
@@ -94,7 +100,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
 
-                if (tile.isFaceUp == true) {
+                if (tile.isFaceUp) {
                     mTileImageViews[index].setImageResource(tile.flagResId)
                 } else {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
@@ -102,7 +108,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 mTileImageViews[index].setOnClickListener {
 
-                    if (mIsFlagActive == false) { // if user prevented from tapping the flag tile
+                    if (!mIsFlagActive) { // if user prevented from tapping the flag tile
                         displayToastAboveButton(
                             mTileImageViews[index],
                             "Please tap a white tile first"
@@ -112,7 +118,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                         // if user tap on face-down flag imageview, it will reveal face-up flag …
                         // …side for 2 seconds. After 2 seconds, flag is face-down again.
-                        if (tile.isFaceUp == false) mTileImageViews[index].setImageResource(tile.flagResId)
+                        if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
 
                         val timer = object : CountDownTimer(2000, 1000) {
 
@@ -131,7 +137,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             tile.flagResId // tapped flag needs to be compared with tapped country code
 
                         compareTappedTiles(
-                            mTappedCountryName,
+                            mTappedShortenedCountryName,
                             mTappedFlagResID,
                             mTileTextViews[index],
                             mTileImageViews[index]
@@ -144,16 +150,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun compareTappedTiles(
-        tappedCountryName: String,
+        tappedShortenedCountryName: String,
         tappedFlagResID: Int,
         tappedTextView: TextView,
         tappedImageView: ImageView
     ) {
         Log.i(
             "PANJUTA",
-            "inside Compare, tappedCountryCode: $tappedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoCountryName[tappedFlagResID]: ${mMapFlagResIDtoCountryName[tappedFlagResID]}"
+            "inside Compare, tappedCountryCode: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoCountryName[tappedFlagResID]: ${mMapFlagResIDtoCountryName[tappedFlagResID]}"
         )
-        if (mMapFlagResIDtoCountryName[tappedFlagResID] == tappedCountryName) {
+        if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) {
             Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
             //tappedTextView.background = ContextCompat.getDrawable(this, R.drawable.tv_border_correct)
         }
@@ -161,47 +167,52 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         // reset tapped tiles
         mTappedFlagResID = -1
-        mTappedCountryName = "-1"
+        mTappedShortenedCountryName = "-1"
 
     }
 
     private fun selectAndShuffleTileContent() {
 
-        mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles/2, null)
+        mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles / 2, null)
 
-        findSelectedCountryNames(mSelectedFlagsResID) // for toast that appears above tile
+        findSelectedShortenedCountryNames(mSelectedFlagsResID) // for toast that appears above tile
 
-        mSelectedFlagResIDandCountryName =
-            combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedCountryNames)
+        mSelectedFlagResIDandShortenedCountryName =
+            combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedShortenedCountryNames)
         Log.i(
             "PANJUTA",
-            "mSelectedFlagResIDandCountryName size: ${mSelectedFlagResIDandCountryName.size}"
+            "mSelectedFlagResIDandShortenedCountryName size: ${mSelectedFlagResIDandShortenedCountryName.size}"
         )
 
         //  mShuffledSelectedFlagResIDandCountryCode =
         //  mSelectedFlagResIDandCountryCode.shuffled() as ArrayList<Any>
 
         // shuffle
-        mShuffledSelectedFlagResIDandCountryName =
-            fisherYatesShuffle(mSelectedFlagResIDandCountryName) as ArrayList<Any>
+        mShuffledSelectedFlagResIDandShortenedCountryName =
+            fisherYatesShuffle(mSelectedFlagResIDandShortenedCountryName) as ArrayList<Any>
     }
 
     private fun populateTileList() { // create tiles based on what is inside displayed tile on the screen
-        for ((index, tileContent) in mShuffledSelectedFlagResIDandCountryName.withIndex()) {
+        for ((index, tileContent) in mShuffledSelectedFlagResIDandShortenedCountryName.withIndex()) {
             Log.i(
                 "PANJUTA",
                 "tile position ${index + 1}: $tileContent"
             )
+
             //check variable types:
             when (tileContent) {
                 // flag image resID (int); face down
-                is Int -> mTileList.add(Tile(index + 1, false, tileContent.toInt(), ""))
+                is Int -> mTileList.add(Tile(index + 1, false, tileContent.toInt(), "", ""))
                 // country name (string)
                 is String -> mTileList.add(
                     Tile(
-                        index + 1, true, -1, tileContent.toString(),
-
+                        index + 1,
+                        true,
+                        -1,
+                        tileContent.toString(),
+                        mMapShortenedCountryNameToCountryName[tileContent].toString()
                     )
+
                 )
                 else -> Log.i(
                     "PANJUTA",
@@ -224,12 +235,20 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         btn_restart3.setOnClickListener(this)
     }
 
-    private fun mapFlagResIDToCountryName(allFlagsResID: ArrayList<Int>) {
+    private fun mapFlagResIDToShortenedCountryName(allFlagsResID: ArrayList<Int>) {
         for ((index, flagResID) in allFlagsResID.withIndex()) {
-            mMapFlagResIDtoCountryName.put(flagResID, Constants.allCountryNames[index])
-            Log.i(
-                "PANJUTA",
-                "flag ResID: $flagResID, Country name: ${Constants.allCountryNames[index]}"
+            mMapFlagResIDtoShortenedCountryName.put(
+                flagResID,
+                Constants.allShortenedCountryNames[index]
+            )
+        }
+    }
+
+    private fun mapShortenedCountryNameToCountryName(allShortenedCountryName: ArrayList<String>) {
+        for ((index, shortenedCountryName) in allShortenedCountryName.withIndex()) {
+            mMapShortenedCountryNameToCountryName.put(
+                shortenedCountryName,
+                Constants.allCountryNames[index]
             )
         }
     }
@@ -261,15 +280,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         return selectedFlagsResID
     }
 
-    private fun findSelectedCountryNames(selectedFlagsResID: ArrayList<Int>) {
+    private fun findSelectedShortenedCountryNames(selectedFlagsResID: ArrayList<Int>) {
         for ((index, flagResID) in selectedFlagsResID.withIndex()) {
-            val countryName = mMapFlagResIDtoCountryName[flagResID]
-            if (countryName != null) {
-                mSelectedCountryNames.add(countryName)
+            val shortenedCountryName = mMapFlagResIDtoShortenedCountryName[flagResID]
+            if (shortenedCountryName != null) {
+                mSelectedShortenedCountryNames.add(shortenedCountryName)
             }
-            Log.i("PANJUTA", "Selected country names: $countryName")
         }
-        Log.i("PANJUTA", "mSelectedCountryNames size: ${mSelectedCountryNames.size}")
+        Log.i(
+            "PANJUTA",
+            "mSelectedShortenedCountryNames size: ${mSelectedShortenedCountryNames.size}"
+        )
     }
 
     // combine 2 arraylist of different types
