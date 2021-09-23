@@ -51,8 +51,8 @@
         <item name="android:textStyle">bold</item>
         <item name="android:visibility">gone</item>
         <item name="android:layout_margin">1dp</item>
-        <item name="android:background">?android:attr/selectableItemBackground</item>
         <item name="android:hyphenationFrequency">full</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
 

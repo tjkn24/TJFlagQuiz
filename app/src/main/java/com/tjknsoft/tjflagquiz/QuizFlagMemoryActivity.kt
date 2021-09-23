@@ -75,33 +75,40 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun drawTiles() {
+
+        // draw tiles
         for ((index, tile) in mTileList.withIndex()) {
-
-            Log.i(
-                "PANJUTA",
-                "inside drawTiles(), $index, $tile"
-            )
-
             if (tile.shortenedCountryName != "") {
                 // tile displays shortened country name
-
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
-                if (tile.isFaceUp) {
-
-                    mTileTextViews[index].setText(tile.shortenedCountryName)
+                if (tile.isFaceUp == true) {
+                    Log.i(
+                        "PANJUTA",
+                        "entering (tile.isFaceUp == true): ${tile.isFaceUp}"
+                    )
+                    mTileTextViews[index].text = tile.shortenedCountryName
                 } else {
-                    mTileTextViews[index].setText("")
+                    Log.i(
+                        "PANJUTA",
+                        "entering (tile.isFaceUp != true): ${tile.isFaceUp},mTileTextViews[index]: ${mTileTextViews[index].text}"
+                    )
+                    // mTileTextViews[index].text = ""
+                    // mTileTextViews[index].setBackgroundColor(null))
+                    // mTileTextViews[index].setVisibility(View.INVISIBLE)
                 }
 
-                // display shortened country name in the tile
-                mTileTextViews[index].text = tile.shortenedCountryName
+
+                // set tiles' onClickListener
                 mTileTextViews[index].setOnClickListener {
+                    // mTileTextViews[index].setVisibility(View.VISIBLE)
+                    // mTileTextViews[index].setBackgroundColor(getResources().getColor(R.color.white))
+                    mTileTextViews[index].text = tile.shortenedCountryName
                     // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     displayToastAboveButton(mTileTextViews[index], tile.countryName)
                     // show border or tapped tile
-                    mTileTextViews[index].background =
-                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
+//                    mTileTextViews[index].background =
+//                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
                     // user can tap on closed flag tile after tapping country tile first
                     mIsFlagActive = true
 

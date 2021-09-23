@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/button_border.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable-v24/round_corner.xml" value="0.1398148148148148" />
+        <entry key="app/src/main/res/drawable-v24/rounded_corner.xml" value="0.12037037037037036" />
         <entry key="app/src/main/res/drawable/blur_splash.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/edittext_bg.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tv_background_primary.xml" value="0.1" />
@@ -18,7 +19,7 @@
         <entry key="app/src/main/res/layout/activity_quiz_chooseflag.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/layout/activity_quiz_choosename.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_mastermind.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_quiz_memoryflag.xml" value="0.1440972222222222" />
         <entry key="app/src/main/res/layout/activity_quiz_questions.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_quiz_time_attack.xml" value="0.22083333333333333" />

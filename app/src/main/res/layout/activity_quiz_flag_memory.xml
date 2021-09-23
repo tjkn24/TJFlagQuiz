@@ -95,8 +95,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:layout_marginBottom="25dp"
-            >
+            android:layout_marginBottom="25dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_tile_01"
@@ -112,8 +111,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_01"
-                    style="@style/TextViewTileStyle"
-                    android:text="ASM" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
 
@@ -130,8 +128,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_02"
-                    style="@style/TextViewTileStyle"
-                    android:text="IDN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -147,8 +144,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_03"
-                    style="@style/TextViewTileStyle"
-                    android:text="COG" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -164,8 +160,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_04"
-                    style="@style/TextViewTileStyle"
-                    android:text="UKD" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -181,8 +176,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_05"
-                    style="@style/TextViewTileStyle"
-                    android:text="PKS" />
+                    style="@style/TextViewTileStyle" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -201,8 +195,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_06"
-                    style="@style/TextViewTileStyle"
-                    android:text="ETP" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -218,8 +211,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_07"
-                    style="@style/TextViewTileStyle"
-                    android:text="TNS" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -235,8 +227,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_08"
-                    style="@style/TextViewTileStyle"
-                    android:text="OMN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -252,8 +243,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_09"
-                    style="@style/TextViewTileStyle"
-                    android:text="BHT" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -269,8 +259,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_10"
-                    style="@style/TextViewTileStyle"
-                    android:text="CMB" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -288,8 +277,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_11"
-                    style="@style/TextViewTileStyle"
-                    android:text="STP" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -305,8 +293,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_12"
-                    style="@style/TextViewTileStyle"
-                    android:text="MGL" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -322,8 +309,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_13"
-                    style="@style/TextViewTileStyle"
-                    android:text="SLN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -339,8 +325,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_14"
-                    style="@style/TextViewTileStyle"
-                    android:text="WAF" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -356,8 +341,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_15"
-                    style="@style/TextViewTileStyle"
-                    android:text="URU" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -375,8 +359,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_16"
-                    style="@style/TextViewTileStyle"
-                    android:text="PLD" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -392,8 +375,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_17"
-                    style="@style/TextViewTileStyle"
-                    android:text="TAT" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -409,8 +391,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_18"
-                    style="@style/TextViewTileStyle"
-                    android:text="DJB" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -426,8 +407,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_19"
-                    style="@style/TextViewTileStyle"
-                    android:text="MRT" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -443,8 +423,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_20"
-                    style="@style/TextViewTileStyle"
-                    android:text="HUN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -462,8 +441,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_21"
-                    style="@style/TextViewTileStyle"
-                    android:text="SAF" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -479,8 +457,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_22"
-                    style="@style/TextViewTileStyle"
-                    android:text="LIB" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -496,8 +473,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_23"
-                    style="@style/TextViewTileStyle"
-                    android:text="GBN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -513,8 +489,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_24"
-                    style="@style/TextViewTileStyle"
-                    android:text="USA" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -530,8 +505,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_25"
-                    style="@style/TextViewTileStyle"
-                    android:text="ANL" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -549,8 +523,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_26"
-                    style="@style/TextViewTileStyle"
-                    android:text="MDG" />
+                    style="@style/TextViewTileStyle" />
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -567,8 +540,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_27"
-                    style="@style/TextViewTileStyle"
-                    android:text="PRO" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -584,8 +556,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_28"
-                    style="@style/TextViewTileStyle"
-                    android:text="UAE" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -601,8 +572,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_29"
-                    style="@style/TextViewTileStyle"
-                    android:text="KRB" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -618,8 +588,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_30"
-                    style="@style/TextViewTileStyle"
-                    android:text="CAR" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -637,8 +606,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_31"
-                    style="@style/TextViewTileStyle"
-                    android:text="BLG" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -654,8 +622,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_32"
-                    style="@style/TextViewTileStyle"
-                    android:text="NZL" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -671,8 +638,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_33"
-                    style="@style/TextViewTileStyle"
-                    android:text="IND" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -688,8 +654,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_34"
-                    style="@style/TextViewTileStyle"
-                    android:text="JPN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -705,8 +670,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_35"
-                    style="@style/TextViewTileStyle"
-                    android:text="NRU" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -715,8 +679,7 @@
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
                 app:layout_constraintStart_toStartOf="@id/cv_tile_01"
-                app:layout_constraintTop_toBottomOf="@id/cv_tile_31"
-                >
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_31">
 
                 <ImageView
                     android:id="@+id/iv_tile_36"
@@ -725,8 +688,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_36"
-                    style="@style/TextViewTileStyle"
-                    android:text="CND" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -742,8 +704,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_37"
-                    style="@style/TextViewTileStyle"
-                    android:text="QTR" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -759,8 +720,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_38"
-                    style="@style/TextViewTileStyle"
-                    android:text="GRN" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -776,8 +736,7 @@
 
                 <TextView
                     android:id="@+id/tv_tile_39"
-                    style="@style/TextViewTileStyle"
-                    android:text="ROC" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
@@ -793,18 +752,17 @@
 
                 <TextView
                     android:id="@+id/tv_tile_40"
-                    style="@style/TextViewTileStyle"
-                    android:text="FJI" />
+                    style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:visibility="invisible"
                 android:layout_marginTop="@dimen/flag_vertical_gap"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="@id/cl_tile_board"
                 app:layout_constraintStart_toStartOf="@id/cl_tile_board"
-                app:layout_constraintTop_toBottomOf="@id/cv_tile_36"
-                app:layout_constraintEnd_toEndOf="@id/cl_tile_board"/>
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_36" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
