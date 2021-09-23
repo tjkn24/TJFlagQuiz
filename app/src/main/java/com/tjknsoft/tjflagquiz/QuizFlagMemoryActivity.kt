@@ -106,17 +106,19 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileTextViews[index].text = tile.shortenedCountryName
                     // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     displayToastAboveButton(mTileTextViews[index], tile.countryName)
-                    // show border or tapped tile
-//                    mTileTextViews[index].background =
-//                        ContextCompat.getDrawable(this, R.drawable.tv_border_selected)
-                    // user can tap on closed flag tile after tapping country tile first
+
+                    // disable other text tiles
+                    val otherTileTextViews = mTileTextViews.filterNot { it == mTileTextViews[index] }
+                    otherTileTextViews.forEach{it -> it.setEnabled(false)}
+
+                    // user can tap on closed flag tile after tapping country tile
                     mIsFlagActive = true
 
                     mTappedShortenedCountryName =
                         tile.shortenedCountryName // needs to be compared with tapped flag image after this one
                 }
             } else { // tile displays flag image
-                mIsFlagActive = false // user has to tap country tile for the very first time
+                // mIsFlagActive = false // user has to tap country tile for the very first time
 
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
