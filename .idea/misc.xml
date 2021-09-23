@@ -7,6 +7,8 @@
         <entry key="app/src/main/res/drawable-v24/round_corner.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable/blur_splash.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/edittext_bg.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/tv_background_primary.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/tv_background_sacondary.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tv_border.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable/tv_border_correct.xml" value="0.15092592592592594" />
         <entry key="app/src/main/res/drawable/tv_border_selected.xml" value="0.1398148148148148" />

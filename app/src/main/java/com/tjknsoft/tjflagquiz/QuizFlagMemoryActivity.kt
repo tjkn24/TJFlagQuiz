@@ -76,9 +76,23 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun drawTiles() {
         for ((index, tile) in mTileList.withIndex()) {
-            if (tile.shortenedCountryName != "") { // tile displays shortened country name
+
+            Log.i(
+                "PANJUTA",
+                "inside drawTiles(), $index, $tile"
+            )
+
+            if (tile.shortenedCountryName != "") {
+                // tile displays shortened country name
+
                 mTileImageViews[index].setVisibility(View.GONE)
                 mTileTextViews[index].setVisibility(View.VISIBLE)
+                if (tile.isFaceUp) {
+
+                    mTileTextViews[index].setText(tile.shortenedCountryName)
+                } else {
+                    mTileTextViews[index].setText("")
+                }
 
                 // display shortened country name in the tile
                 mTileTextViews[index].text = tile.shortenedCountryName
@@ -103,7 +117,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 if (tile.isFaceUp) {
                     mTileImageViews[index].setImageResource(tile.flagResId)
                 } else {
-                    mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                    mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
                 }
 
                 mTileImageViews[index].setOnClickListener {
@@ -127,7 +141,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             }
 
                             override fun onFinish() {
-                                mTileImageViews[index].setImageResource(R.drawable.tv_background_selected)
+                                mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
                             }
                         }
                         timer.start()
@@ -201,13 +215,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             //check variable types:
             when (tileContent) {
-                // flag image resID (int); face down
+                // tile is flag image; face down
                 is Int -> mTileList.add(Tile(index + 1, false, tileContent.toInt(), "", ""))
-                // country name (string)
+                // tile is country name; face down
                 is String -> mTileList.add(
                     Tile(
                         index + 1,
-                        true,
+                        false,
                         -1,
                         tileContent.toString(),
                         mMapShortenedCountryNameToCountryName[tileContent].toString()
@@ -384,85 +398,85 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun addViewsToViewList() {
         mTileImageViews.add(0, iv_tile_01)
-        mTileImageViews.add(0, iv_tile_02)
-        mTileImageViews.add(0, iv_tile_03)
-        mTileImageViews.add(0, iv_tile_04)
-        mTileImageViews.add(0, iv_tile_05)
-        mTileImageViews.add(0, iv_tile_06)
-        mTileImageViews.add(0, iv_tile_07)
-        mTileImageViews.add(0, iv_tile_08)
-        mTileImageViews.add(0, iv_tile_09)
-        mTileImageViews.add(0, iv_tile_10)
-        mTileImageViews.add(0, iv_tile_11)
-        mTileImageViews.add(0, iv_tile_12)
-        mTileImageViews.add(0, iv_tile_13)
-        mTileImageViews.add(0, iv_tile_14)
-        mTileImageViews.add(0, iv_tile_15)
-        mTileImageViews.add(0, iv_tile_16)
-        mTileImageViews.add(0, iv_tile_17)
-        mTileImageViews.add(0, iv_tile_18)
-        mTileImageViews.add(0, iv_tile_19)
-        mTileImageViews.add(0, iv_tile_20)
-        mTileImageViews.add(0, iv_tile_21)
-        mTileImageViews.add(0, iv_tile_22)
-        mTileImageViews.add(0, iv_tile_23)
-        mTileImageViews.add(0, iv_tile_24)
-        mTileImageViews.add(0, iv_tile_25)
-        mTileImageViews.add(0, iv_tile_26)
-        mTileImageViews.add(0, iv_tile_27)
-        mTileImageViews.add(0, iv_tile_28)
-        mTileImageViews.add(0, iv_tile_29)
-        mTileImageViews.add(0, iv_tile_30)
-        mTileImageViews.add(0, iv_tile_31)
-        mTileImageViews.add(0, iv_tile_32)
-        mTileImageViews.add(0, iv_tile_33)
-        mTileImageViews.add(0, iv_tile_34)
-        mTileImageViews.add(0, iv_tile_35)
-        mTileImageViews.add(0, iv_tile_36)
-        mTileImageViews.add(0, iv_tile_37)
-        mTileImageViews.add(0, iv_tile_38)
-        mTileImageViews.add(0, iv_tile_39)
-        mTileImageViews.add(0, iv_tile_40)
+        mTileImageViews.add(1, iv_tile_02)
+        mTileImageViews.add(2, iv_tile_03)
+        mTileImageViews.add(3, iv_tile_04)
+        mTileImageViews.add(4, iv_tile_05)
+        mTileImageViews.add(5, iv_tile_06)
+        mTileImageViews.add(6, iv_tile_07)
+        mTileImageViews.add(7, iv_tile_08)
+        mTileImageViews.add(8, iv_tile_09)
+        mTileImageViews.add(9, iv_tile_10)
+        mTileImageViews.add(10, iv_tile_11)
+        mTileImageViews.add(11, iv_tile_12)
+        mTileImageViews.add(12, iv_tile_13)
+        mTileImageViews.add(13, iv_tile_14)
+        mTileImageViews.add(14, iv_tile_15)
+        mTileImageViews.add(15, iv_tile_16)
+        mTileImageViews.add(16, iv_tile_17)
+        mTileImageViews.add(17, iv_tile_18)
+        mTileImageViews.add(18, iv_tile_19)
+        mTileImageViews.add(19, iv_tile_20)
+        mTileImageViews.add(20, iv_tile_21)
+        mTileImageViews.add(21, iv_tile_22)
+        mTileImageViews.add(22, iv_tile_23)
+        mTileImageViews.add(23, iv_tile_24)
+        mTileImageViews.add(24, iv_tile_25)
+        mTileImageViews.add(25, iv_tile_26)
+        mTileImageViews.add(26, iv_tile_27)
+        mTileImageViews.add(27, iv_tile_28)
+        mTileImageViews.add(28, iv_tile_29)
+        mTileImageViews.add(29, iv_tile_30)
+        mTileImageViews.add(30, iv_tile_31)
+        mTileImageViews.add(31, iv_tile_32)
+        mTileImageViews.add(32, iv_tile_33)
+        mTileImageViews.add(33, iv_tile_34)
+        mTileImageViews.add(34, iv_tile_35)
+        mTileImageViews.add(35, iv_tile_36)
+        mTileImageViews.add(36, iv_tile_37)
+        mTileImageViews.add(37, iv_tile_38)
+        mTileImageViews.add(38, iv_tile_39)
+        mTileImageViews.add(39, iv_tile_40)
 
         mTileTextViews.add(0, tv_tile_01)
-        mTileTextViews.add(0, tv_tile_02)
-        mTileTextViews.add(0, tv_tile_03)
-        mTileTextViews.add(0, tv_tile_04)
-        mTileTextViews.add(0, tv_tile_05)
-        mTileTextViews.add(0, tv_tile_06)
-        mTileTextViews.add(0, tv_tile_07)
-        mTileTextViews.add(0, tv_tile_08)
-        mTileTextViews.add(0, tv_tile_09)
-        mTileTextViews.add(0, tv_tile_10)
-        mTileTextViews.add(0, tv_tile_11)
-        mTileTextViews.add(0, tv_tile_12)
-        mTileTextViews.add(0, tv_tile_13)
-        mTileTextViews.add(0, tv_tile_14)
-        mTileTextViews.add(0, tv_tile_15)
-        mTileTextViews.add(0, tv_tile_16)
-        mTileTextViews.add(0, tv_tile_17)
-        mTileTextViews.add(0, tv_tile_18)
-        mTileTextViews.add(0, tv_tile_19)
-        mTileTextViews.add(0, tv_tile_20)
-        mTileTextViews.add(0, tv_tile_21)
-        mTileTextViews.add(0, tv_tile_22)
-        mTileTextViews.add(0, tv_tile_23)
-        mTileTextViews.add(0, tv_tile_24)
-        mTileTextViews.add(0, tv_tile_25)
-        mTileTextViews.add(0, tv_tile_26)
-        mTileTextViews.add(0, tv_tile_27)
-        mTileTextViews.add(0, tv_tile_28)
-        mTileTextViews.add(0, tv_tile_29)
-        mTileTextViews.add(0, tv_tile_30)
-        mTileTextViews.add(0, tv_tile_31)
-        mTileTextViews.add(0, tv_tile_32)
-        mTileTextViews.add(0, tv_tile_33)
-        mTileTextViews.add(0, tv_tile_34)
-        mTileTextViews.add(0, tv_tile_35)
-        mTileTextViews.add(0, tv_tile_36)
-        mTileTextViews.add(0, tv_tile_37)
-        mTileTextViews.add(0, tv_tile_38)
-        mTileTextViews.add(0, tv_tile_39)
-        mTileTextViews.add(0, tv_tile_40)
+        mTileTextViews.add(1, tv_tile_02)
+        mTileTextViews.add(2, tv_tile_03)
+        mTileTextViews.add(3, tv_tile_04)
+        mTileTextViews.add(4, tv_tile_05)
+        mTileTextViews.add(5, tv_tile_06)
+        mTileTextViews.add(6, tv_tile_07)
+        mTileTextViews.add(7, tv_tile_08)
+        mTileTextViews.add(8, tv_tile_09)
+        mTileTextViews.add(9, tv_tile_10)
+        mTileTextViews.add(10, tv_tile_11)
+        mTileTextViews.add(11, tv_tile_12)
+        mTileTextViews.add(12, tv_tile_13)
+        mTileTextViews.add(13, tv_tile_14)
+        mTileTextViews.add(14, tv_tile_15)
+        mTileTextViews.add(15, tv_tile_16)
+        mTileTextViews.add(16, tv_tile_17)
+        mTileTextViews.add(17, tv_tile_18)
+        mTileTextViews.add(18, tv_tile_19)
+        mTileTextViews.add(19, tv_tile_20)
+        mTileTextViews.add(20, tv_tile_21)
+        mTileTextViews.add(21, tv_tile_22)
+        mTileTextViews.add(22, tv_tile_23)
+        mTileTextViews.add(23, tv_tile_24)
+        mTileTextViews.add(24, tv_tile_25)
+        mTileTextViews.add(25, tv_tile_26)
+        mTileTextViews.add(26, tv_tile_27)
+        mTileTextViews.add(27, tv_tile_28)
+        mTileTextViews.add(28, tv_tile_29)
+        mTileTextViews.add(29, tv_tile_30)
+        mTileTextViews.add(30, tv_tile_31)
+        mTileTextViews.add(31, tv_tile_32)
+        mTileTextViews.add(32, tv_tile_33)
+        mTileTextViews.add(33, tv_tile_34)
+        mTileTextViews.add(34, tv_tile_35)
+        mTileTextViews.add(35, tv_tile_36)
+        mTileTextViews.add(36, tv_tile_37)
+        mTileTextViews.add(37, tv_tile_38)
+        mTileTextViews.add(38, tv_tile_39)
+        mTileTextViews.add(39, tv_tile_40)
     }
 }
