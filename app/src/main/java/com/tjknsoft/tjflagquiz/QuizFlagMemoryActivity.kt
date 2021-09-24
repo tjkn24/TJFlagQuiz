@@ -193,15 +193,18 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         } else { // wrong pairs
             Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
 
-            // make both tiles face-down after 2 seconds:
-            val timer = object : CountDownTimer(2000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
+            // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
+            val ivIndex = mTappedTileImageViewsIndex
+            val tvIndex = mTappedTileTextViewsIndex
 
+            // make both tiles face-down after 2 seconds:
+            val timer = object : CountDownTimer(1500, 250) {
+                override fun onTick(millisUntilFinished: Long) {
                 }
 
                 override fun onFinish() {
-                    mTileImageViews[mTappedTileImageViewsIndex].setImageResource(R.drawable.tv_background_primary)
-                    mTileTextViews[mTappedTileTextViewsIndex].text = ""
+                    mTileImageViews[ivIndex].setImageResource(R.drawable.tv_background_primary)
+                    mTileTextViews[tvIndex].text = ""
                 }
             }
             timer.start()
