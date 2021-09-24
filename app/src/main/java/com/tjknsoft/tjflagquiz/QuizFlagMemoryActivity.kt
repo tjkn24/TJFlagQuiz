@@ -14,6 +14,8 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 import android.view.Gravity
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -41,6 +43,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mTappedShortenedCountryName: String = "-1"
     private var mTappedTileTextViewsIndex: Int = -1
     private var mTappedTileImageViewsIndex: Int = -1
+    private lateinit var mSound: SoundPoolPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +65,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         drawTiles()
 
         setOnClickListenerBottomButtons()
+
+        mSound = SoundPoolPlayer(this)
 
     }
 
@@ -179,7 +184,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun compareTappedTiles(
         tappedShortenedCountryName: String,
         tappedFlagResID: Int
-
     ) {
         Log.i(
             "PANJUTA",
@@ -187,11 +191,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
         if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) //correct pairs
         {
-            Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
-            // make both tiles disappear:
+            // Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
+
+                    // play correct sound:
+            mSound.playShortResource(R.raw.correct)
+
+            // make both tiles blink:
+            blinkView(mTileImageViews[mTappedTileImageViewsIndex])
+            blinkView(mTileTextViews[mTappedTileTextViewsIndex])
+
+            // make both tiles non-clickable:
+            mTileImageViews[mTappedTileImageViewsIndex].setClickable(true)
+            mTileTextViews[mTappedTileTextViewsIndex].setClickable(true)
+
 
         } else { // wrong pairs
-            Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
+            // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
             val ivIndex = mTappedTileImageViewsIndex
@@ -208,8 +223,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             timer.start()
-
-
         }
 
 // reset tapped tiles
@@ -376,9 +389,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.btn_quit3 -> {
+                mSound.release()
                 finish()
             }
-            R.id.btn_restart3 -> {// onCreateHelper()
+            R.id.btn_restart3 -> { // onCreateHelper()
+                mSound.release()
                 val intent = Intent(this, SplashScreenActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -431,6 +446,23 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //        toastview.setTextSize(20.0F)
         toast.setGravity(Gravity.CENTER, xOffset, yOffset)
         toast.show()
+    }
+
+    private fun blinkView(view: View) {
+        val animation: Animation = AlphaAnimation(
+            1.0F,
+            0.25F
+        ) // to change visibility from visible (1.0) to invisible (0.0)
+
+        animation.duration = 350 // miliseconds duration for each animation cycle
+
+        // animation.interpolator = LinearInterpolator()
+        animation.repeatCount = 2
+
+        animation.repeatMode = Animation.RESTART //animation will start from start point once ended
+
+        view.startAnimation(animation) //to start animation
+
     }
 
     private fun addViewsToViewList() {
