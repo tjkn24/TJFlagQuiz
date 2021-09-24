@@ -88,14 +88,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         "entering (tile.isFaceUp == true): ${tile.isFaceUp}"
                     )
                     mTileTextViews[index].text = tile.shortenedCountryName
-                } else {
-                    Log.i(
-                        "PANJUTA",
-                        "entering (tile.isFaceUp != true): ${tile.isFaceUp},mTileTextViews[index]: ${mTileTextViews[index].text}"
-                    )
-                    // mTileTextViews[index].text = ""
-                    // mTileTextViews[index].setBackgroundColor(null))
-                    // mTileTextViews[index].setVisibility(View.INVISIBLE)
                 }
 
 
@@ -104,32 +96,36 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // mTileTextViews[index].setVisibility(View.VISIBLE)
                     // mTileTextViews[index].setBackgroundColor(getResources().getColor(R.color.white))
                     mTileTextViews[index].text = tile.shortenedCountryName
-                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
-                    displayToastAboveButton(mTileTextViews[index], tile.countryName)
 
-                    // disable other text tiles
+                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
+                    // displayToastAboveButton(mTileTextViews[index], tile.countryName)
+
+                    // disable click on other text tiles
                     val otherTileTextViews =
                         mTileTextViews.filterNot { it == mTileTextViews[index] }
                     otherTileTextViews.forEach { it -> it.setClickable(false) }
 
-                    // disable this text tile
+                    // disable click on this text tile
                     mTileTextViews[index].setClickable(false)
 
                     // user can tap on closed flag tile after tapping country tile
                     // mIsFlagActive = true
 
-                    if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty
+                    if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty (ie. "-1")
                         mTappedShortenedCountryName =
                             tile.shortenedCountryName // needs to be compared with tapped flag image after this one
-                    }
 
-                    if (mTappedShortenedCountryName != "-1" && mTappedFlagResID != -1)
-                        compareTappedTiles(
-                            mTappedShortenedCountryName,
-                            mTappedFlagResID,
-                            mTileTextViews[index],
-                            mTileImageViews[index]
-                        )
+                        if (mTappedFlagResID != -1)  // if flag image has been tapped too
+                        {
+                            compareTappedTiles(
+                                mTappedShortenedCountryName,
+                                mTappedFlagResID,
+                                mTileTextViews[index],
+                                mTileImageViews[index]
+                            )
+                        }
+
+                    }
 
                 }
             } else { // tile displays flag image
@@ -147,27 +143,30 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 mTileImageViews[index].setOnClickListener {
 
-                    if (mIsFlagActive) {
+                    // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
 
-                        // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
+                    if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
 
-                        if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
+                    // disable other flag tiles
+                    val otherTileImageViews =
+                        mTileImageViews.filterNot { it == mTileImageViews[index] }
+                    otherTileImageViews.forEach { it -> it.setClickable(false) }
 
-                        // disable other flag tiles
-                        val otherTileImageViews =
-                            mTileImageViews.filterNot { it == mTileImageViews[index] }
-                        otherTileImageViews.forEach { it -> it.setClickable(false) }
+                    // disable this flag tile
+                    mTileImageViews[index].setClickable(false)
 
-                        // disable this flag tile
-                        mTileImageViews[index].setClickable(false)
-
-                        // user can tap on closed text tile after tapping country tile
-                        // mIsNameActive = true
-
-                        if (mTappedFlagResID == -1) { // register tile only if the variable is empty
-                            mTappedFlagResID =
-                                tile.flagResId // needs to be compared with tapped name tile
+                    if (mTappedFlagResID == -1) { // register tile only if the variable is empty
+                        mTappedFlagResID =
+                            tile.flagResId // needs to be compared with tapped name tile
+                        if (mTappedShortenedCountryName != "-1") { // if text image has been tapped too
+                            compareTappedTiles(
+                                mTappedShortenedCountryName,
+                                mTappedFlagResID,
+                                mTileTextViews[index],
+                                mTileImageViews[index]
+                            )
                         }
+                    }
 
 
 //                        val timer = object : CountDownTimer(2000, 1000) {
@@ -184,14 +183,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //                        mIsFlagActive =
 //                            false // after flipping flag tile, user has to tap country tile again
 
-                        if (mTappedShortenedCountryName != "-1" && mTappedFlagResID != -1)
-                            compareTappedTiles(
-                                mTappedShortenedCountryName,
-                                mTappedFlagResID,
-                                mTileTextViews[index],
-                                mTileImageViews[index]
-                            )
-                    }
+
                 }
 
             }
@@ -211,11 +203,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) {
             Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
             // make both tiles disappear:
-            tappedTextView.setText("")
-            tappedTextView.alpha = 0.25F
-            tappedTextView.isEnabled = false
-            tappedImageView.alpha = 0.25F
-            tappedImageView.isEnabled = false
+//            tappedTextView.setText("")
+//            tappedTextView.alpha = 0.25F
+//            tappedTextView.isEnabled = false
+//            tappedImageView.alpha = 0.25F
+//            tappedImageView.isEnabled = false
         } else {
             Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
             // make both tiles face-down:
@@ -230,7 +222,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         for (tv in mTileTextViews) tv.setClickable(true)
         for (iv in mTileImageViews) iv.setClickable(true)
     }
-
 
 
     private fun selectAndShuffleTileContent() {
