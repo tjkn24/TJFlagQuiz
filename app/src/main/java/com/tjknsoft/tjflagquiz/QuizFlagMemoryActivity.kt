@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 import android.view.Gravity
-import androidx.core.content.ContextCompat
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -40,6 +39,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsNameActive: Boolean = true
     private var mTappedFlagResID: Int = -1
     private var mTappedShortenedCountryName: String = "-1"
+    private var mTappedTileTextViewsIndex: Int = -1
+    private var mTappedTileImageViewsIndex: Int = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,14 +89,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         "entering (tile.isFaceUp == true): ${tile.isFaceUp}"
                     )
                     mTileTextViews[index].text = tile.shortenedCountryName
+
                 }
 
 
                 // set tiles' onClickListener
                 mTileTextViews[index].setOnClickListener {
-                    // mTileTextViews[index].setVisibility(View.VISIBLE)
-                    // mTileTextViews[index].setBackgroundColor(getResources().getColor(R.color.white))
+
                     mTileTextViews[index].text = tile.shortenedCountryName
+                    mTappedTileTextViewsIndex = index
 
                     // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                     // displayToastAboveButton(mTileTextViews[index], tile.countryName)
@@ -108,9 +110,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // disable click on this text tile
                     mTileTextViews[index].setClickable(false)
 
-                    // user can tap on closed flag tile after tapping country tile
-                    // mIsFlagActive = true
-
                     if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty (ie. "-1")
                         mTappedShortenedCountryName =
                             tile.shortenedCountryName // needs to be compared with tapped flag image after this one
@@ -120,8 +119,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             compareTappedTiles(
                                 mTappedShortenedCountryName,
                                 mTappedFlagResID,
-                                mTileTextViews[index],
-                                mTileImageViews[index]
                             )
                         }
 
@@ -146,6 +143,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
 
                     if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
+                    mTappedTileImageViewsIndex = index
 
                     // disable other flag tiles
                     val otherTileImageViews =
@@ -162,24 +160,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             compareTappedTiles(
                                 mTappedShortenedCountryName,
                                 mTappedFlagResID,
-                                mTileTextViews[index],
-                                mTileImageViews[index]
-                            )
+
+                                )
                         }
                     }
 
 
-//                        val timer = object : CountDownTimer(2000, 1000) {
-//
-//                            override fun onTick(millisUntilFinished: Long) {
-//                                // mTextField.setText("seconds remaining: " + millisUntilFinished / 1000)
-//                            }
-//
-//                            override fun onFinish() {
-//                                mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
-//                            }
-//                        }
-//                        timer.start()
 //                        mIsFlagActive =
 //                            false // after flipping flag tile, user has to tap country tile again
 
@@ -192,25 +178,34 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun compareTappedTiles(
         tappedShortenedCountryName: String,
-        tappedFlagResID: Int,
-        tappedTextView: TextView,
-        tappedImageView: ImageView
+        tappedFlagResID: Int
+
     ) {
         Log.i(
             "PANJUTA",
             "inside Compare, tappedShortenedCountryName: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoShortenedCountryName[tappedFlagResID]: ${mMapFlagResIDtoShortenedCountryName[tappedFlagResID]}"
         )
-        if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) {
+        if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) //correct pairs
+        {
             Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
             // make both tiles disappear:
-//            tappedTextView.setText("")
-//            tappedTextView.alpha = 0.25F
-//            tappedTextView.isEnabled = false
-//            tappedImageView.alpha = 0.25F
-//            tappedImageView.isEnabled = false
-        } else {
+
+        } else { // wrong pairs
             Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
-            // make both tiles face-down:
+
+            // make both tiles face-down after 2 seconds:
+            val timer = object : CountDownTimer(2000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+
+                }
+
+                override fun onFinish() {
+                    mTileImageViews[mTappedTileImageViewsIndex].setImageResource(R.drawable.tv_background_primary)
+                    mTileTextViews[mTappedTileTextViewsIndex].text = ""
+                }
+            }
+            timer.start()
+
 
         }
 
