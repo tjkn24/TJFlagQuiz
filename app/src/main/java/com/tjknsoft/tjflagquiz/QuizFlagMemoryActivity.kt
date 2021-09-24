@@ -169,14 +169,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                 )
                         }
                     }
-
-
-//                        mIsFlagActive =
-//                            false // after flipping flag tile, user has to tap country tile again
-
-
                 }
-
             }
         }
     }
@@ -193,7 +186,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         {
             // Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
 
-                    // play correct sound:
+            // play correct sound:
             mSound.playShortResource(R.raw.correct)
 
             // make both tiles blink:
@@ -201,9 +194,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             blinkView(mTileTextViews[mTappedTileTextViewsIndex])
 
             // make both tiles non-clickable:
-            mTileImageViews[mTappedTileImageViewsIndex].setClickable(true)
-            mTileTextViews[mTappedTileTextViewsIndex].setClickable(true)
-
+            // note: android is weird -> setOnClickKistener must be
+            // put before setClickable(false) o disable click
+            mTileImageViews[mTappedTileImageViewsIndex].setOnClickListener(this)
+            mTileImageViews[mTappedTileImageViewsIndex].setClickable(false)
+            mTileTextViews[mTappedTileTextViewsIndex].setOnClickListener(this)
+            mTileTextViews[mTappedTileTextViewsIndex].setClickable(false)
 
         } else { // wrong pairs
             // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
@@ -213,7 +209,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             val tvIndex = mTappedTileTextViewsIndex
 
             // make both tiles face-down after 2 seconds:
-            val timer = object : CountDownTimer(1500, 250) {
+            val timer = object : CountDownTimer(1750, 250) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
 
