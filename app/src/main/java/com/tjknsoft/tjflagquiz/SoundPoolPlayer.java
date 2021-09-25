@@ -18,7 +18,7 @@ public class SoundPoolPlayer {
         mSounds.put(R.raw.correct, this.mShortPlayer.load(pContext, R.raw.correct, 1));
         mSounds.put(R.raw.wrong, this.mShortPlayer.load(pContext, R.raw.wrong, 1));
         mSounds.put(R.raw.perfect, this.mShortPlayer.load(pContext, R.raw.perfect, 1));
-        mSounds.put(R.raw.wrong2, this.mShortPlayer.load(pContext, R.raw.wrong2, 1));
+        mSounds.put(R.raw.tap, this.mShortPlayer.load(pContext, R.raw.tap, 1));
     }
 
     public void playShortResource(int piResource) {

@@ -101,7 +101,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mTileTextViews[index].setOnClickListener {
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedShortenedCountryName != "-1") {
-                        mSound.playShortResource(R.raw.wrong2)
+                        mSound.playShortResource(R.raw.tap)
                     } else {
                         mTileTextViews[index].text = tile.shortenedCountryName
                         mTappedTileTextViewsIndex = index
@@ -150,7 +150,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedFlagResID != -1) {
-                        mSound.playShortResource(R.raw.wrong2)
+                        mSound.playShortResource(R.raw.tap)
                     } else {
                         // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
                         if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
@@ -205,13 +205,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             // put before setClickable(false) o disable click
             mTileImageViews[mTappedTileImageViewsIndex].setOnClickListener {
                 mSound.playShortResource(
-                    R.raw.wrong2
+                    R.raw.tap
                 )
             }
             mTileImageViews[mTappedTileImageViewsIndex].setClickable(false)
             mTileTextViews[mTappedTileTextViewsIndex].setOnClickListener {
                 mSound.playShortResource(
-                    R.raw.wrong2
+                    R.raw.tap
                 )
             }
             mTileTextViews[mTappedTileTextViewsIndex].setClickable(false)
