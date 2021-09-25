@@ -100,37 +100,44 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 // set tiles' onClickListener
                 mTileTextViews[index].setOnClickListener {
+                    Log.i("PANJUTA", "entering text tile's setOnlickListner, mTappedShortenedCountryName: $mTappedShortenedCountryName")
+                    if (mTappedShortenedCountryName != "-1"){
+                        mSound.playShortResource(R.raw.wrong2)
+                    } else {
+                        mTileTextViews[index].text = tile.shortenedCountryName
+                        mTappedTileTextViewsIndex = index
 
-                    mTileTextViews[index].text = tile.shortenedCountryName
-                    mTappedTileTextViewsIndex = index
+                        // if user tap on a tile containing country code, show a toast above that tile cbout its country name
+                        // displayToastAboveButton(mTileTextViews[index], tile.countryName)
 
-                    // if user tap on a tile containing country code, show a toast above that tile cbout its country name
-                    // displayToastAboveButton(mTileTextViews[index], tile.countryName)
-
-                    // disable click on other text tiles
+                        // disable click on other text tiles
 //                    val otherTileTextViews =
 //                        mTileTextViews.filterNot { it == mTileTextViews[index] }
 //                    otherTileTextViews.forEach { it -> it.setClickable(false) }
 
-                    // disable click on this text tile
+                        // disable click on this text tile
 //                    mTileTextViews[index].setClickable(false)
 
-                    // disable click on all text tiles after a text tile is clicked
-                    mTileTextViews.forEach { it -> it.setClickable(false) }
+                        // disable click on all text tiles after a text tile is clicked
+                        // mTileTextViews.forEach { it -> it.setClickable(false) }
 
-                    if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty (ie. "-1")
-                        mTappedShortenedCountryName =
-                            tile.shortenedCountryName // needs to be compared with tapped flag image after this one
+                        if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty (ie. "-1")
+                            mTappedShortenedCountryName =
+                                tile.shortenedCountryName // needs to be compared with tapped flag image after this one
 
-                        if (mTappedFlagResID != -1)  // if flag image has been tapped too
-                        {
-                            compareTappedTiles(
-                                mTappedShortenedCountryName,
-                                mTappedFlagResID,
-                            )
+                            if (mTappedFlagResID != -1)  // if flag image has been tapped too
+                            {
+                                compareTappedTiles(
+                                    mTappedShortenedCountryName,
+                                    mTappedFlagResID,
+                                )
+                            }
+
                         }
 
                     }
+
+
 
                 }
             } else { // tile displays flag image
