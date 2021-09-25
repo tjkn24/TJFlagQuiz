@@ -97,11 +97,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
 
-
-                // set tiles' onClickListener
+                // set text tiles' onClickListener
                 mTileTextViews[index].setOnClickListener {
-                    Log.i("PANJUTA", "entering text tile's setOnlickListner, mTappedShortenedCountryName: $mTappedShortenedCountryName")
-                    if (mTappedShortenedCountryName != "-1"){
+                    // if a text tile was tapped before this one, play error sound
+                    if (mTappedShortenedCountryName != "-1") {
                         mSound.playShortResource(R.raw.wrong2)
                     } else {
                         mTileTextViews[index].text = tile.shortenedCountryName
@@ -132,16 +131,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                     mTappedFlagResID,
                                 )
                             }
-
                         }
-
                     }
-
-
-
                 }
             } else { // tile displays flag image
-                // mIsFlagActive = false // user has to tap country tile for the very first time
 
                 mTileTextViews[index].setVisibility(View.GONE)
                 mTileImageViews[index].setVisibility(View.VISIBLE)
@@ -152,31 +145,35 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
                 }
 
-
+                // set flag tiles' onClickListener
                 mTileImageViews[index].setOnClickListener {
 
-                    // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
+                    // if a text tile was tapped before this one, play error sound
+                    if (mTappedFlagResID != -1) {
+                        mSound.playShortResource(R.raw.wrong2)
+                    } else {
+                        // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
+                        if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
+                        mTappedTileImageViewsIndex = index
 
-                    if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
-                    mTappedTileImageViewsIndex = index
+                        // disable other flag tiles
+//                        val otherTileImageViews =
+//                            mTileImageViews.filterNot { it == mTileImageViews[index] }
+//                        otherTileImageViews.forEach { it -> it.setClickable(false) }
 
-                    // disable other flag tiles
-                    val otherTileImageViews =
-                        mTileImageViews.filterNot { it == mTileImageViews[index] }
-                    otherTileImageViews.forEach { it -> it.setClickable(false) }
+                        // disable this flag tile
+//                        mTileImageViews[index].setClickable(false)
 
-                    // disable this flag tile
-                    mTileImageViews[index].setClickable(false)
+                        if (mTappedFlagResID == -1) { // register tile only if the variable is empty
+                            mTappedFlagResID =
+                                tile.flagResId // needs to be compared with tapped name tile
+                            if (mTappedShortenedCountryName != "-1") { // if text image has been tapped too
+                                compareTappedTiles(
+                                    mTappedShortenedCountryName,
+                                    mTappedFlagResID,
 
-                    if (mTappedFlagResID == -1) { // register tile only if the variable is empty
-                        mTappedFlagResID =
-                            tile.flagResId // needs to be compared with tapped name tile
-                        if (mTappedShortenedCountryName != "-1") { // if text image has been tapped too
-                            compareTappedTiles(
-                                mTappedShortenedCountryName,
-                                mTappedFlagResID,
-
-                                )
+                                    )
+                            }
                         }
                     }
                 }
