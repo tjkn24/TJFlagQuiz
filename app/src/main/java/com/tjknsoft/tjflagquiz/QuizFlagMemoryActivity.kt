@@ -108,12 +108,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // displayToastAboveButton(mTileTextViews[index], tile.countryName)
 
                     // disable click on other text tiles
-                    val otherTileTextViews =
-                        mTileTextViews.filterNot { it == mTileTextViews[index] }
-                    otherTileTextViews.forEach { it -> it.setClickable(false) }
+//                    val otherTileTextViews =
+//                        mTileTextViews.filterNot { it == mTileTextViews[index] }
+//                    otherTileTextViews.forEach { it -> it.setClickable(false) }
 
                     // disable click on this text tile
-                    mTileTextViews[index].setClickable(false)
+//                    mTileTextViews[index].setClickable(false)
+
+                    // disable click on all text tiles after a text tile is clicked
+                    mTileTextViews.forEach { it -> it.setClickable(false) }
 
                     if (mTappedShortenedCountryName == "-1") { // register tile only if the variable is empty (ie. "-1")
                         mTappedShortenedCountryName =
@@ -196,9 +199,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             // make both tiles non-clickable:
             // note: android is weird -> setOnClickKistener must be
             // put before setClickable(false) o disable click
-            mTileImageViews[mTappedTileImageViewsIndex].setOnClickListener(this)
+            mTileImageViews[mTappedTileImageViewsIndex].setOnClickListener {
+                mSound.playShortResource(
+                    R.raw.wrong2
+                )
+            }
             mTileImageViews[mTappedTileImageViewsIndex].setClickable(false)
-            mTileTextViews[mTappedTileTextViewsIndex].setOnClickListener(this)
+            mTileTextViews[mTappedTileTextViewsIndex].setOnClickListener {
+                mSound.playShortResource(
+                    R.raw.wrong2
+                )
+            }
             mTileTextViews[mTappedTileTextViewsIndex].setClickable(false)
 
         } else { // wrong pairs
