@@ -222,21 +222,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             blinkView(mTileImageViews[mTappedTileImageViewIndex])
             blinkView(mTileTextViews[mTappedTileTextViewIndex])
 
-            // make both tiles non-clickable:
-            // note: android is weird -> setOnClickKistener must be
-            // put before setClickable(false) o disable click
+
+            // both tiles must not be able to selected anymore; just play sound when tapped
             mTileImageViews[mTappedTileImageViewIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
-            mTileImageViews[mTappedTileImageViewIndex].setClickable(false)
             mTileTextViews[mTappedTileTextViewIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
-            mTileTextViews[mTappedTileTextViewIndex].setClickable(false)
+
+            // disable long-click on text and flag tiles after they are matched and open
+            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener{false}
+            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener{false}
 
         } else { // wrong pairs
             // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
@@ -251,20 +252,26 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onFinish() {
+                    // display text and flag tiles in close position
                     mTileImageViews[ivIndex].setImageResource(R.drawable.tv_background_primary)
                     mTileTextViews[tvIndex].text = ""
+
+                    // disable long-click on text and flag tiles after they are closed
+                    mTileImageViews[ivIndex].setOnLongClickListener{false}
+                    mTileTextViews[tvIndex].setOnLongClickListener{false}
                 }
             }
             timer.start()
         }
 
-// reset tapped tiles
+        // reset tapped tiles
         mTappedFlagResID = -1
         mTappedShortenedCountryName = "-1"
 
         // enable all tiles
         for (tv in mTileTextViews) tv.setClickable(true)
         for (iv in mTileImageViews) iv.setClickable(true)
+
     }
 
 
