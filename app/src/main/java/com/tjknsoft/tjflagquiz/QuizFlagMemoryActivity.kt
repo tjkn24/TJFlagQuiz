@@ -41,8 +41,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsNameActive: Boolean = true
     private var mTappedFlagResID: Int = -1
     private var mTappedShortenedCountryName: String = "-1"
-    private var mTappedTileTextViewsIndex: Int = -1
-    private var mTappedTileImageViewsIndex: Int = -1
+    private var mTappedTileTextViewIndex: Int = -1
+    private var mTappedTileImageViewIndex: Int = -1
     private lateinit var mSound: SoundPoolPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -94,7 +94,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         "entering (tile.isFaceUp == true): ${tile.isFaceUp}"
                     )
                     mTileTextViews[index].text = tile.shortenedCountryName
+                }
 
+                // closed text tile cannot be long-pressed:
+                mTileTextViews[index].setOnLongClickListener{
+                    false
                 }
 
                 // set text tiles' onClickListener
@@ -104,7 +108,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         mSound.playShortResource(R.raw.tap)
                     } else {
                         mTileTextViews[index].text = tile.shortenedCountryName
-                        mTappedTileTextViewsIndex = index
+                        mTappedTileTextViewIndex = index
+
+                        // only text tile that has been opened can be long-pressed:
+                        mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener{
+                            Toast.makeText(this, "Text tile l" +
+                                    "ong click detected", Toast.LENGTH_SHORT).show()
+                            return@setOnLongClickListener true
+                        }
 
                         // if user tap on a tile containing country code, show a toast above that tile cbout its country name
                         // displayToastAboveButton(mTileTextViews[index], tile.countryName)
@@ -145,6 +156,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
                 }
 
+                // closed flag tile cannot be long-pressed:
+                mTileImageViews[index].setOnLongClickListener{
+                    false
+                }
+
                 // set flag tiles' onClickListener
                 mTileImageViews[index].setOnClickListener {
 
@@ -154,7 +170,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
                         if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
-                        mTappedTileImageViewsIndex = index
+                        mTappedTileImageViewIndex = index
+
+                        // only flag tile that has been opened can be long-pressed:
+                        mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener{
+                            Toast.makeText(this, "Flag tile long click detected", Toast.LENGTH_SHORT).show()
+                            return@setOnLongClickListener true
+                        }
 
                         // disable other flag tiles
 //                        val otherTileImageViews =
@@ -197,34 +219,34 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mSound.playShortResource(R.raw.correct)
 
             // make both tiles blink:
-            blinkView(mTileImageViews[mTappedTileImageViewsIndex])
-            blinkView(mTileTextViews[mTappedTileTextViewsIndex])
+            blinkView(mTileImageViews[mTappedTileImageViewIndex])
+            blinkView(mTileTextViews[mTappedTileTextViewIndex])
 
             // make both tiles non-clickable:
             // note: android is weird -> setOnClickKistener must be
             // put before setClickable(false) o disable click
-            mTileImageViews[mTappedTileImageViewsIndex].setOnClickListener {
+            mTileImageViews[mTappedTileImageViewIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
-            mTileImageViews[mTappedTileImageViewsIndex].setClickable(false)
-            mTileTextViews[mTappedTileTextViewsIndex].setOnClickListener {
+            mTileImageViews[mTappedTileImageViewIndex].setClickable(false)
+            mTileTextViews[mTappedTileTextViewIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
-            mTileTextViews[mTappedTileTextViewsIndex].setClickable(false)
+            mTileTextViews[mTappedTileTextViewIndex].setClickable(false)
 
         } else { // wrong pairs
             // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
-            val ivIndex = mTappedTileImageViewsIndex
-            val tvIndex = mTappedTileTextViewsIndex
+            val ivIndex = mTappedTileImageViewIndex
+            val tvIndex = mTappedTileTextViewIndex
 
             // make both tiles face-down after 2 seconds:
-            val timer = object : CountDownTimer(1750, 250) {
+            val timer = object : CountDownTimer(2000, 250) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
 
