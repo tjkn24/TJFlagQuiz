@@ -97,7 +97,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 // closed text tile cannot be long-pressed:
-                mTileTextViews[index].setOnLongClickListener{
+                mTileTextViews[index].setOnLongClickListener {
                     false
                 }
 
@@ -111,10 +111,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         mTappedTileTextViewIndex = index
 
                         // only text tile that has been opened can be long-pressed:
-                        mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener{
-                            Toast.makeText(this, "Text tile l" +
-                                    "ong click detected", Toast.LENGTH_SHORT).show()
-                            return@setOnLongClickListener true
+                        // condition: only when flag tile has not been opened
+                        // in other words: this is the first tile of the tile pair that
+                        // is going to be compared
+                        if (mTappedFlagResID == -1) {
+                            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener {
+                                Toast.makeText(
+                                    this, "Text tile l" +
+                                            "ong click detected", Toast.LENGTH_SHORT
+                                ).show()
+                                return@setOnLongClickListener true
+                            }
                         }
 
                         // if user tap on a tile containing country code, show a toast above that tile cbout its country name
@@ -157,7 +164,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 // closed flag tile cannot be long-pressed:
-                mTileImageViews[index].setOnLongClickListener{
+                mTileImageViews[index].setOnLongClickListener {
                     false
                 }
 
@@ -173,9 +180,18 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         mTappedTileImageViewIndex = index
 
                         // only flag tile that has been opened can be long-pressed:
-                        mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener{
-                            Toast.makeText(this, "Flag tile long click detected", Toast.LENGTH_SHORT).show()
-                            return@setOnLongClickListener true
+                        // condition: only when text tile has not been opened
+                        // in other words: this is the first tile of the tile pair that
+                        // is going to be compared
+                        if (mTappedShortenedCountryName == "-1") {
+                            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener {
+                                Toast.makeText(
+                                    this,
+                                    "Flag tile long click detected",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@setOnLongClickListener true
+                            }
                         }
 
                         // disable other flag tiles
@@ -236,8 +252,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             // disable long-click on text and flag tiles after they are matched and open
-            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener{false}
-            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener{false}
+            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener { false }
+            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener { false }
 
         } else { // wrong pairs
             // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
@@ -257,8 +273,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mTileTextViews[tvIndex].text = ""
 
                     // disable long-click on text and flag tiles after they are closed
-                    mTileImageViews[ivIndex].setOnLongClickListener{false}
-                    mTileTextViews[tvIndex].setOnLongClickListener{false}
+                    mTileImageViews[ivIndex].setOnLongClickListener { false }
+                    mTileTextViews[tvIndex].setOnLongClickListener { false }
                 }
             }
             timer.start()
