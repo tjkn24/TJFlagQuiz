@@ -45,6 +45,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mTappedTileTextViewIndex: Int = -1
     private var mTappedTileImageViewIndex: Int = -1
     private lateinit var mSound: SoundPoolPlayer
+    private var mMoves: Int = 0
+    private var mBestMoves: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,6 +113,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     } else {
                         mTileTextViews[index].text = tile.shortenedCountryName
                         mTappedTileTextViewIndex = index
+
+                        mMoves++
+                        tv_current_moves.text = mMoves.toString()
 
                         // only text tile that has been opened can be long-pressed:
                         // condition: only when flag tile has not been opened
@@ -183,6 +188,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
                         if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
                         mTappedTileImageViewIndex = index
+
+                        mMoves++
+                        tv_current_moves.text = mMoves.toString()
 
                         // only flag tile that has been opened can be long-pressed:
                         // condition: only when text tile has not been opened
