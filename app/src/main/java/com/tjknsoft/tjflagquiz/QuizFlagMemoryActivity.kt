@@ -16,9 +16,6 @@ import kotlin.random.Random
 import android.view.Gravity
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.content.Context
-import android.view.ViewGroup
-import android.view.LayoutInflater
 import kotlinx.android.synthetic.main.toast_image_layout.*
 
 
@@ -34,6 +31,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private val mNumberOfTiles: Int = 40
     private var mMapFlagResIDtoCountryName = mutableMapOf<Int, String>()
     private var mMapFlagResIDtoShortenedCountryName = mutableMapOf<Int, String>()
+    private var mMapShortenedCountryNameToFlagResID = mutableMapOf<String, Int>()
     private var mMapShortenedCountryNameToCountryName = mutableMapOf<String, String>()
     private var mSelectedFlagsResID: ArrayList<Int> = arrayListOf()
     private var mSelectedShortenedCountryNames: ArrayList<String> = arrayListOf()
@@ -42,7 +40,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
     private var mTileTextViews: ArrayList<TextView> = arrayListOf()
     private var mIsFlagActive: Boolean = true
-    private var mIsNameActive: Boolean = true
     private var mTappedFlagResID: Int = -1
     private var mTappedShortenedCountryName: String = "-1"
     private var mTappedTileTextViewIndex: Int = -1
@@ -81,6 +78,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mAllShortenedCountryNames = Constants.allShortenedCountryNames
         mAllFlagsResID = SplashScreenActivity.mAllFlagsResID
         mapFlagResIDToShortenedCountryName(mAllFlagsResID)
+        mapShortenedCountryNameToFlagResID(mAllShortenedCountryNames)
         mapShortenedCountryNameToCountryName(mAllShortenedCountryNames)
     }
 
@@ -121,12 +119,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         if (mTappedFlagResID == -1) {
                             mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener {
 
-                                displayHintToast(tile.flagResId, tile.shortenedCountryName)
+                                displayToastAboveButton(
+                                    mTileTextViews[index],
+                                    mMapShortenedCountryNameToFlagResID[tile.shortenedCountryName]!!,
+                                    tile.shortenedCountryName
+                                )
 
-                                Toast.makeText(
-                                    this, "Text tile l" +
-                                            "ong click detected", Toast.LENGTH_SHORT
-                                ).show()
                                 return@setOnLongClickListener true
                             }
                         }
@@ -192,11 +190,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // is going to be compared
                         if (mTappedShortenedCountryName == "-1") {
                             mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener {
-                                Toast.makeText(
-                                    this,
-                                    "Flag tile long click detected",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                displayToastAboveButton(
+                                    mTileImageViews[index],
+                                    tile.flagResId,
+                                    mMapFlagResIDtoShortenedCountryName[tile.flagResId]!!
+                                )
                                 return@setOnLongClickListener true
                             }
                         }
@@ -225,15 +223,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun displayHintToast(flagResId: Int, shortenedCountryName: String) {
-        val layout = layoutInflater.inflate(R.layout.toast_image_layout,ll_toast)
-
-        val myToast = Toast(applicationContext)
-        myToast.duration = Toast.LENGTH_LONG
-        myToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        myToast.view = layout //setting the view of custom toast layout
-        myToast.show()
-    }
 
     private fun compareTappedTiles(
         tappedShortenedCountryName: String,
@@ -380,6 +369,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
+    private fun mapShortenedCountryNameToFlagResID(allShortenedCountryName: ArrayList<String>) {
+        for ((index, shortenedCountryName) in allShortenedCountryName.withIndex()) {
+            mMapShortenedCountryNameToFlagResID.put(
+                shortenedCountryName,
+                mAllFlagsResID[index]
+            )
+        }
+    }
+
     private fun mapShortenedCountryNameToCountryName(allShortenedCountryName: ArrayList<String>) {
         for ((index, shortenedCountryName) in allShortenedCountryName.withIndex()) {
             mMapShortenedCountryNameToCountryName.put(
@@ -486,7 +484,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     // v is the Button view that you want the Toast to appear above
     // and messageId is the id of your string resource for the message
-    private fun displayToastAboveButton(v: View, message: String) {
+    private fun displayToastAboveButton(v: View, flagResId: Int, shortenedCountryName: String) {
         var xOffset = 0
         var yOffset = 0
         val gvr = Rect()
@@ -510,15 +508,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 xOffset = parentCenterX - halfWidth
             }
         }
-        val toast = Toast.makeText(this, message, Toast.LENGTH_SHORT)
-//        val view: View? = toast.getView()
-//        view?.setBackgroundResource(R.drawable.toast_background)
-//        val toastview = toast.view!!.findViewById<View>(android.R.id.message) as TextView
-//        toastview.setTextColor(Color.YELLOW)
-//        toastview.setTextSize(20.0F)
-        toast.setGravity(Gravity.CENTER, xOffset, yOffset)
-        toast.show()
+        val layout = layoutInflater.inflate(R.layout.toast_image_layout, ll_toast)
+
+        val myToast = Toast(applicationContext)
+        myToast.duration = Toast.LENGTH_SHORT
+        myToast.setGravity(Gravity.CENTER, xOffset, yOffset)
+
+        val flag = layout.findViewById<ImageView>(R.id.iv_toast)
+        val country = layout.findViewById<TextView>(R.id.tv_toast)
+
+        flag.setImageResource(flagResId)
+        country.text = shortenedCountryName
+
+        myToast.view = layout //setting the view of custom toast layout
+        myToast.show()
     }
+
 
     private fun blinkView(view: View) {
         val animation: Animation = AlphaAnimation(
