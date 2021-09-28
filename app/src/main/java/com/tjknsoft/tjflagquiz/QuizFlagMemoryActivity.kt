@@ -116,8 +116,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         mTileTextViews[index].text = tile.shortenedCountryName
                         mTappedTileTextViewIndex = index
 
-                        mCurrentMoves++
-                        tv_current_moves.text = mCurrentMoves.toString()
+                        updateMoves()
 
                         // only text tile that has been opened can be long-pressed:
                         // condition: only when flag tile has not been opened
@@ -131,6 +130,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                     mMapShortenedCountryNameToFlagResID[tile.shortenedCountryName]!!,
                                     tile.shortenedCountryName
                                 )
+
+                                updateMoves()
 
                                 return@setOnLongClickListener true
                             }
@@ -191,8 +192,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
                         mTappedTileImageViewIndex = index
 
-                        mCurrentMoves++
-                        tv_current_moves.text = mCurrentMoves.toString()
+                        updateMoves()
 
                         // only flag tile that has been opened can be long-pressed:
                         // condition: only when text tile has not been opened
@@ -205,6 +205,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                     tile.flagResId,
                                     mMapFlagResIDtoShortenedCountryName[tile.flagResId]!!
                                 )
+                                updateMoves()
                                 return@setOnLongClickListener true
                             }
                         }
@@ -231,6 +232,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+
+    private fun updateMoves() {
+        mCurrentMoves++
+        tv_current_moves.text = mCurrentMoves.toString()
     }
 
 
