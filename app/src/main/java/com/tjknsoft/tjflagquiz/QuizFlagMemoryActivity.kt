@@ -1,5 +1,6 @@
 package com.tjknsoft.tjflagquiz
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,10 @@ import android.view.Gravity
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import kotlinx.android.synthetic.main.toast_image_layout.*
+import android.content.SharedPreferences
+
+
+
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -39,7 +44,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mShuffledSelectedFlagResIDandShortenedCountryName: ArrayList<Any> = arrayListOf()
     private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
     private var mTileTextViews: ArrayList<TextView> = arrayListOf()
-    private var mIsFlagActive: Boolean = true
     private var mTappedFlagResID: Int = -1
     private var mTappedShortenedCountryName: String = "-1"
     private var mTappedTileTextViewIndex: Int = -1
@@ -48,7 +52,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentMoves = 0
     private var mBestMoves = 0
     private var mCurrentTime = 0
-    private var mBestTime= 0
+    private var mBestTime = 0
+    private var mMatchedPairs = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +63,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onCreateHelper() {
+
+        updateBestMovesTexView()
 
         getAndMapData()
 
@@ -249,8 +256,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "inside Compare, tappedShortenedCountryName: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoShortenedCountryName[tappedFlagResID]: ${mMapFlagResIDtoShortenedCountryName[tappedFlagResID]}"
         )
         if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) //correct pairs
-        {
-            // Toast.makeText(this, "MATCHED!", Toast.LENGTH_LONG).show()
+        { // matched pair
 
             // play correct sound:
             mSound.playShortResource(R.raw.correct)
@@ -258,7 +264,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             // make both tiles blink:
             blinkView(mTileImageViews[mTappedTileImageViewIndex])
             blinkView(mTileTextViews[mTappedTileTextViewIndex])
-
 
             // both tiles must not be able to selected anymore; just play sound when tapped
             mTileImageViews[mTappedTileImageViewIndex].setOnClickListener {
@@ -272,12 +277,23 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 )
             }
 
-            // disable long-click on text and flag tiles after they are matched and open
+            // disable long-click on text and flag tiles after they are matched and opened
             mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener { false }
             mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener { false }
 
+            mMatchedPairs++
+
+            if (mMatchedPairs == 20){
+                // game ends
+                setBestMoves(mCurrentMoves)
+                blinkView(tv_best_moves)
+                mSound.playShortResource(
+                    R.raw.perfect
+                )
+                Toast.makeText(applicationContext,"You set a Best Moves record!!",Toast.LENGTH_LONG).show()
+            }
+
         } else { // wrong pairs
-            // Toast.makeText(this, "WRONG!", Toast.LENGTH_LONG).show()
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
             val ivIndex = mTappedTileImageViewIndex
@@ -309,6 +325,25 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         for (tv in mTileTextViews) tv.setClickable(true)
         for (iv in mTileImageViews) iv.setClickable(true)
 
+    }
+
+    private fun setBestMoves(score: Int) {
+        // set currentMoves as bestMoves if no bestMoves yet (0) or currentMoves smaller than best Moves
+        if (mBestMoves == 0 || mCurrentMoves < mBestMoves) {
+            //setting preferences
+            val prefs = getSharedPreferences("mBestMovesKey", Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = prefs.edit()
+            editor.putInt("key", score)
+            editor.commit()
+        }
+        updateBestMovesTexView()
+    }
+
+    private fun updateBestMovesTexView() {
+        // getting preferences
+        val prefs = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
+        val storedBestMoves = prefs.getInt("key", 0) //0 is the default value
+        tv_best_moves.text = storedBestMoves.toString()
     }
 
 
