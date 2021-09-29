@@ -21,9 +21,6 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import android.content.SharedPreferences
 
 
-
-
-
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
 
@@ -64,6 +61,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
+        // clearSharedPreferences()
+
         updateBestMovesTexView()
 
         getAndMapData()
@@ -81,7 +80,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mSound = SoundPoolPlayer(this)
 
     }
-
 
     private fun getAndMapData() {
 
@@ -262,8 +260,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mSound.playShortResource(R.raw.correct)
 
             // make both tiles blink:
-            blinkView(mTileImageViews[mTappedTileImageViewIndex])
-            blinkView(mTileTextViews[mTappedTileTextViewIndex])
+            blinkView(mTileImageViews[mTappedTileImageViewIndex], false)
+            blinkView(mTileTextViews[mTappedTileTextViewIndex], false)
 
             // both tiles must not be able to selected anymore; just play sound when tapped
             mTileImageViews[mTappedTileImageViewIndex].setOnClickListener {
@@ -283,14 +281,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             mMatchedPairs++
 
-            if (mMatchedPairs == 20){
+            if (mMatchedPairs == 20) {
                 // game ends
-                setBestMoves(mCurrentMoves)
-                blinkView(tv_best_moves)
-                mSound.playShortResource(
-                    R.raw.perfect
-                )
-                Toast.makeText(applicationContext,"You set a Best Moves record!!",Toast.LENGTH_LONG).show()
+                checkBestMoves(mCurrentMoves)
             }
 
         } else { // wrong pairs
@@ -324,17 +317,32 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // enable all tiles
         for (tv in mTileTextViews) tv.setClickable(true)
         for (iv in mTileImageViews) iv.setClickable(true)
+    }
+
+    private fun clearSharedPreferences() {
+        val sharedPreferences = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.remove("best_moves")
+        editor.commit()
 
     }
 
-    private fun setBestMoves(score: Int) {
+    private fun checkBestMoves(score: Int) {
         // set currentMoves as bestMoves if no bestMoves yet (0) or currentMoves smaller than best Moves
         if (mBestMoves == 0 || mCurrentMoves < mBestMoves) {
             //setting preferences
             val prefs = getSharedPreferences("mBestMovesKey", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = prefs.edit()
-            editor.putInt("key", score)
+            editor.putInt("best_moves", score)
             editor.commit()
+
+            blinkView(tv_best_moves, true)
+            blinkView(tv_current_moves, true)
+            mSound.playShortResource(
+                R.raw.perfect
+            )
+            Toast.makeText(applicationContext, "You set a Best Moves record!!", Toast.LENGTH_LONG)
+                .show()
         }
         updateBestMovesTexView()
     }
@@ -342,7 +350,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateBestMovesTexView() {
         // getting preferences
         val prefs = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
-        val storedBestMoves = prefs.getInt("key", 0) //0 is the default value
+        val storedBestMoves = prefs.getInt("best_moves", 0) //0 is the default value
         tv_best_moves.text = storedBestMoves.toString()
     }
 
@@ -576,7 +584,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun blinkView(view: View) {
+    private fun blinkView(view: View, isInfinite: Boolean) {
         val animation: Animation = AlphaAnimation(
             1.0F,
             0.25F
@@ -585,7 +593,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         animation.duration = 350 // miliseconds duration for each animation cycle
 
         // animation.interpolator = LinearInterpolator()
-        animation.repeatCount = 2
+        if (isInfinite) {
+            animation.repeatCount = Animation.INFINITE
+        } else {
+            animation.repeatCount = 2
+        }
 
         animation.repeatMode = Animation.RESTART //animation will start from start point once ended
 
