@@ -19,6 +19,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import android.content.SharedPreferences
+import android.os.Handler
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -51,6 +52,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentTime = 0
     private var mBestTime = 0
     private var mMatchedPairs = 0
+    private var mStartTime = 0L
+    private lateinit var mTimerHandler: Handler
+    private lateinit var mTimerRunnable: Runnable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +66,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         // clearSharedPreferences()
+
+        setTimer()
 
         updateBestMovesTexView()
 
@@ -80,6 +86,29 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mSound = SoundPoolPlayer(this)
 
     }
+
+    private fun setTimer() {
+        mStartTime = System.currentTimeMillis()
+        mTimerHandler = Handler()
+        mTimerRunnable = object : Runnable {
+            override fun run() {
+              val millis: Long = System.currentTimeMillis() - mStartTime
+                var seconds = (millis / 1000).toInt()
+                val minutes = seconds / 60
+                seconds = seconds % 60
+                tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
+                mTimerHandler.postDelayed(this, 500)
+            }
+        }
+        mTimerHandler.postDelayed(mTimerRunnable, 0)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mTimerHandler.removeCallbacks(mTimerRunnable)
+
+    }
+
 
     private fun getAndMapData() {
 
