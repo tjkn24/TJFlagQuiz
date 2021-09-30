@@ -585,23 +585,26 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun blinkView(view: View, isInfinite: Boolean) {
-        val animation: Animation = AlphaAnimation(
-            1.0F,
-            0.25F
-        ) // to change visibility from visible (1.0) to invisible (0.0)
 
-        animation.duration = 350 // miliseconds duration for each animation cycle
-
-        // animation.interpolator = LinearInterpolator()
         if (isInfinite) {
+            val animation: Animation = AlphaAnimation(
+                1.0F,
+                0.0F
+            ) // to change visibility from visible (1.0) to invisible (0.0)
             animation.repeatCount = Animation.INFINITE
+            animation.duration = 400 // miliseconds duration for each animation cycle
+            animation.repeatMode = Animation.REVERSE //animation will start from end point once ended
+            view.startAnimation(animation) //to start animation
         } else {
+            val animation: Animation = AlphaAnimation(
+                1.0F,
+                0.25F
+            )
             animation.repeatCount = 2
+            animation.duration = 350
+            animation.repeatMode = Animation.RESTART
+            view.startAnimation(animation)
         }
-
-        animation.repeatMode = Animation.RESTART //animation will start from start point once ended
-
-        view.startAnimation(animation) //to start animation
 
     }
 
