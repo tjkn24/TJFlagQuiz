@@ -20,6 +20,7 @@ import android.view.animation.Animation
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import android.content.SharedPreferences
 import android.os.Handler
+import kotlin.math.floor
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -52,7 +53,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mCurrentTime = 0
     private var mBestTime = 0
     private var mMatchedPairs = 0
-    private var mStartTime = 0L
+    private var mStartTime = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
 
@@ -88,16 +89,20 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTimer() {
-        mStartTime = System.currentTimeMillis()
+        mStartTime = System.currentTimeMillis().toDouble()
         mTimerHandler = Handler()
         mTimerRunnable = object : Runnable {
             override fun run() {
-              val millis: Long = System.currentTimeMillis() - mStartTime
-                var seconds = (millis / 1000).toInt()
-                val minutes = seconds / 60
-                seconds = seconds % 60
-                tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
-                mTimerHandler.postDelayed(this, 500)
+              val millis: Double = System.currentTimeMillis() - mStartTime
+                val minutes = millis / 60000
+                val intMinutes = floor(minutes)
+                val seconds = (minutes - intMinutes)*60.0
+                val intSeconds = floor(seconds)
+                val hundreths = (seconds- intSeconds)*100.0
+
+                // tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
+                tv_current_timer.text = String.format("%02d:%02d:%02d", intMinutes.toInt(), intSeconds.toInt(), hundreths.toInt())
+                mTimerHandler.postDelayed(this, 100)
             }
         }
         mTimerHandler.postDelayed(mTimerRunnable, 0)
@@ -109,6 +114,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // mTimerHandler.
+    }
 
     private fun getAndMapData() {
 
