@@ -50,11 +50,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mSound: SoundPoolPlayer
     private var mCurrentMoves = 0
     private var mBestMoves = 0
-    private var mCurrentTime = 0
     private var mBestTime = 0
     private var mMatchedPairs = 0
-    private var mStartTime = 0.0
-    private var mMillis = 0.0
+    private var mOnResumeTime = 0.0
+    private var mCurrentTime = 0.0
+    private var mGameStartTime = 0.0
+    private var mGameEndTime = 0.0
     private var mPreviousDuration = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
@@ -92,12 +93,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTimer() {
-        mStartTime = System.currentTimeMillis().toDouble()
+        mGameStartTime = System.currentTimeMillis().toDouble()
         mTimerHandler = Handler()
         mTimerRunnable = object : Runnable {
             override fun run() {
-              mMillis = System.currentTimeMillis() - mStartTime + mPreviousDuration
-                val minutes = mMillis / 60000
+              mCurrentTime = System.currentTimeMillis() - mOnResumeTime + mPreviousDuration
+                // mPreviousDuration: duration before latest onPause() (if any)
+                val minutes = mCurrentTime / 60000
                 val intMinutes = floor(minutes)
                 val seconds = (minutes - intMinutes)*60.0
                 val intSeconds = floor(seconds)
@@ -114,14 +116,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     override fun onPause() {
         super.onPause()
         mTimerHandler.removeCallbacks(mTimerRunnable) // stop the timer
-        mPreviousDuration = mMillis // save the game duration before paused
+        mPreviousDuration = mCurrentTime // save the game duration before paused
         // this duration will be added to the next game time after resumed
         // 'added', because mStartTime is reset when game resumed
     }
 
-    override fun onStart() {
-        super.onStart()
-        mStartTime = System.currentTimeMillis().toDouble()
+    override fun onResume() {
+        super.onResume()
+        mOnResumeTime = System.currentTimeMillis().toDouble()
         mTimerHandler.postDelayed(mTimerRunnable, 0)
     }
 
@@ -328,9 +330,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             if (mMatchedPairs == 20) {
                 // game ends
                 checkBestMoves(mCurrentMoves)
+
+                // stop the timer and store it
+                mGameEndTime = System.currentTimeMillis().toDouble()
+                mTimerHandler.removeCallbacks(mTimerRunnable)
+
+                // todo: check best time and update its textview
             }
 
         } else { // wrong pairs
+
+            // Todo: User can tap any other tile only after the wrong pair is closed
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
             val ivIndex = mTappedTileImageViewIndex
@@ -372,6 +382,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun checkBestMoves(score: Int) {
+        // this function is called when game ends
         // set currentMoves as bestMoves if no bestMoves yet (0) or currentMoves smaller than best Moves
         if (mBestMoves == 0 || mCurrentMoves < mBestMoves) {
 
