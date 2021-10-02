@@ -54,8 +54,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mBestTime = 0
     private var mMatchedPairs = 0
     private var mStartTime = 0.0
+    private var mMillis = 0.0
+    private var mPreviousDuration = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,8 +96,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mTimerHandler = Handler()
         mTimerRunnable = object : Runnable {
             override fun run() {
-              val millis: Double = System.currentTimeMillis() - mStartTime
-                val minutes = millis / 60000
+              mMillis = System.currentTimeMillis() - mStartTime + mPreviousDuration
+                val minutes = mMillis / 60000
                 val intMinutes = floor(minutes)
                 val seconds = (minutes - intMinutes)*60.0
                 val intSeconds = floor(seconds)
@@ -110,13 +113,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-        mTimerHandler.removeCallbacks(mTimerRunnable)
-
+        mTimerHandler.removeCallbacks(mTimerRunnable) // stop the timer
+        mPreviousDuration = mMillis // save the game duration before paused
+        // this duration will be added to the next game time after resumed
+        // 'added', because mStartTime is reset when game resumed
     }
 
     override fun onStart() {
         super.onStart()
-        // mTimerHandler.
+        mStartTime = System.currentTimeMillis().toDouble()
+        mTimerHandler.postDelayed(mTimerRunnable, 0)
     }
 
     private fun getAndMapData() {
