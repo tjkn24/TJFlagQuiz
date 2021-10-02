@@ -76,6 +76,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         updateBestMovesTexView()
 
+        updateBestTimeTexView()
+
         getAndMapData()
 
         selectAndShuffleTileContent()
@@ -331,11 +333,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // game ends
                 checkBestMoves(mCurrentMoves)
 
-                // stop the timer and store it
-                mGameEndTime = System.currentTimeMillis().toDouble()
-                mTimerHandler.removeCallbacks(mTimerRunnable)
-
-                // todo: check best time and update its textview
+                checkBestTime()
             }
 
         } else { // wrong pairs
@@ -373,6 +371,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         for (iv in mTileImageViews) iv.setClickable(true)
     }
 
+
+
     private fun clearSharedPreferences() {
         val sharedPreferences = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -380,6 +380,42 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor.commit()
 
     }
+
+    private fun checkBestTime() {
+        // stop the timer and store it
+        mGameEndTime = System.currentTimeMillis().toDouble()
+        mTimerHandler.removeCallbacks(mTimerRunnable)
+
+        val gameDuration = mGameEndTime - mGameStartTime
+
+        if (mBestTime == 0 || gameDuration < mBestTime) {
+            //setting preferences
+            val prefs = getSharedPreferences("mBestTimeKey", Context.MODE_PRIVATE)
+            val editor: SharedPreferences.Editor = prefs.edit()
+            editor.putInt("best_time", gameDuration.toInt())
+            editor.commit()
+
+            blinkView(tv_best_timer, true)
+            blinkView(tv_current_timer, true)
+            mSound.playShortResource(
+                R.raw.perfect
+            )
+            Toast.makeText(applicationContext, "You set a Best Time record!!", Toast.LENGTH_LONG)
+                .show()
+        } else {
+            Toast.makeText(this,"Game Over; try breaking the record next time!",Toast.LENGTH_LONG).show()
+        }
+        updateBestTimeTexView()
+    }
+
+    private fun updateBestTimeTexView() {
+        // getting preferences
+        val prefs = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
+        mBestTime = prefs.getInt("best_time", 0) //0 is the default value
+        // todo: tv_best_timer string format min:sec:millis
+        tv_best_timer.text = mBestTime.toString()
+    }
+
 
     private fun checkBestMoves(score: Int) {
         // this function is called when game ends
