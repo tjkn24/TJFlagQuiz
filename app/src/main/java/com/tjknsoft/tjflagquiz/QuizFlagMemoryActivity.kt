@@ -374,6 +374,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun checkBestMoves(score: Int) {
         // set currentMoves as bestMoves if no bestMoves yet (0) or currentMoves smaller than best Moves
         if (mBestMoves == 0 || mCurrentMoves < mBestMoves) {
+
             //setting preferences
             val prefs = getSharedPreferences("mBestMovesKey", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = prefs.edit()
@@ -394,8 +395,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateBestMovesTexView() {
         // getting preferences
         val prefs = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
-        val storedBestMoves = prefs.getInt("best_moves", 0) //0 is the default value
-        tv_best_moves.text = storedBestMoves.toString()
+        mBestMoves = prefs.getInt("best_moves", 0) //0 is the default value
+        tv_best_moves.text = mBestMoves.toString()
     }
 
 
