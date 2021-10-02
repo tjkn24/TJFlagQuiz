@@ -388,6 +388,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             )
             Toast.makeText(applicationContext, "You set a Best Moves record!!", Toast.LENGTH_LONG)
                 .show()
+        } else {
+            Toast.makeText(this,"Game Over; try breaking the record next time!",Toast.LENGTH_LONG).show()
         }
         updateBestMovesTexView()
     }
