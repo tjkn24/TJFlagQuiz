@@ -20,11 +20,11 @@ import android.view.animation.Animation
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import android.content.SharedPreferences
 import android.os.Handler
+import android.os.SystemClock
 import kotlin.math.floor
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
-
 
     private var mTileList: ArrayList<Tile> = arrayListOf()
     private var mAllFlagsResID: ArrayList<Int> = arrayListOf()
@@ -33,7 +33,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mAllCountryNames: ArrayList<String> = arrayListOf()
     private var mAllShortenedCountryNames: ArrayList<String> = arrayListOf()
     private val mNumberOfTiles: Int = 40
-    private var mMapFlagResIDtoCountryName = mutableMapOf<Int, String>()
     private var mMapFlagResIDtoShortenedCountryName = mutableMapOf<Int, String>()
     private var mMapShortenedCountryNameToFlagResID = mutableMapOf<String, Int>()
     private var mMapShortenedCountryNameToCountryName = mutableMapOf<String, String>()
@@ -41,12 +40,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mSelectedShortenedCountryNames: ArrayList<String> = arrayListOf()
     private var mSelectedFlagResIDandShortenedCountryName: MutableList<Any> = arrayListOf()
     private var mShuffledSelectedFlagResIDandShortenedCountryName: ArrayList<Any> = arrayListOf()
-    private var mTileImageViews: ArrayList<ImageView> = arrayListOf()
-    private var mTileTextViews: ArrayList<TextView> = arrayListOf()
+    private var mFlagTiles: ArrayList<ImageView> = arrayListOf()
+    private var mCountryTiles: ArrayList<TextView> = arrayListOf()
     private var mTappedFlagResID: Int = -1
     private var mTappedShortenedCountryName: String = "-1"
-    private var mTappedTileTextViewIndex: Int = -1
-    private var mTappedTileImageViewIndex: Int = -1
+    private var mTappedCountryTileIndex: Int = -1
+    private var mTappedFlagTileIndex: Int = -1
     private lateinit var mSound: SoundPoolPlayer
     private var mCurrentMoves = 0
     private var mBestMoves = 0
@@ -57,6 +56,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mPreviousDuration = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
+    private var mLastFlagClickTime: Long = 0 // variable to track event time for flag tile
+    private var mLastCountryClickTime: Long = 0 // variable to track event time for country name tile
+    private var mLastPairClickTime: Long = 0 // event time when second member of a pair (flag or country) is clicked
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +70,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        // clearSharedPreferences()
+        clearSharedPreferences()
 
         setTimer()
 
@@ -97,8 +99,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mTimerRunnable = object : Runnable {
             override fun run() {
               mCurrentTime = System.currentTimeMillis() - mOnResumeTime + mPreviousDuration
-                // mPreviousDuration: duration before latest onPause() (if any)
+
                 val minutes = mCurrentTime / 60000
+
+                // if game time reach 60 minutes -> restart the game
+                if (minutes > 60){
+                    mTimerHandler.removeCallbacks(mTimerRunnable)
+                    btn_restart3.performClick()
+                }
+
                 val intMinutes = floor(minutes)
                 val seconds = (minutes - intMinutes) * 60.0
                 val intSeconds = floor(seconds)
@@ -142,29 +151,35 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         for ((index, tile) in mTileList.withIndex()) {
             if (tile.shortenedCountryName != "") {
                 // tile displays shortened country name
-                mTileImageViews[index].setVisibility(View.GONE)
-                mTileTextViews[index].setVisibility(View.VISIBLE)
+                mFlagTiles[index].setVisibility(View.GONE)
+                mCountryTiles[index].setVisibility(View.VISIBLE)
                 if (tile.isFaceUp == true) {
-                    Log.i(
-                        "PANJUTA",
-                        "entering (tile.isFaceUp == true): ${tile.isFaceUp}"
-                    )
-                    mTileTextViews[index].text = tile.shortenedCountryName
+                    mCountryTiles[index].text = tile.shortenedCountryName
                 }
 
                 // closed text tile cannot be long-pressed:
-                mTileTextViews[index].setOnLongClickListener {
+                mCountryTiles[index].setOnLongClickListener {
                     false
                 }
 
                 // set text tiles' onClickListener
-                mTileTextViews[index].setOnClickListener {
+                mCountryTiles[index].setOnClickListener {
+
+                    // save click time of a country tile
+                    mLastCountryClickTime = SystemClock.elapsedRealtime()
+
+                    // if country is clicked less than 1.5 second of last time a pair clicked -> ignore
+                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500 ) {
+                        mSound.playShortResource(R.raw.tap)
+                        return@setOnClickListener
+                    }
+
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedShortenedCountryName != "-1") {
                         mSound.playShortResource(R.raw.tap)
                     } else {
-                        mTileTextViews[index].text = tile.shortenedCountryName
-                        mTappedTileTextViewIndex = index
+                        mCountryTiles[index].text = tile.shortenedCountryName
+                        mTappedCountryTileIndex = index
 
                         updateMoves()
 
@@ -173,10 +188,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // in other words: this is the first tile of the tile pair that
                         // is going to be compared
                         if (mTappedFlagResID == -1) {
-                            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener {
+                            mCountryTiles[mTappedCountryTileIndex].setOnLongClickListener {
 
                                 displayToastAboveButton(
-                                    mTileTextViews[index],
+                                    mCountryTiles[index],
                                     mMapShortenedCountryNameToFlagResID[tile.shortenedCountryName]!!,
                                     tile.shortenedCountryName
                                 )
@@ -207,6 +222,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                             if (mTappedFlagResID != -1)  // if flag image has been tapped too
                             {
+                                mLastPairClickTime = SystemClock.elapsedRealtime()
                                 compareTappedTiles(
                                     mTappedShortenedCountryName,
                                     mTappedFlagResID,
@@ -217,30 +233,39 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 }
             } else { // tile displays flag image
 
-                mTileTextViews[index].setVisibility(View.GONE)
-                mTileImageViews[index].setVisibility(View.VISIBLE)
+                mCountryTiles[index].setVisibility(View.GONE)
+                mFlagTiles[index].setVisibility(View.VISIBLE)
 
                 if (tile.isFaceUp) {
-                    mTileImageViews[index].setImageResource(tile.flagResId)
+                    mFlagTiles[index].setImageResource(tile.flagResId)
                 } else {
-                    mTileImageViews[index].setImageResource(R.drawable.tv_background_primary)
+                    mFlagTiles[index].setImageResource(R.drawable.tv_background_primary)
                 }
 
                 // closed flag tile cannot be long-pressed:
-                mTileImageViews[index].setOnLongClickListener {
+                mFlagTiles[index].setOnLongClickListener {
                     false
                 }
 
                 // set flag tiles' onClickListener
-                mTileImageViews[index].setOnClickListener {
+                mFlagTiles[index].setOnClickListener {
+
+                    // save click time of a flag tile
+                    mLastFlagClickTime = SystemClock.elapsedRealtime()
+
+                    // if flag is clicked less than 1.5 second of last time a pair clicked -> ignore
+                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
+                        mSound.playShortResource(R.raw.tap)
+                        return@setOnClickListener
+                    }
 
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedFlagResID != -1) {
                         mSound.playShortResource(R.raw.tap)
                     } else {
                         // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
-                        if (!tile.isFaceUp) mTileImageViews[index].setImageResource(tile.flagResId)
-                        mTappedTileImageViewIndex = index
+                        if (!tile.isFaceUp) mFlagTiles[index].setImageResource(tile.flagResId)
+                        mTappedFlagTileIndex = index
 
                         updateMoves()
 
@@ -249,9 +274,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // in other words: this is the first tile of the tile pair that
                         // is going to be compared
                         if (mTappedShortenedCountryName == "-1") {
-                            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener {
+                            mFlagTiles[mTappedFlagTileIndex].setOnLongClickListener {
                                 displayToastAboveButton(
-                                    mTileImageViews[index],
+                                    mFlagTiles[index],
                                     tile.flagResId,
                                     mMapFlagResIDtoShortenedCountryName[tile.flagResId]!!
                                 )
@@ -272,6 +297,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             mTappedFlagResID =
                                 tile.flagResId // needs to be compared with tapped name tile
                             if (mTappedShortenedCountryName != "-1") { // if text image has been tapped too
+                                mLastPairClickTime = SystemClock.elapsedRealtime()
                                 compareTappedTiles(
                                     mTappedShortenedCountryName,
                                     mTappedFlagResID,
@@ -305,24 +331,24 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mSound.playShortResource(R.raw.correct)
 
             // make both tiles blink:
-            blinkView(mTileImageViews[mTappedTileImageViewIndex], false)
-            blinkView(mTileTextViews[mTappedTileTextViewIndex], false)
+            blinkView(mFlagTiles[mTappedFlagTileIndex], false)
+            blinkView(mCountryTiles[mTappedCountryTileIndex], false)
 
             // both tiles must not be able to selected anymore; just play sound when tapped
-            mTileImageViews[mTappedTileImageViewIndex].setOnClickListener {
+            mFlagTiles[mTappedFlagTileIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
-            mTileTextViews[mTappedTileTextViewIndex].setOnClickListener {
+            mCountryTiles[mTappedCountryTileIndex].setOnClickListener {
                 mSound.playShortResource(
                     R.raw.tap
                 )
             }
 
             // disable long-click on text and flag tiles after they are matched and opened
-            mTileImageViews[mTappedTileImageViewIndex].setOnLongClickListener { false }
-            mTileTextViews[mTappedTileTextViewIndex].setOnLongClickListener { false }
+            mFlagTiles[mTappedFlagTileIndex].setOnLongClickListener { false }
+            mCountryTiles[mTappedCountryTileIndex].setOnLongClickListener { false }
 
             mMatchedPairs++
 
@@ -338,22 +364,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             // Todo: User can tap any other tile only after the wrong pair is closed
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
-            val ivIndex = mTappedTileImageViewIndex
-            val tvIndex = mTappedTileTextViewIndex
+            val ivIndex = mTappedFlagTileIndex
+            val tvIndex = mTappedCountryTileIndex
 
             // make both tiles face-down after 2 seconds:
-            val timer = object : CountDownTimer(2000, 250) {
+            val timer = object : CountDownTimer(1500, 250) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
 
                 override fun onFinish() {
                     // display text and flag tiles in close position
-                    mTileImageViews[ivIndex].setImageResource(R.drawable.tv_background_primary)
-                    mTileTextViews[tvIndex].text = ""
+                    mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary)
+                    mCountryTiles[tvIndex].text = ""
 
                     // disable long-click on text and flag tiles after they are closed
-                    mTileImageViews[ivIndex].setOnLongClickListener { false }
-                    mTileTextViews[tvIndex].setOnLongClickListener { false }
+                    mFlagTiles[ivIndex].setOnLongClickListener { false }
+                    mCountryTiles[tvIndex].setOnLongClickListener { false }
                 }
             }
             timer.start()
@@ -364,11 +390,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mTappedShortenedCountryName = "-1"
 
         // enable all tiles
-        for (tv in mTileTextViews) tv.setClickable(true)
-        for (iv in mTileImageViews) iv.setClickable(true)
+        for (tv in mCountryTiles) tv.setClickable(true)
+        for (iv in mFlagTiles) iv.setClickable(true)
     }
-
-
 
     private fun clearSharedPreferences() {
         val sharedPreferences = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
@@ -377,8 +401,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor.commit()
 
         val sharedPreferences2 = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
-        val editor2 = sharedPreferences2.edit()
-        editor2.remove("best_time")
+        val editor2 = sharedPreferences.edit()
+        editor2.remove("best_tinme")
         editor2.commit()
 
     }
@@ -427,6 +451,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "PANJUTA",
             "getDoubleFromPrefs mBestTime: $mBestTime"
         )
+
+        // todo: tv_best_timer string format min:sec:millis
 
         val minutes = mBestTime / 60000
         val intMinutes = floor(minutes.toDouble())
@@ -738,86 +764,86 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun addViewsToViewList() {
-        mTileImageViews.add(0, iv_tile_01)
-        mTileImageViews.add(1, iv_tile_02)
-        mTileImageViews.add(2, iv_tile_03)
-        mTileImageViews.add(3, iv_tile_04)
-        mTileImageViews.add(4, iv_tile_05)
-        mTileImageViews.add(5, iv_tile_06)
-        mTileImageViews.add(6, iv_tile_07)
-        mTileImageViews.add(7, iv_tile_08)
-        mTileImageViews.add(8, iv_tile_09)
-        mTileImageViews.add(9, iv_tile_10)
-        mTileImageViews.add(10, iv_tile_11)
-        mTileImageViews.add(11, iv_tile_12)
-        mTileImageViews.add(12, iv_tile_13)
-        mTileImageViews.add(13, iv_tile_14)
-        mTileImageViews.add(14, iv_tile_15)
-        mTileImageViews.add(15, iv_tile_16)
-        mTileImageViews.add(16, iv_tile_17)
-        mTileImageViews.add(17, iv_tile_18)
-        mTileImageViews.add(18, iv_tile_19)
-        mTileImageViews.add(19, iv_tile_20)
-        mTileImageViews.add(20, iv_tile_21)
-        mTileImageViews.add(21, iv_tile_22)
-        mTileImageViews.add(22, iv_tile_23)
-        mTileImageViews.add(23, iv_tile_24)
-        mTileImageViews.add(24, iv_tile_25)
-        mTileImageViews.add(25, iv_tile_26)
-        mTileImageViews.add(26, iv_tile_27)
-        mTileImageViews.add(27, iv_tile_28)
-        mTileImageViews.add(28, iv_tile_29)
-        mTileImageViews.add(29, iv_tile_30)
-        mTileImageViews.add(30, iv_tile_31)
-        mTileImageViews.add(31, iv_tile_32)
-        mTileImageViews.add(32, iv_tile_33)
-        mTileImageViews.add(33, iv_tile_34)
-        mTileImageViews.add(34, iv_tile_35)
-        mTileImageViews.add(35, iv_tile_36)
-        mTileImageViews.add(36, iv_tile_37)
-        mTileImageViews.add(37, iv_tile_38)
-        mTileImageViews.add(38, iv_tile_39)
-        mTileImageViews.add(39, iv_tile_40)
+        mFlagTiles.add(0, iv_tile_01)
+        mFlagTiles.add(1, iv_tile_02)
+        mFlagTiles.add(2, iv_tile_03)
+        mFlagTiles.add(3, iv_tile_04)
+        mFlagTiles.add(4, iv_tile_05)
+        mFlagTiles.add(5, iv_tile_06)
+        mFlagTiles.add(6, iv_tile_07)
+        mFlagTiles.add(7, iv_tile_08)
+        mFlagTiles.add(8, iv_tile_09)
+        mFlagTiles.add(9, iv_tile_10)
+        mFlagTiles.add(10, iv_tile_11)
+        mFlagTiles.add(11, iv_tile_12)
+        mFlagTiles.add(12, iv_tile_13)
+        mFlagTiles.add(13, iv_tile_14)
+        mFlagTiles.add(14, iv_tile_15)
+        mFlagTiles.add(15, iv_tile_16)
+        mFlagTiles.add(16, iv_tile_17)
+        mFlagTiles.add(17, iv_tile_18)
+        mFlagTiles.add(18, iv_tile_19)
+        mFlagTiles.add(19, iv_tile_20)
+        mFlagTiles.add(20, iv_tile_21)
+        mFlagTiles.add(21, iv_tile_22)
+        mFlagTiles.add(22, iv_tile_23)
+        mFlagTiles.add(23, iv_tile_24)
+        mFlagTiles.add(24, iv_tile_25)
+        mFlagTiles.add(25, iv_tile_26)
+        mFlagTiles.add(26, iv_tile_27)
+        mFlagTiles.add(27, iv_tile_28)
+        mFlagTiles.add(28, iv_tile_29)
+        mFlagTiles.add(29, iv_tile_30)
+        mFlagTiles.add(30, iv_tile_31)
+        mFlagTiles.add(31, iv_tile_32)
+        mFlagTiles.add(32, iv_tile_33)
+        mFlagTiles.add(33, iv_tile_34)
+        mFlagTiles.add(34, iv_tile_35)
+        mFlagTiles.add(35, iv_tile_36)
+        mFlagTiles.add(36, iv_tile_37)
+        mFlagTiles.add(37, iv_tile_38)
+        mFlagTiles.add(38, iv_tile_39)
+        mFlagTiles.add(39, iv_tile_40)
 
-        mTileTextViews.add(0, tv_tile_01)
-        mTileTextViews.add(1, tv_tile_02)
-        mTileTextViews.add(2, tv_tile_03)
-        mTileTextViews.add(3, tv_tile_04)
-        mTileTextViews.add(4, tv_tile_05)
-        mTileTextViews.add(5, tv_tile_06)
-        mTileTextViews.add(6, tv_tile_07)
-        mTileTextViews.add(7, tv_tile_08)
-        mTileTextViews.add(8, tv_tile_09)
-        mTileTextViews.add(9, tv_tile_10)
-        mTileTextViews.add(10, tv_tile_11)
-        mTileTextViews.add(11, tv_tile_12)
-        mTileTextViews.add(12, tv_tile_13)
-        mTileTextViews.add(13, tv_tile_14)
-        mTileTextViews.add(14, tv_tile_15)
-        mTileTextViews.add(15, tv_tile_16)
-        mTileTextViews.add(16, tv_tile_17)
-        mTileTextViews.add(17, tv_tile_18)
-        mTileTextViews.add(18, tv_tile_19)
-        mTileTextViews.add(19, tv_tile_20)
-        mTileTextViews.add(20, tv_tile_21)
-        mTileTextViews.add(21, tv_tile_22)
-        mTileTextViews.add(22, tv_tile_23)
-        mTileTextViews.add(23, tv_tile_24)
-        mTileTextViews.add(24, tv_tile_25)
-        mTileTextViews.add(25, tv_tile_26)
-        mTileTextViews.add(26, tv_tile_27)
-        mTileTextViews.add(27, tv_tile_28)
-        mTileTextViews.add(28, tv_tile_29)
-        mTileTextViews.add(29, tv_tile_30)
-        mTileTextViews.add(30, tv_tile_31)
-        mTileTextViews.add(31, tv_tile_32)
-        mTileTextViews.add(32, tv_tile_33)
-        mTileTextViews.add(33, tv_tile_34)
-        mTileTextViews.add(34, tv_tile_35)
-        mTileTextViews.add(35, tv_tile_36)
-        mTileTextViews.add(36, tv_tile_37)
-        mTileTextViews.add(37, tv_tile_38)
-        mTileTextViews.add(38, tv_tile_39)
-        mTileTextViews.add(39, tv_tile_40)
+        mCountryTiles.add(0, tv_tile_01)
+        mCountryTiles.add(1, tv_tile_02)
+        mCountryTiles.add(2, tv_tile_03)
+        mCountryTiles.add(3, tv_tile_04)
+        mCountryTiles.add(4, tv_tile_05)
+        mCountryTiles.add(5, tv_tile_06)
+        mCountryTiles.add(6, tv_tile_07)
+        mCountryTiles.add(7, tv_tile_08)
+        mCountryTiles.add(8, tv_tile_09)
+        mCountryTiles.add(9, tv_tile_10)
+        mCountryTiles.add(10, tv_tile_11)
+        mCountryTiles.add(11, tv_tile_12)
+        mCountryTiles.add(12, tv_tile_13)
+        mCountryTiles.add(13, tv_tile_14)
+        mCountryTiles.add(14, tv_tile_15)
+        mCountryTiles.add(15, tv_tile_16)
+        mCountryTiles.add(16, tv_tile_17)
+        mCountryTiles.add(17, tv_tile_18)
+        mCountryTiles.add(18, tv_tile_19)
+        mCountryTiles.add(19, tv_tile_20)
+        mCountryTiles.add(20, tv_tile_21)
+        mCountryTiles.add(21, tv_tile_22)
+        mCountryTiles.add(22, tv_tile_23)
+        mCountryTiles.add(23, tv_tile_24)
+        mCountryTiles.add(24, tv_tile_25)
+        mCountryTiles.add(25, tv_tile_26)
+        mCountryTiles.add(26, tv_tile_27)
+        mCountryTiles.add(27, tv_tile_28)
+        mCountryTiles.add(28, tv_tile_29)
+        mCountryTiles.add(29, tv_tile_30)
+        mCountryTiles.add(30, tv_tile_31)
+        mCountryTiles.add(31, tv_tile_32)
+        mCountryTiles.add(32, tv_tile_33)
+        mCountryTiles.add(33, tv_tile_34)
+        mCountryTiles.add(34, tv_tile_35)
+        mCountryTiles.add(35, tv_tile_36)
+        mCountryTiles.add(36, tv_tile_37)
+        mCountryTiles.add(37, tv_tile_38)
+        mCountryTiles.add(38, tv_tile_39)
+        mCountryTiles.add(39, tv_tile_40)
     }
 }
