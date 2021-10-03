@@ -50,12 +50,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mSound: SoundPoolPlayer
     private var mCurrentMoves = 0
     private var mBestMoves = 0
-    private var mBestTime = 0
+    private var mBestTime = 0.0
     private var mMatchedPairs = 0
     private var mOnResumeTime = 0.0
     private var mCurrentTime = 0.0
-    private var mGameStartTime = 0.0
-    private var mGameEndTime = 0.0
     private var mPreviousDuration = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
@@ -95,7 +93,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTimer() {
-        mGameStartTime = System.currentTimeMillis().toDouble()
         mTimerHandler = Handler()
         mTimerRunnable = object : Runnable {
             override fun run() {
@@ -103,9 +100,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // mPreviousDuration: duration before latest onPause() (if any)
                 val minutes = mCurrentTime / 60000
                 val intMinutes = floor(minutes)
-                val seconds = (minutes - intMinutes)*60.0
+                val seconds = (minutes - intMinutes) * 60.0
                 val intSeconds = floor(seconds)
-                val hundreths = (seconds- intSeconds)*100.0
+                val hundreths = (seconds- intSeconds) * 100.0
 
                 // tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
                 tv_current_timer.text = String.format("%02d:%02d:%02d", intMinutes.toInt(), intSeconds.toInt(), hundreths.toInt())
@@ -379,20 +376,30 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor.remove("best_moves")
         editor.commit()
 
+        val sharedPreferences2 = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
+        val editor2 = sharedPreferences2.edit()
+        editor2.remove("best_time")
+        editor2.commit()
+
     }
 
     private fun checkBestTime() {
-        // stop the timer and store it
-        mGameEndTime = System.currentTimeMillis().toDouble()
+        // stop the timer
         mTimerHandler.removeCallbacks(mTimerRunnable)
 
-        val gameDuration = mGameEndTime - mGameStartTime
-
-        if (mBestTime == 0 || gameDuration < mBestTime) {
+        if (mBestTime == 0.0 || mCurrentTime < mBestTime) {
             //setting preferences
             val prefs = getSharedPreferences("mBestTimeKey", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = prefs.edit()
-            editor.putInt("best_time", gameDuration.toInt())
+
+            // editor.putInt("best_time", mCurrentTime.toInt())
+            // sharedPreferences cannot store double values (mCurrentTime) so use this function
+            // from https://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
+            putDoubleToPrefs(editor, "best_time", mCurrentTime)
+            Log.i(
+                "PANJUTA",
+                "putDoubleToPrefs mCurrentTime: $mCurrentTime"
+            )
             editor.commit()
 
             blinkView(tv_best_timer, true)
@@ -411,9 +418,37 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateBestTimeTexView() {
         // getting preferences
         val prefs = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
-        mBestTime = prefs.getInt("best_time", 0) //0 is the default value
-        // todo: tv_best_timer string format min:sec:millis
-        tv_best_timer.text = mBestTime.toString()
+
+        // mBestTime = prefs.getInt("best_time", 0) //0 is the default value
+        // sharedPreferences cannot store double values (mCurrentTime) so use this function
+        // from https://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
+        mBestTime = getDoubleFromPrefs(prefs, "best_time", 0.0)
+        Log.i(
+            "PANJUTA",
+            "getDoubleFromPrefs mBestTime: $mBestTime"
+        )
+
+        val minutes = mBestTime / 60000
+        val intMinutes = floor(minutes.toDouble())
+        val seconds = (minutes - intMinutes) * 60.0
+        val intSeconds = floor(seconds)
+        val hundreths = (seconds- intSeconds) * 100.0
+
+        tv_best_timer.text = String.format("%02d:%02d:%02d", intMinutes.toInt(), intSeconds.toInt(), hundreths.toInt())
+
+    }
+
+    private fun putDoubleToPrefs(edit: SharedPreferences.Editor, key: String?, value: Double): SharedPreferences.Editor? {
+        return edit.putLong(key, java.lang.Double.doubleToRawLongBits(value))
+    }
+
+    private fun getDoubleFromPrefs(prefs: SharedPreferences, key: String?, defaultValue: Double): Double {
+        return java.lang.Double.longBitsToDouble(
+            prefs.getLong(
+                key,
+                java.lang.Double.doubleToLongBits(defaultValue)
+            )
+        )
     }
 
 
