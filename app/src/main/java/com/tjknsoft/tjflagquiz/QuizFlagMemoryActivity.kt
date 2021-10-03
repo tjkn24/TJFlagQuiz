@@ -70,7 +70,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        clearSharedPreferences()
+        // clearSharedPreferences()
 
         setTimer()
 
