@@ -2,26 +2,25 @@ package com.tjknsoft.tjflagquiz
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.SystemClock
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
-import kotlin.collections.ArrayList
-import kotlin.random.Random
-import android.view.Gravity
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import kotlinx.android.synthetic.main.toast_image_layout.*
-import android.content.SharedPreferences
-import android.os.Handler
-import android.os.SystemClock
 import kotlin.math.floor
+import kotlin.random.Random
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -57,8 +56,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
     private var mLastFlagClickTime: Long = 0 // variable to track event time for flag tile
-    private var mLastCountryClickTime: Long = 0 // variable to track event time for country name tile
-    private var mLastPairClickTime: Long = 0 // event time when second member of a pair (flag or country) is clicked
+    private var mLastCountryClickTime: Long =
+        0 // variable to track event time for country name tile
+    private var mLastPairClickTime: Long =
+        0 // event time when second member of a pair (flag or country) is clicked
+    private var mIsBestTime = false
+    private var mIsBestMoves = false
+    private var mIsFirstGameCompleted = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +74,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
+        // todo: centralize result toast
+        // todo: menu
+        // todo: instruction
+
         // clearSharedPreferences()
+
+        resetVariables()
 
         setTimer()
 
@@ -94,16 +104,29 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun resetVariables() {
+        mIsBestMoves = false
+        mIsBestTime = false
+        mIsFirstGameCompleted = getSharedPreferences(
+            "mIsFirstGameCompletedKey",
+            Context.MODE_PRIVATE
+        ).getBoolean("first_game_completed", false) // false is the default value
+        Log.i(
+            "PANJUTA",
+            "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
+        )
+    }
+
     private fun setTimer() {
         mTimerHandler = Handler()
         mTimerRunnable = object : Runnable {
             override fun run() {
-              mCurrentTime = System.currentTimeMillis() - mOnResumeTime + mPreviousDuration
+                mCurrentTime = System.currentTimeMillis() - mOnResumeTime + mPreviousDuration
 
                 val minutes = mCurrentTime / 60000
 
                 // if game time reach 60 minutes -> restart the game
-                if (minutes > 60){
+                if (minutes > 60) {
                     mTimerHandler.removeCallbacks(mTimerRunnable)
                     btn_restart3.performClick()
                 }
@@ -111,10 +134,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 val intMinutes = floor(minutes)
                 val seconds = (minutes - intMinutes) * 60.0
                 val intSeconds = floor(seconds)
-                val hundreths = (seconds- intSeconds) * 100.0
+                val hundreths = (seconds - intSeconds) * 100.0
 
                 // tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
-                tv_current_timer.text = String.format("%02d:%02d:%02d", intMinutes.toInt(), intSeconds.toInt(), hundreths.toInt())
+                tv_current_timer.text = String.format(
+                    "%02d:%02d:%02d",
+                    intMinutes.toInt(),
+                    intSeconds.toInt(),
+                    hundreths.toInt()
+                )
                 mTimerHandler.postDelayed(this, 100)
             }
         }
@@ -169,7 +197,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mLastCountryClickTime = SystemClock.elapsedRealtime()
 
                     // if country is clicked less than 1.5 second of last time a pair clicked -> ignore
-                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500 ) {
+                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
                         mSound.playShortResource(R.raw.tap)
                         return@setOnClickListener
                     }
@@ -352,16 +380,67 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             mMatchedPairs++
 
-            if (mMatchedPairs == 20) {
-                // game ends
-                checkBestMoves(mCurrentMoves)
+            if (mMatchedPairs == 20) { // game ends
+
+                // store to prefs that user has completed first game
+                val prefs = getSharedPreferences("mIsFirstGameCompletedKey", Context.MODE_PRIVATE)
+                val editor: SharedPreferences.Editor = prefs.edit()
+                editor.putBoolean("first_game_completed", true)
+                editor.commit()
 
                 checkBestTime()
+                checkBestMoves(mCurrentMoves)
+
+                Log.i(
+                    "PANJUTA",
+                    "game ends: mIsFirstGameCompleted: $mIsFirstGameCompleted"
+                )
+
+                when {
+                    !mIsFirstGameCompleted -> {
+                        Toast.makeText(
+                            applicationContext,
+                            "Congratulation! You completed your first game.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    !mIsBestTime && !mIsBestMoves -> {
+                        // neither best moves nor best time is achieved
+                        // and this is not the first game completed
+                        Toast.makeText(
+                            applicationContext,
+                            "Nice try! You'll keep getting better next time.",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    mIsBestTime && !mIsBestMoves -> {
+                        // user set a new best time
+                        Toast.makeText(
+                            applicationContext,
+                            "Good job! You set a new Best Moves!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    !mIsBestTime && mIsBestMoves -> {
+                        // user set a new best moves
+                        Toast.makeText(
+                            applicationContext,
+                            "Good job! You set a new Best Time!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                    mIsBestTime && mIsBestMoves -> {
+                        // set a new best moves
+                        Toast.makeText(
+                            applicationContext,
+                            "Excellent! You set BOTH new Best Time and Best Moves!!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
             }
 
         } else { // wrong pairs
-
-            // Todo: User can tap any other tile only after the wrong pair is closed
 
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
             val ivIndex = mTappedFlagTileIndex
@@ -394,6 +473,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         for (iv in mFlagTiles) iv.setClickable(true)
     }
 
+
     private fun clearSharedPreferences() {
         val sharedPreferences = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -401,10 +481,35 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor.commit()
 
         val sharedPreferences2 = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
-        val editor2 = sharedPreferences.edit()
-        editor2.remove("best_tinme")
+        val editor2 = sharedPreferences2.edit()
+        editor2.remove("best_time")
         editor2.commit()
 
+        val sharedPreferences3 = getSharedPreferences("mIsFirstGameCompletedKey", MODE_PRIVATE)
+        val editor3 = sharedPreferences3.edit()
+        editor3.remove("first_game_completed")
+        editor3.commit()
+    }
+
+    private fun putDoubleToPrefs(
+        edit: SharedPreferences.Editor,
+        key: String?,
+        value: Double
+    ): SharedPreferences.Editor? {
+        return edit.putLong(key, java.lang.Double.doubleToRawLongBits(value))
+    }
+
+    private fun getDoubleFromPrefs(
+        prefs: SharedPreferences,
+        key: String?,
+        defaultValue: Double
+    ): Double {
+        return java.lang.Double.longBitsToDouble(
+            prefs.getLong(
+                key,
+                java.lang.Double.doubleToLongBits(defaultValue)
+            )
+        )
     }
 
     private fun checkBestTime() {
@@ -412,6 +517,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mTimerHandler.removeCallbacks(mTimerRunnable)
 
         if (mBestTime == 0.0 || mCurrentTime < mBestTime) {
+
             //setting preferences
             val prefs = getSharedPreferences("mBestTimeKey", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = prefs.edit()
@@ -428,13 +534,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             blinkView(tv_best_timer, true)
             blinkView(tv_current_timer, true)
-            mSound.playShortResource(
-                R.raw.perfect
-            )
-            Toast.makeText(applicationContext, "You set a Best Time record!!", Toast.LENGTH_LONG)
-                .show()
-        } else {
-            Toast.makeText(this,"Game Over; try breaking the record next time!",Toast.LENGTH_LONG).show()
+
+            mIsBestTime = true
+
         }
         updateBestTimeTexView()
     }
@@ -447,41 +549,25 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // sharedPreferences cannot store double values (mCurrentTime) so use this function
         // from https://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
         mBestTime = getDoubleFromPrefs(prefs, "best_time", 0.0)
-        Log.i(
-            "PANJUTA",
-            "getDoubleFromPrefs mBestTime: $mBestTime"
-        )
-
-        // todo: tv_best_timer string format min:sec:millis
 
         val minutes = mBestTime / 60000
         val intMinutes = floor(minutes.toDouble())
         val seconds = (minutes - intMinutes) * 60.0
         val intSeconds = floor(seconds)
-        val hundreths = (seconds- intSeconds) * 100.0
+        val hundredths = (seconds - intSeconds) * 100.0
 
-        tv_best_timer.text = String.format("%02d:%02d:%02d", intMinutes.toInt(), intSeconds.toInt(), hundreths.toInt())
-
-    }
-
-    private fun putDoubleToPrefs(edit: SharedPreferences.Editor, key: String?, value: Double): SharedPreferences.Editor? {
-        return edit.putLong(key, java.lang.Double.doubleToRawLongBits(value))
-    }
-
-    private fun getDoubleFromPrefs(prefs: SharedPreferences, key: String?, defaultValue: Double): Double {
-        return java.lang.Double.longBitsToDouble(
-            prefs.getLong(
-                key,
-                java.lang.Double.doubleToLongBits(defaultValue)
-            )
+        tv_best_timer.text = String.format(
+            "%02d:%02d:%02d",
+            intMinutes.toInt(),
+            intSeconds.toInt(),
+            hundredths.toInt()
         )
     }
 
-
     private fun checkBestMoves(score: Int) {
         // this function is called when game ends
-        // set currentMoves as bestMoves if no bestMoves yet (0) or currentMoves smaller than best Moves
-        if (mBestMoves == 0 || mCurrentMoves < mBestMoves) {
+
+        if (mBestMoves == 0 || mCurrentMoves < mBestMoves) { // set a new best moves
 
             //setting preferences
             val prefs = getSharedPreferences("mBestMovesKey", Context.MODE_PRIVATE)
@@ -491,13 +577,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             blinkView(tv_best_moves, true)
             blinkView(tv_current_moves, true)
-            mSound.playShortResource(
-                R.raw.perfect
-            )
-            Toast.makeText(applicationContext, "You set a Best Moves record!!", Toast.LENGTH_LONG)
-                .show()
-        } else {
-            Toast.makeText(this,"Game Over; try breaking the record next time!",Toast.LENGTH_LONG).show()
+
+            mIsBestMoves = true
+
         }
         updateBestMovesTexView()
     }
@@ -511,10 +593,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun selectAndShuffleTileContent() {
-
         mSelectedFlagsResID = selectRandomFlags(mAllFlagsResID, mNumberOfTiles / 2, null)
 
-        findSelectedShortenedCountryNames(mSelectedFlagsResID) // for toast that appears above tile
+        findSelectedShortenedCountryNames(mSelectedFlagsResID) // get country names's of selected flags
 
         mSelectedFlagResIDandShortenedCountryName =
             combineArrayListOfDifferentTypes(mSelectedFlagsResID, mSelectedShortenedCountryNames)
@@ -642,7 +723,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     // combine 2 arraylist of different types
-    // from https://www.techiedelight.com/combine-two-arrays-different-types-kotlin/
+// from https://www.techiedelight.com/combine-two-arrays-different-types-kotlin/
     private fun <T, U> combineArrayListOfDifferentTypes(
         first: ArrayList<T>,
         second: ArrayList<U>
@@ -653,8 +734,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         return list
     }
 
-    // Fisher–Yates Shuffle Algorithm
-    // from https://www.techiedelight.com/shuffle-list-kotlin/
+// Fisher–Yates Shuffle Algorithm
+// from https://www.techiedelight.com/shuffle-list-kotlin/
 
     private fun <T> fisherYatesShuffle(list: MutableList<T>): MutableList<T> {
         // start from the end of the list
@@ -693,11 +774,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    // v is the Button view that you want the Toast to appear above
+// v is the Button view that you want the Toast to appear above
 // and messageId is the id of your string resource for the message
 
     // v is the Button view that you want the Toast to appear above
-    // and messageId is the id of your string resource for the message
+// and messageId is the id of your string resource for the message
     private fun displayToastAboveButton(v: View, flagResId: Int, shortenedCountryName: String) {
         var xOffset = 0
         var yOffset = 0
@@ -748,7 +829,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             ) // to change visibility from visible (1.0) to invisible (0.0)
             animation.repeatCount = Animation.INFINITE
             animation.duration = 400 // miliseconds duration for each animation cycle
-            animation.repeatMode = Animation.REVERSE //animation will start from end point once ended
+            animation.repeatMode =
+                Animation.REVERSE //animation will start from end point once ended
             view.startAnimation(animation) //to start animation
         } else {
             val animation: Animation = AlphaAnimation(
