@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The goal of this game is to match all flag tiles with its corresponding country tile." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="All tiles are closed initially. Flag tiles are the orange ones, and country tiles are the white ones." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="If a flag tile is tapped, then subsequently a country name has to be tapped; and vice versa." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The goal is to open all 40 tiles is least possible time and moves." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This game provides hints, i.e by long-pressing the first tile of a pair, which will show information about the tile pressed." />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="But using a hint will be counted as a move, which eventually will worsen the end result" />
+
+
+</LinearLayout>

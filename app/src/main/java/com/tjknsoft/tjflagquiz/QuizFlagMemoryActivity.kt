@@ -1,5 +1,6 @@
 package com.tjknsoft.tjflagquiz
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -80,6 +81,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         // clearSharedPreferences()
 
+        displayInstruction()
+
         resetVariables()
 
         setTimer()
@@ -102,6 +105,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         mSound = SoundPoolPlayer(this)
 
+    }
+
+    private fun displayInstruction() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.dialog_instruction)
+        dialog.setTitle("How to Play")
+        dialog.show()
     }
 
     private fun resetVariables() {
