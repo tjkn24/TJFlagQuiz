@@ -11,4 +11,5 @@
     <dimen name="name_vertical_gap">8dp</dimen>
 
     <dimen name="card_elevation">10dp</dimen>
+
 </resources>

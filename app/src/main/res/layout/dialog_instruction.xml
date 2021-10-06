@@ -1,38 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:background="#CCFFFFFF"
+    android:padding="8dp">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/tv_how_to_play"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="The goal of this game is to match all flag tiles with its corresponding country tile." />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="HOW TO PLAY"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_top"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@id/tv_how_to_play"
+        app:layout_constraintStart_toStartOf="@+id/tv_how_to_play"
+        app:layout_constraintTop_toBottomOf="@id/tv_how_to_play" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_how_01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_top">
+
+        <TextView
+            style="@style/TextViewInstructionStyle"
+            android:text="The goal of the game is to match all flag (orange tiles) with country name (white tiles)." />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_how_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_how_01">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="All tiles are closed initially. Flag tiles are the orange ones, and country tiles are the white ones." />
+        style="@style/TextViewInstructionStyle"
+        android:text="Tapping an orange tile must be followed by tapping a white tile; and vice versa."
+        />
+    </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_how_03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:layout_constraintTop_toBottomOf="@id/cv_how_02">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="If a flag tile is tapped, then subsequently a country name has to be tapped; and vice versa." />
+        style="@style/TextViewInstructionStyle"
+        android:text="If there is a match then both tiles will stay open."
+        />
+    </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_how_04"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_how_03">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="The goal is to open all 40 tiles is least possible time and moves." />
+        style="@style/TextViewInstructionStyle"
+        android:text="The game continues until all tiles are open."
+        />
+    </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_how_05"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardElevation="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_how_04">
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="This game provides hints, i.e by long-pressing the first tile of a pair, which will show information about the tile pressed." />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="But using a hint will be counted as a move, which eventually will worsen the end result" />
+        style="@style/TextViewInstructionStyle"
+        android:text="NOTE: user can long-press a tile to show a HINT, however this will be counted as an additional tap."
+        />
+    </com.google.android.material.card.MaterialCardView>
 
 
-</LinearLayout>
+    <CheckBox
+        android:id="@+id/cb_do_not_show_again"
+        style="@style/TextViewInstructionStyle"
+        android:layout_marginTop="32dp"
+        android:text="Don't show this again"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_how_05" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
