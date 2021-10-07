@@ -392,7 +392,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             mMatchedPairs++
 
-            if (mMatchedPairs == 20) { // game ends
+            if (mMatchedPairs == mNumberOfTiles/2) { // game ends
 
                 // store to prefs that user has completed first game
                 val prefs = getSharedPreferences("mIsFirstGameCompletedKey", Context.MODE_PRIVATE)
