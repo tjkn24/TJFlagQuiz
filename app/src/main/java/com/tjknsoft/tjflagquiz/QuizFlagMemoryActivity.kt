@@ -79,7 +79,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         // todo: centralize result toast
         // todo: menu
-        // todo: instruction
+        // todo: instruction -> sharedprefs not yet!
 
         // clearSharedPreferences()
 
