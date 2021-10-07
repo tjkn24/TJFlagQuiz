@@ -9,9 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#FFAA00</color>
     <color name="colorPrimaryDark">#CF6659</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#FFAA00</color>
     <color name="backgroundPage">#d9d9d9</color>
     <color name="grey">#808080</color>
-    <color name="light_grey">#efefef</color>
+    <color name="light_grey">#F8F8F8</color>
     <color name="orange">#ffaa00</color>
 </resources>

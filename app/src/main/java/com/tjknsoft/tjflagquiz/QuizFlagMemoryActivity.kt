@@ -34,7 +34,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     // private var mAllCountryCodes: ArrayList<String> = arrayListOf()
     private var mAllCountryNames: ArrayList<String> = arrayListOf()
     private var mAllShortenedCountryNames: ArrayList<String> = arrayListOf()
-    private val mNumberOfTiles: Int = 40
+    private val mNumberOfTiles: Int = 50
     private var mMapFlagResIDtoShortenedCountryName = mutableMapOf<Int, String>()
     private var mMapShortenedCountryNameToFlagResID = mutableMapOf<String, Int>()
     private var mMapShortenedCountryNameToCountryName = mutableMapOf<String, String>()
@@ -898,6 +898,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mFlagTiles.add(37, iv_tile_38)
         mFlagTiles.add(38, iv_tile_39)
         mFlagTiles.add(39, iv_tile_40)
+        mFlagTiles.add(30, iv_tile_41)
+        mFlagTiles.add(31, iv_tile_42)
+        mFlagTiles.add(32, iv_tile_43)
+        mFlagTiles.add(33, iv_tile_44)
+        mFlagTiles.add(34, iv_tile_45)
+        mFlagTiles.add(35, iv_tile_46)
+        mFlagTiles.add(36, iv_tile_47)
+        mFlagTiles.add(37, iv_tile_48)
+        mFlagTiles.add(38, iv_tile_49)
+        mFlagTiles.add(39, iv_tile_50)
 
         mCountryTiles.add(0, tv_tile_01)
         mCountryTiles.add(1, tv_tile_02)
@@ -939,5 +949,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mCountryTiles.add(37, tv_tile_38)
         mCountryTiles.add(38, tv_tile_39)
         mCountryTiles.add(39, tv_tile_40)
+        mCountryTiles.add(30, tv_tile_41)
+        mCountryTiles.add(31, tv_tile_42)
+        mCountryTiles.add(32, tv_tile_43)
+        mCountryTiles.add(33, tv_tile_44)
+        mCountryTiles.add(34, tv_tile_45)
+        mCountryTiles.add(35, tv_tile_46)
+        mCountryTiles.add(36, tv_tile_47)
+        mCountryTiles.add(37, tv_tile_48)
+        mCountryTiles.add(38, tv_tile_49)
+        mCountryTiles.add(39, tv_tile_50)
     }
 }

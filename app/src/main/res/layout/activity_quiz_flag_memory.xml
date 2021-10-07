@@ -6,23 +6,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".QuizFlagMemoryActivity">
+    tools:context=".QuizFlagMemoryActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/light_grey"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
                 android:padding="4dp">
@@ -31,7 +37,8 @@
                     android:id="@+id/ll_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -48,7 +55,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="2dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -82,7 +92,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -120,7 +133,9 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
                 android:padding="4dp">
@@ -129,7 +144,8 @@
                     android:id="@+id/ll_moves"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -146,7 +162,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="2dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -180,7 +199,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="8dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginStart="2dp"
+                            android:layout_marginBottom="4dp"
+                            android:layout_marginEnd="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -220,8 +242,8 @@
             android:id="@+id/cl_tile_board"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_tile_01"
@@ -525,11 +547,6 @@
                 style="@style/CardViewTileStyle"
                 app:layout_constraintStart_toEndOf="@id/cv_tile_18"
                 app:layout_constraintTop_toTopOf="@id/cv_tile_16">
-
-                <ImageView
-                    android:id="@+id/iv_tile_19"
-                    style="@style/ImageViewTileStyle"
-                    android:src="@drawable/flag_mauritius" />
 
                 <TextView
                     android:id="@+id/tv_tile_19"
@@ -881,6 +898,170 @@
                     style="@style/TextViewTileStyle" />
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_41"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_36">
+
+                <ImageView
+                    android:id="@+id/iv_tile_41"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_canada" />
+
+                <TextView
+                    android:id="@+id/tv_tile_41"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_42"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_41"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_41">
+
+                <ImageView
+                    android:id="@+id/iv_tile_42"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_qatar" />
+
+                <TextView
+                    android:id="@+id/tv_tile_42"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_43"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_42"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_41">
+
+                <ImageView
+                    android:id="@+id/iv_tile_43"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_grenada" />
+
+                <TextView
+                    android:id="@+id/tv_tile_43"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_44"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_43"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_41">
+
+                <ImageView
+                    android:id="@+id/iv_tile_44"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_republic_of_the_congo" />
+
+                <TextView
+                    android:id="@+id/tv_tile_44"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_45"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_44"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_41">
+
+                <ImageView
+                    android:id="@+id/iv_tile_45"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_fiji" />
+
+                <TextView
+                    android:id="@+id/tv_tile_45"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_46"
+                style="@style/CardViewTileStyle"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="@dimen/flag_vertical_gap"
+                app:layout_constraintStart_toStartOf="@id/cv_tile_01"
+                app:layout_constraintTop_toBottomOf="@id/cv_tile_41">
+
+                <ImageView
+                    android:id="@+id/iv_tile_46"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_canada" />
+
+                <TextView
+                    android:id="@+id/tv_tile_46"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_47"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_46"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_46">
+
+                <ImageView
+                    android:id="@+id/iv_tile_47"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_qatar" />
+
+                <TextView
+                    android:id="@+id/tv_tile_47"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_48"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_47"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_46">
+
+                <ImageView
+                    android:id="@+id/iv_tile_48"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_grenada" />
+
+                <TextView
+                    android:id="@+id/tv_tile_48"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_49"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_48"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_46">
+
+                <ImageView
+                    android:id="@+id/iv_tile_49"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_republic_of_the_congo" />
+
+                <TextView
+                    android:id="@+id/tv_tile_49"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cv_tile_50"
+                style="@style/CardViewTileStyle"
+                app:layout_constraintStart_toEndOf="@id/cv_tile_49"
+                app:layout_constraintTop_toTopOf="@id/cv_tile_46">
+
+                <ImageView
+                    android:id="@+id/iv_tile_50"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_fiji" />
+
+                <TextView
+                    android:id="@+id/tv_tile_50"
+                    style="@style/TextViewTileStyle" />
+            </com.google.android.material.card.MaterialCardView>
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -926,6 +1107,11 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_tile_19"
+            style="@style/ImageViewTileStyle"
+            android:src="@drawable/flag_mauritius" />
 
     </LinearLayout>
 
