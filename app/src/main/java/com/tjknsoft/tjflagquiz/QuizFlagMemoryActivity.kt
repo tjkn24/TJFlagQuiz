@@ -22,6 +22,9 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
 import android.widget.CompoundButton
+import androidx.appcompat.app.AlertDialog
+import android.widget.CheckBox
+import android.content.DialogInterface
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -121,15 +124,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
         )
         // listener below is from https://www.codingdemos.com/android-custom-alertdialog/
-        InstructionActivity().cbDoNotShowAgain?.setOnCheckedChangeListener(
-            CompoundButton.OnCheckedChangeListener { compoundButton, _ ->
-                if (compoundButton.isChecked) {
-                    storeCheckBoxStatus(true)
-                } else {
-                    storeCheckBoxStatus(false)
-                }
-            },
+
+        Log.i(
+            "PANJUTA",
+            "resetVariables: InstructionActivity().cbDoNotShowAgain?: ${InstructionActivity().cbDoNotShowAgain}"
         )
+
+//        InstructionActivity().cbDoNotShowAgain?.setOnCheckedChangeListener(
+//            CompoundButton.OnCheckedChangeListener { compoundButton, _ ->
+//                if (compoundButton.isChecked) {
+//                    storeCheckBoxStatus(true)
+//                } else {
+//                    storeCheckBoxStatus(false)
+//                }
+//            },
+//        )
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -145,13 +154,25 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun displayInstruction() {
-//        val dialog = Dialog(this)
-//        dialog.setContentView(R.layout.dialog_instruction)
-//        dialog.setTitle("How to Play")
-//        dialog.show()
 
-        val intent = Intent(this, InstructionActivity::class.java)
-        startActivity(intent)
+        // below code is from https://www.codingdemos.com/android-custom-alertdialog/
+        val myBuilder: android.app.AlertDialog.Builder =
+            android.app.AlertDialog.Builder(this@QuizFlagMemoryActivity)
+        val myView: View = layoutInflater.inflate(R.layout.activity_instruction, null)
+        val myCheckBox: CheckBox = myView.findViewById(R.id.cb_do_not_show_again)
+        myBuilder.setView(myView)
+        myBuilder.setPositiveButton("OK",
+            DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() })
+        val myDialog: android.app.AlertDialog? = myBuilder.create()
+        myDialog?.show()
+
+        myCheckBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+            if (compoundButton.isChecked) {
+                storeCheckBoxStatus(true)
+            } else {
+                storeCheckBoxStatus(false)
+            }
+        })
     }
 
     private fun setTimer() {
