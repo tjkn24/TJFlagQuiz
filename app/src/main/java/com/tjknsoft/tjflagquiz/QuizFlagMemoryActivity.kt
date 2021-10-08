@@ -110,10 +110,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun displayInstruction() {
-        val dialog = Dialog(this)
-        dialog.setContentView(R.layout.dialog_instruction)
-        dialog.setTitle("How to Play")
-        dialog.show()
+//        val dialog = Dialog(this)
+//        dialog.setContentView(R.layout.dialog_instruction)
+//        dialog.setTitle("How to Play")
+//        dialog.show()
+
+        val intent = Intent(this, InstructionActivity::class.java)
+        startActivity(intent)
     }
 
     private fun resetVariables() {

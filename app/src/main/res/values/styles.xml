@@ -24,6 +24,14 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
+    <style name="CustomDialog" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
     <style name="CardViewTileStyle" parent="CardView">
         <item name="android:layout_width">@dimen/flag_width</item>
         <item name="android:layout_height">@dimen/flag_height</item>
