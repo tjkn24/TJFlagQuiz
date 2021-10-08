@@ -1,12 +1,9 @@
 package com.tjknsoft.tjflagquiz
 
-import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
@@ -24,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
+import android.widget.CompoundButton
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -78,14 +76,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         // todo: centralize result toast
-        // todo: menu
+        // todo: menu (show Instruction activity)
         // todo: instruction -> sharedprefs not yet!
 
         // clearSharedPreferences()
 
-        displayInstruction()
+        setVariables()
 
-        resetVariables()
+        if (!getCheckBoxStatus()) {
+            displayInstruction()
+        }
 
         setTimer()
 
@@ -109,17 +109,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun displayInstruction() {
-//        val dialog = Dialog(this)
-//        dialog.setContentView(R.layout.dialog_instruction)
-//        dialog.setTitle("How to Play")
-//        dialog.show()
-
-        val intent = Intent(this, InstructionActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun resetVariables() {
+    private fun setVariables() {
         mIsBestMoves = false
         mIsBestTime = false
         mIsFirstGameCompleted = getSharedPreferences(
@@ -130,6 +120,38 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "PANJUTA",
             "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
         )
+        // listener below is from https://www.codingdemos.com/android-custom-alertdialog/
+        InstructionActivity().cbDoNotShowAgain?.setOnCheckedChangeListener(
+            CompoundButton.OnCheckedChangeListener { compoundButton, _ ->
+                if (compoundButton.isChecked) {
+                    storeCheckBoxStatus(true)
+                } else {
+                    storeCheckBoxStatus(false)
+                }
+            },
+        )
+    }
+
+    private fun storeCheckBoxStatus(isChecked: Boolean) {
+        val mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE)
+        val mEditor = mSharedPreferences.edit()
+        mEditor.putBoolean("item", isChecked)
+        mEditor.apply()
+    }
+
+    private fun getCheckBoxStatus(): Boolean {
+        val mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE)
+        return mSharedPreferences.getBoolean("item", false)
+    }
+
+    private fun displayInstruction() {
+//        val dialog = Dialog(this)
+//        dialog.setContentView(R.layout.dialog_instruction)
+//        dialog.setTitle("How to Play")
+//        dialog.show()
+
+        val intent = Intent(this, InstructionActivity::class.java)
+        startActivity(intent)
     }
 
     private fun setTimer() {
@@ -395,7 +417,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             mMatchedPairs++
 
-            if (mMatchedPairs == mNumberOfTiles/2) { // game ends
+            if (mMatchedPairs == mNumberOfTiles / 2) { // game ends
 
                 // store to prefs that user has completed first game
                 val prefs = getSharedPreferences("mIsFirstGameCompletedKey", Context.MODE_PRIVATE)
