@@ -10,11 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".InstructionActivity"
-            android:exported="true"
-            android:theme="@style/CustomDialog"
-            android:excludeFromRecents="true" />
+
         <activity
             android:name=".QuizFlagMemoryActivity"
             android:exported="true"

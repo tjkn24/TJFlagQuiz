@@ -1,6 +1,7 @@
 package com.tjknsoft.tjflagquiz
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
@@ -13,18 +14,12 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
-import android.widget.CompoundButton
-import androidx.appcompat.app.AlertDialog
-import android.widget.CheckBox
-import android.content.DialogInterface
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -123,22 +118,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "PANJUTA",
             "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
         )
-        // listener below is from https://www.codingdemos.com/android-custom-alertdialog/
-
-        Log.i(
-            "PANJUTA",
-            "resetVariables: InstructionActivity().cbDoNotShowAgain?: ${InstructionActivity().cbDoNotShowAgain}"
-        )
-
-//        InstructionActivity().cbDoNotShowAgain?.setOnCheckedChangeListener(
-//            CompoundButton.OnCheckedChangeListener { compoundButton, _ ->
-//                if (compoundButton.isChecked) {
-//                    storeCheckBoxStatus(true)
-//                } else {
-//                    storeCheckBoxStatus(false)
-//                }
-//            },
-//        )
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
