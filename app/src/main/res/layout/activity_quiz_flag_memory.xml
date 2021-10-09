@@ -548,6 +548,11 @@
                 app:layout_constraintStart_toEndOf="@id/cv_tile_18"
                 app:layout_constraintTop_toTopOf="@id/cv_tile_16">
 
+                <ImageView
+                    android:id="@+id/iv_tile_19"
+                    style="@style/ImageViewTileStyle"
+                    android:src="@drawable/flag_mauritius" />
+
                 <TextView
                     android:id="@+id/tv_tile_19"
                     style="@style/TextViewTileStyle" />
@@ -1108,10 +1113,7 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_tile_19"
-            style="@style/ImageViewTileStyle"
-            android:src="@drawable/flag_mauritius" />
+
 
     </LinearLayout>
 

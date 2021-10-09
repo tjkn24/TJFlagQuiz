@@ -73,9 +73,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        // todo: centralize result toast
-        // todo: menu (show Instruction activity)
-        // todo: instruction -> sharedprefs not yet!
+        // tablet?
+        // todo: menu (show Instruction, Flag 101?)
 
         // clearSharedPreferences()
 
@@ -137,7 +136,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // below code is from https://www.codingdemos.com/android-custom-alertdialog/
         val myBuilder: android.app.AlertDialog.Builder =
             android.app.AlertDialog.Builder(this@QuizFlagMemoryActivity)
-        val myView: View = layoutInflater.inflate(R.layout.activity_instruction, null)
+        val myView: View = layoutInflater.inflate(R.layout.dialog_instruction, null)
         val myCheckBox: CheckBox = myView.findViewById(R.id.cb_do_not_show_again)
         myBuilder.setView(myView)
         myBuilder.setPositiveButton("OK",
@@ -454,7 +453,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // user set a new best time
                         Toast.makeText(
                             applicationContext,
-                            "Good job! You set a new Best Moves!",
+                            "Good job! You set a new Best Time!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -462,7 +461,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         // user set a new best moves
                         Toast.makeText(
                             applicationContext,
-                            "Good job! You set a new Best Time!",
+                            "Good job! You set a new Best Moves!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -526,6 +525,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         val editor3 = sharedPreferences3.edit()
         editor3.remove("first_game_completed")
         editor3.commit()
+
+        val sharedPreferences4 = getSharedPreferences("CheckItem", MODE_PRIVATE)
+        val editor4 = sharedPreferences4.edit()
+        editor4.remove("item")
+        editor4.commit()
+
     }
 
     private fun putDoubleToPrefs(
