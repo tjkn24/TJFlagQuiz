@@ -1,18 +1,47 @@
 package com.tjknsoft.tjflagquiz
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.CheckBox
+import android.widget.CompoundButton
+import android.widget.CompoundButton.OnCheckedChangeListener
+
 
 class InstructionActivity : AppCompatActivity() {
 
-    var cbDoNotShowAgain: CheckBox? = null
+    lateinit var cbDoNotShowAgain: CheckBox
+    var isCBchecked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_instruction)
 
-        cbDoNotShowAgain = findViewById<CheckBox?>(R.id.cb_do_not_show_again)
+        // If you want to stop your dialog / activity from being destroyed when the user clicks outside of the dialog:
+        // from https://stackoverflow.com/questions/54139503/pause-activity-when-the-alertdialog-is-shown
+        this.setFinishOnTouchOutside(false)
+
+        cbDoNotShowAgain = findViewById(R.id.cb_do_not_show_again)
+
+        isCBchecked = cbDoNotShowAgain.isChecked
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(
+            "PANJUTA",
+            "InstructionActivity; onDestroy() called"
+        )
+        val intent = Intent()
+        intent.putExtra("KeyCB", cbDoNotShowAgain.isChecked.toString())
+        setResult(Activity.RESULT_OK, intent)
+        Log.i(
+            "PANJUTA",
+            "InstructionActivity; cbDoNotShowAgain.isChecked: ${cbDoNotShowAgain.isChecked}"
+        )
+        finish()
     }
 
 }

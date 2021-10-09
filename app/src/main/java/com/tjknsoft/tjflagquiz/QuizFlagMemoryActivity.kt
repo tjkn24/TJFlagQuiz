@@ -1,7 +1,7 @@
 package com.tjknsoft.tjflagquiz
 
+import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
@@ -62,6 +62,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsBestTime = false
     private var mIsBestMoves = false
     private var mIsFirstGameCompleted = false
+    val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        // tablet?
+        // todo: tablet?
         // todo: menu (show Instruction, Flag 101?)
 
         // clearSharedPreferences()
@@ -133,24 +134,58 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun displayInstruction() {
 
-        // below code is from https://www.codingdemos.com/android-custom-alertdialog/
-        val myBuilder: android.app.AlertDialog.Builder =
-            android.app.AlertDialog.Builder(this@QuizFlagMemoryActivity)
-        val myView: View = layoutInflater.inflate(R.layout.dialog_instruction, null)
-        val myCheckBox: CheckBox = myView.findViewById(R.id.cb_do_not_show_again)
-        myBuilder.setView(myView)
-        myBuilder.setPositiveButton("OK",
-            DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() })
-        val myDialog: android.app.AlertDialog? = myBuilder.create()
-        myDialog?.show()
+//        // below code is from https://www.codingdemos.com/android-custom-alertdialog/
+//        val myBuilder: android.app.AlertDialog.Builder =
+//            android.app.AlertDialog.Builder(this@QuizFlagMemoryActivity)
+//        val myView: View = layoutInflater.inflate(R.layout.dialog_instruction, null)
+//        val myCheckBox: CheckBox = myView.findViewById(R.id.cb_do_not_show_again)
+//        myBuilder.setView(myView)
+//        myBuilder.setPositiveButton("OK",
+//            DialogInterface.OnClickListener { dialogInterface, _ -> dialogInterface.dismiss() })
+//        val myDialog: android.app.AlertDialog? = myBuilder.create()
+//        myDialog?.show()
+//
+//        myCheckBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
+//            if (compoundButton.isChecked) {
+//                storeCheckBoxStatus(true)
+//            } else {
+//                storeCheckBoxStatus(false)
+//            }
+//        })
 
-        myCheckBox.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { compoundButton, b ->
-            if (compoundButton.isChecked) {
-                storeCheckBoxStatus(true)
+
+        val intent = Intent(this, InstructionActivity::class.java)
+        startActivityForResult(intent, mINSTRUCTION_ACTIVITY_REQUEST_CODE)
+    }
+
+    // This method is called when the InstructionActivity finishes
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        Log.i(
+            "PANJUTA",
+            "Back to FlagMemoryActivity; inside onActivityResult(), requestCode: $requestCode, resultCode: $resultCode, data: ${data.toString()} "
+        )
+
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == 0) {
+            if (resultCode == 0) {
+
+                // Get String data from Intent
+                val cbStatus = data!!.getStringExtra("KeyCB")
+
+                Log.i(
+                    "PANJUTA",
+                    "Back to FlagMemoryActivity; cbStatus: $cbStatus"
+                )
+
             } else {
-                storeCheckBoxStatus(false)
+                Log.i(
+                    "PANJUTA",
+                    "resultCode != Activity.RESULT_OK; resultCode: $resultCode"
+                )
             }
-        })
+        }
     }
 
     private fun setTimer() {
@@ -191,6 +226,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mPreviousDuration = mCurrentTime // save the game duration before paused
         // this duration will be added to the next game time after resumed
         // 'added', because mStartTime is reset when game resumed
+        Log.i(
+            "PANJUTA",
+            "onPause() called"
+        )
     }
 
     override fun onResume() {
@@ -990,4 +1029,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mCountryTiles.add(38, tv_tile_49)
         mCountryTiles.add(39, tv_tile_50)
     }
+
+
 }
