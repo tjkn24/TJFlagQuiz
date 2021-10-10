@@ -168,8 +168,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
 
         // Check that it is the SecondActivity with an OK result
-        if (requestCode == 0) {
-            if (resultCode == 0) {
+        if (requestCode == mINSTRUCTION_ACTIVITY_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
 
                 // Get String data from Intent
                 val cbStatus = data!!.getStringExtra("KeyCB")

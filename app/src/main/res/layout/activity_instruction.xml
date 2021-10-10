@@ -42,10 +42,10 @@
             android:id="@+id/cv_how_01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="4dp"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/view_top">
@@ -66,8 +66,7 @@
 
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="Tapping an orange tile must be followed by tapping a white tile; and vice versa."
-                />
+                android:text="Tapping an orange tile must be followed by tapping a white tile; and vice versa." />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -79,10 +78,10 @@
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@id/cv_how_02">
+
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="If there is a match then both tiles will stay open."
-                />
+                android:text="If there is a match then both tiles will stay open." />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -93,10 +92,10 @@
             app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_how_03">
+
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="The game continues until all tiles are open."
-                />
+                android:text="The game continues until all tiles are open." />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -107,10 +106,24 @@
             app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cv_how_04">
+
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="NOTE: user can long-press a tile to show a HINT, however this will be counted as an additional tap."
-                />
+                android:text="At game's end, the duration and the amount of taps are compared with the game's best record." />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_how_06"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:cardElevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cv_how_05">
+
+            <TextView
+                style="@style/TextViewInstructionStyle"
+                android:text="NOTE: user can long-press a tile to show a HINT about a flag with its country name; however this will be counted as an additional tap." />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
@@ -119,7 +132,7 @@
         android:id="@+id/cb_do_not_show_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="84dp"
         android:text="Don't show this again"
         android:textColor="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
@@ -129,27 +142,25 @@
         android:id="@+id/cv_Start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="methodtoexecute"
+        android:background="@color/colorPrimary"
+        android:minHeight="48dp"
         app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/cb_do_not_show_again"
+        app:layout_constraintEnd_toEndOf="@id/ll_how_items"
         app:layout_constraintTop_toBottomOf="@id/ll_how_items">
 
         <TextView
             android:id="@+id/tv_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="4dp"
-            android:text="Start"
-            android:textColor="@color/colorPrimary"
-            android:textSize="15sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="OK, Start the Game"
+            android:textColor="@color/grey"
+            android:textSize="18sp"
             android:textStyle="bold"
-
-
-            />
+            android:clickable="true"/>
 
     </com.google.android.material.card.MaterialCardView>
 
