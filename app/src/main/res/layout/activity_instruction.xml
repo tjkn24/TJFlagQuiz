@@ -81,7 +81,7 @@
 
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="If there is a match then both tiles will stay open." />
+                android:text="If there is a match then both tiles will stay open. The game continues until all tiles are open." />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -95,7 +95,7 @@
 
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="The game continues until all tiles are open." />
+                android:text="At game's end, the duration and the amount of taps are compared with the game's best record." />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
@@ -109,20 +109,6 @@
 
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="At game's end, the duration and the amount of taps are compared with the game's best record." />
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cv_how_06"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:cardElevation="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_how_05">
-
-            <TextView
-                style="@style/TextViewInstructionStyle"
                 android:text="NOTE: user can long-press a tile to show a HINT about a flag with its country name; however this will be counted as an additional tap." />
         </com.google.android.material.card.MaterialCardView>
 
@@ -132,36 +118,21 @@
         android:id="@+id/cb_do_not_show_again"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="28dp"
         android:text="Don't show this again"
         android:textColor="@color/grey"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll_how_items" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/colorPrimary"
-        android:minHeight="48dp"
-        app:cardElevation="4dp"
-        app:layout_constraintEnd_toEndOf="@id/ll_how_items"
-        app:layout_constraintTop_toBottomOf="@id/ll_how_items">
+        <Button
+            android:id="@+id/btn_instruction_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ll_how_items"
+            app:layout_constraintEnd_toEndOf="@id/ll_how_items"
+            android:layout_marginTop="20dp"
+            android:text="OK"
 
-        <TextView
-            android:id="@+id/tv_start"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:padding="8dp"
-            android:text="OK, Start the Game"
-            android:textColor="@color/grey"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:clickable="true"/>
-
-    </com.google.android.material.card.MaterialCardView>
+            />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

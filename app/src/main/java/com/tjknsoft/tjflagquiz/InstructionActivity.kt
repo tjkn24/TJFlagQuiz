@@ -27,8 +27,8 @@ class InstructionActivity : AppCompatActivity(), View.OnClickListener {
 
         isCBchecked = cbDoNotShowAgain.isChecked
 
-        val tvStart = findViewById<TextView>(R.id.tv_start)
-        tvStart.setOnClickListener(this)
+        val btnInstructionOK = findViewById<TextView>(R.id.btn_instruction_ok)
+        btnInstructionOK.setOnClickListener(this)
 
     }
 

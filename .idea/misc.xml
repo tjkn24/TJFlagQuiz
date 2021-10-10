@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/drawable/tv_border_correct.xml" value="0.15092592592592594" />
         <entry key="app/src/main/res/drawable/tv_border_selected.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable/tv_border_wrong.xml" value="0.15092592592592594" />
-        <entry key="app/src/main/res/layout/activity_instruction.xml" value="0.75" />
+        <entry key="app/src/main/res/layout/activity_instruction.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3015625" />
         <entry key="app/src/main/res/layout/activity_quiz_askName.xml" value="0.2957099080694586" />
         <entry key="app/src/main/res/layout/activity_quiz_chooseflag.xml" value="0.19010416666666666" />
