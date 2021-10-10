@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ico_restart"
+        android:icon="@drawable/ic_restart"
+        android:title="Restart" />
+
+    <item
+        android:id="@+id/ico_mute"
+        android:icon="@drawable/ic_mute"
+        android:title="Mute" />
+
+    <item
+        android:id="@+id/ico_help"
+        android:icon="@drawable/ic_help"
+        android:title="Help" />
+
+    <item
+        android:id="@+id/ico_quit"
+        android:icon="@drawable/ic_quit"
+        android:title="Quit" />
+
+
+</menu>

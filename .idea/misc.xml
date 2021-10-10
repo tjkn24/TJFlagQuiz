@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-v24/bottom_navigation_background.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/drawable-v24/bottom_navigation_color_selector.xml" value="0.20364583333333333" />
         <entry key="app/src/main/res/drawable-v24/button_border.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable-v24/round_corner.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable-v24/rounded_corner.xml" value="0.12037037037037036" />
@@ -22,7 +24,7 @@
         <entry key="app/src/main/res/layout/activity_quiz_chooseflag.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/layout/activity_quiz_choosename.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_mastermind.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.13" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_quiz_memoryflag.xml" value="0.1440972222222222" />
         <entry key="app/src/main/res/layout/activity_quiz_questions.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_quiz_time_attack.xml" value="0.22083333333333333" />
@@ -30,6 +32,7 @@
         <entry key="app/src/main/res/layout/dialog_instruction.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/layout/splash_screen_activity.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/toast_image_layout.xml" value="0.5" />
+        <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.18333333333333332" />
       </map>
     </option>
   </component>
