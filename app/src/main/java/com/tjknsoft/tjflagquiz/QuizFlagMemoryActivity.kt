@@ -615,13 +615,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             )
             editor.commit()
 
-            blinkView(tv_best_timer, true)
+            dimTextView(tv_best_timer)
             blinkView(tv_current_timer, true)
 
             mIsBestTime = true
 
         }
-        updateBestTimeTexView()
+        // updateBestTimeTexView()
     }
 
     private fun updateBestTimeTexView() {
@@ -658,13 +658,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             editor.putInt("best_moves", score)
             editor.commit()
 
-            blinkView(tv_best_moves, true)
+            dimTextView(tv_best_moves)
             blinkView(tv_current_moves, true)
 
             mIsBestMoves = true
 
         }
-        updateBestMovesTexView()
+        // updateBestMovesTexView()
+    }
+
+    private fun dimTextView(tv: TextView) {
+        tv.setBackgroundColor(resources.getColor(R.color.medium_grey))
     }
 
     private fun updateBestMovesTexView() {
