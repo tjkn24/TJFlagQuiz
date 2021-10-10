@@ -43,7 +43,7 @@ class InstructionActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View?) {
         val intent = Intent()
-        intent.putExtra("KeyCB", cbDoNotShowAgain.isChecked.toString())
+        intent.putExtra("KeyCheckBox", cbDoNotShowAgain.isChecked)
         setResult(Activity.RESULT_OK, intent)
         Log.i(
             "PANJUTA",

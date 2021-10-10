@@ -121,15 +121,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
-        val mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE)
-        val mEditor = mSharedPreferences.edit()
-        mEditor.putBoolean("item", isChecked)
-        mEditor.apply()
+        val prefs = getSharedPreferences("CheckBox", MODE_PRIVATE)
+        val editor = prefs.edit()
+        editor.putBoolean("cb_status", isChecked)
+        editor.apply()
     }
 
     private fun getCheckBoxStatus(): Boolean {
-        val mSharedPreferences = getSharedPreferences("CheckItem", MODE_PRIVATE)
-        return mSharedPreferences.getBoolean("item", false)
+        val prefs = getSharedPreferences("CheckBox", MODE_PRIVATE)
+        return prefs.getBoolean("cb_status", false)
     }
 
     private fun displayInstruction() {
@@ -172,12 +172,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             if (resultCode == Activity.RESULT_OK) {
 
                 // Get String data from Intent
-                val cbStatus = data!!.getStringExtra("KeyCB")
+                val checkBoxStatus = data!!.getBooleanExtra("KeyCheckBox", false)
 
                 Log.i(
                     "PANJUTA",
-                    "Back to FlagMemoryActivity; cbStatus: $cbStatus"
+                    "Back to FlagMemoryActivity; checkBoxStatus: $checkBoxStatus"
                 )
+
+                storeCheckBoxStatus(checkBoxStatus)
 
             } else {
                 Log.i(
