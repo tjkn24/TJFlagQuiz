@@ -109,7 +109,7 @@
 
             <TextView
                 style="@style/TextViewInstructionStyle"
-                android:text="NOTE: user can long-press a tile to show a HINT about a flag with its country name; however this will be counted as an additional tap." />
+                android:text="NOTE: user can long-press a tile to show a HINT displaying a flag with its country name; however this will be counted as an additional tap." />
         </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>

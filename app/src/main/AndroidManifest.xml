@@ -14,12 +14,11 @@
         <activity
             android:name=".QuizFlagMemoryActivity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/MaterialNoActionBarTheme" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".InstructionActivity"
-            android:theme="@style/CustomDialog"
-            android:excludeFromRecents="true"/>
+            android:excludeFromRecents="true"
+            android:theme="@style/CustomDialog" />
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
@@ -28,7 +27,6 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -36,13 +34,12 @@
             android:name=".QuizChooseNameActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialNoActionBarTheme"
+
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".QuizChooseFlagActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/MaterialNoActionBarTheme"
             android:windowSoftInputMode="adjustResize" />
     </application>
 

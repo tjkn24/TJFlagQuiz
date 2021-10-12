@@ -11,6 +11,7 @@ import android.os.Handler
 import android.os.SystemClock
 import android.util.Log
 import android.view.Gravity
+import android.view.Menu
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
+import android.view.MenuItem
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -45,8 +47,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mTappedCountryTileIndex: Int = -1
     private var mTappedFlagTileIndex: Int = -1
     private lateinit var mSound: SoundPoolPlayer
-    private var mCurrentMoves = 0
-    private var mBestMoves = 0
+    private var mCurrentTaps = 0
+    private var mBestTaps = 0
     private var mBestTime = 0.0
     private var mMatchedPairs = 0
     private var mOnResumeTime = 0.0
@@ -60,7 +62,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mLastPairClickTime: Long =
         0 // event time when second member of a pair (flag or country) is clicked
     private var mIsBestTime = false
-    private var mIsBestMoves = false
+    private var mIsBestTaps = false
     private var mIsFirstGameCompleted = false
     val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
 
@@ -75,7 +77,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         // todo: tablet?
-        // todo: menu (show Instruction, Flag 101?)
+
 
         // clearSharedPreferences()
 
@@ -87,7 +89,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         setTimer()
 
-        updateBestMovesTexView()
+        updateBestTapsTexView()
 
         updateBestTimeTexView()
 
@@ -101,14 +103,53 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         drawTiles()
 
-        setOnClickListenerBottomButtons()
+        // setOnClickListenerBottomButtons()
 
         mSound = SoundPoolPlayer(this)
 
     }
 
+    // @SuppressLint("RestrictedApi")
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.options_menu, menu)
+//
+//        if (menu is MenuBuilder) {
+//            menu.setOptionalIconsVisible(true)
+//        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        // todo: tap effect on menu in app bar
+        return when (item.itemId) {
+
+            R.id.ico_help -> {
+                displayInstruction()
+                true
+            }
+
+            // todo: mute sound
+            R.id.ico_mute -> {
+                Toast.makeText(this,"Todo: Mute Sound",Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.ico_restart -> {
+                restartGame()
+                true
+            }
+
+            R.id.ico_quit -> {
+                quitGame()
+                true
+            }
+            else -> super.onContextItemSelected(item)
+        }
+    }
+
     private fun setVariables() {
-        mIsBestMoves = false
+        mIsBestTaps = false
         mIsBestTime = false
         mIsFirstGameCompleted = getSharedPreferences(
             "mIsFirstGameCompletedKey",
@@ -201,7 +242,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // if game time reach 60 minutes -> restart the game
                 if (minutes > 60) {
                     mTimerHandler.removeCallbacks(mTimerRunnable)
-                    btn_restart3.performClick()
+                    // btn_restart3.performClick()
+                    restartGame()
                 }
 
                 val intMinutes = floor(minutes)
@@ -286,7 +328,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         mCountryTiles[index].text = tile.shortenedCountryName
                         mTappedCountryTileIndex = index
 
-                        updateMoves()
+                        updateTaps()
 
                         // only text tile that has been opened can be long-pressed:
                         // condition: only when flag tile has not been opened
@@ -301,7 +343,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                     tile.shortenedCountryName
                                 )
 
-                                updateMoves()
+                                updateTaps()
 
                                 return@setOnLongClickListener true
                             }
@@ -372,7 +414,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         if (!tile.isFaceUp) mFlagTiles[index].setImageResource(tile.flagResId)
                         mTappedFlagTileIndex = index
 
-                        updateMoves()
+                        updateTaps()
 
                         // only flag tile that has been opened can be long-pressed:
                         // condition: only when text tile has not been opened
@@ -385,7 +427,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                                     tile.flagResId,
                                     mMapFlagResIDtoShortenedCountryName[tile.flagResId]!!
                                 )
-                                updateMoves()
+                                updateTaps()
                                 return@setOnLongClickListener true
                             }
                         }
@@ -415,9 +457,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun updateMoves() {
-        mCurrentMoves++
-        tv_current_moves.text = mCurrentMoves.toString()
+    private fun updateTaps() {
+        mCurrentTaps++
+        tv_current_taps.text = mCurrentTaps.toString()
     }
 
 
@@ -466,7 +508,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 editor.commit()
 
                 checkBestTime()
-                checkBestMoves(mCurrentMoves)
+                checkBestTaps(mCurrentTaps)
 
                 Log.i(
                     "PANJUTA",
@@ -477,12 +519,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     !mIsFirstGameCompleted -> {
                         Toast.makeText(
                             applicationContext,
-                            "Congratulation! You completed your first game.",
+                            "Congratulation! You completed your first game!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    !mIsBestTime && !mIsBestMoves -> {
-                        // neither best moves nor best time is achieved
+                    !mIsBestTime && !mIsBestTaps -> {
+                        // neither best taps nor best time is achieved
                         // and this is not the first game completed
                         Toast.makeText(
                             applicationContext,
@@ -490,27 +532,27 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    mIsBestTime && !mIsBestMoves -> {
+                    mIsBestTime && !mIsBestTaps -> {
                         // user set a new best time
                         Toast.makeText(
                             applicationContext,
-                            "Good job! You set a new Best Time!",
+                            "Congratulation! You set a new Best Time!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    !mIsBestTime && mIsBestMoves -> {
-                        // user set a new best moves
+                    !mIsBestTime && mIsBestTaps -> {
+                        // user set a new best taps
                         Toast.makeText(
                             applicationContext,
-                            "Good job! You set a new Best Moves!",
+                            "Congratulation! You set a new Best Taps!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
-                    mIsBestTime && mIsBestMoves -> {
-                        // set a new best moves
+                    mIsBestTime && mIsBestTaps -> {
+                        // set a new best time and taps
                         Toast.makeText(
                             applicationContext,
-                            "Excellent! You set BOTH new Best Time and Best Moves!!",
+                            "Excellent! You set BOTH new Best Time and Best Taps!!",
                             Toast.LENGTH_LONG
                         ).show()
                     }
@@ -552,9 +594,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun clearSharedPreferences() {
-        val sharedPreferences = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
-        editor.remove("best_moves")
+        editor.remove("best_taps")
         editor.commit()
 
         val sharedPreferences2 = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
@@ -647,35 +689,35 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    private fun checkBestMoves(score: Int) {
+    private fun checkBestTaps(score: Int) {
         // this function is called when game ends
 
-        if (mBestMoves == 0 || mCurrentMoves < mBestMoves) { // set a new best moves
+        if (mBestTaps == 0 || mCurrentTaps < mBestTaps) { // set a new best taps
 
             //setting preferences
-            val prefs = getSharedPreferences("mBestMovesKey", Context.MODE_PRIVATE)
+            val prefs = getSharedPreferences("mBestTapsKey", Context.MODE_PRIVATE)
             val editor: SharedPreferences.Editor = prefs.edit()
-            editor.putInt("best_moves", score)
+            editor.putInt("best_taps", score)
             editor.commit()
 
-            dimTextView(tv_best_moves)
-            blinkView(tv_current_moves, true)
+            dimTextView(tv_best_taps)
+            blinkView(tv_current_taps, true)
 
-            mIsBestMoves = true
+            mIsBestTaps = true
 
         }
-        // updateBestMovesTexView()
+        // updateBestTapsTexView()
     }
 
     private fun dimTextView(tv: TextView) {
         tv.setBackgroundColor(resources.getColor(R.color.medium_grey))
     }
 
-    private fun updateBestMovesTexView() {
+    private fun updateBestTapsTexView() {
         // getting preferences
-        val prefs = getSharedPreferences("mBestMovesKey", MODE_PRIVATE)
-        mBestMoves = prefs.getInt("best_moves", 0) //0 is the default value
-        tv_best_moves.text = mBestMoves.toString()
+        val prefs = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
+        mBestTaps = prefs.getInt("best_taps", 0) //0 is the default value
+        tv_best_taps.text = mBestTaps.toString()
     }
 
 
@@ -737,10 +779,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
     }
 
-    private fun setOnClickListenerBottomButtons() {
-        btn_quit3.setOnClickListener(this)
-        btn_restart3.setOnClickListener(this)
-    }
+//    private fun setOnClickListenerBottomButtons() {
+//        btn_quit3.setOnClickListener(this)
+//        btn_restart3.setOnClickListener(this)
+//    }
 
     private fun mapFlagResIDToShortenedCountryName(allFlagsResID: ArrayList<Int>) {
         for ((index, flagResID) in allFlagsResID.withIndex()) {
@@ -839,26 +881,34 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when (v?.id) {
-            R.id.btn_quit3 -> {
-                mSound.release()
-                finish()
-            }
-            R.id.btn_restart3 -> { // onCreateHelper()
-                mSound.release()
-                val intent = Intent(this, SplashScreenActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            R.id.iv_tile_01 -> {
-                Log.i("PANJUTA", "imageview 01 clicked")
+//        when (v?.id) {
+//            R.id.btn_quit3 -> {
+//                quitGame()
+//            }
+//            R.id.btn_restart3 -> { // onCreateHelper()
+//                restartGame()
+//            }
+//            R.id.iv_tile_01 -> {
+//                Log.i("PANJUTA", "imageview 01 clicked")
+//
+//            }
+//            R.id.tv_tile_01 -> {
+//                Log.i("PANJUTA", "textview 01 clicked")
+//            }
+//        }
+//
+    }
 
-            }
-            R.id.tv_tile_01 -> {
-                Log.i("PANJUTA", "textview 01 clicked")
-            }
-        }
+    private fun quitGame() {
+        mSound.release()
+        finish()
+    }
 
+    private fun restartGame() {
+        mSound.release()
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
 // v is the Button view that you want the Toast to appear above

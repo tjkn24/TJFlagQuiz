@@ -6,29 +6,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".QuizFlagMemoryActivity"
-    >
+    tools:context=".QuizFlagMemoryActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
         android:background="@color/light_grey"
-        >
+        android:gravity="center"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginEnd="4dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
                 android:padding="4dp">
@@ -37,8 +34,8 @@
                     android:id="@+id/ll_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -55,10 +52,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginTop="4dp"
                             android:layout_marginEnd="2dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -92,10 +89,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
                             android:layout_marginStart="2dp"
-                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="4dp"
                             android:layout_marginEnd="4dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -134,24 +131,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:elevation="10dp"
                 android:padding="4dp">
 
                 <LinearLayout
-                    android:id="@+id/ll_moves"
+                    android:id="@+id/ll_taps"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_vertical">
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Moves"
+                        android:text="Taps"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -162,10 +159,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginTop="4dp"
                             android:layout_marginEnd="2dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -185,7 +182,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_current_moves"
+                                    android:id="@+id/tv_current_taps"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -199,10 +196,10 @@
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
                             android:layout_marginStart="2dp"
-                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="4dp"
                             android:layout_marginEnd="4dp"
+                            android:layout_marginBottom="4dp"
                             android:layout_weight="1"
                             android:elevation="10dp"
                             android:padding="4dp">
@@ -222,7 +219,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_best_moves"
+                                    android:id="@+id/tv_best_taps"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -1078,30 +1075,14 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
 
-            android:background="@drawable/bottom_navigation_background"
-            android:elevation="8dp"
-            app:itemIconTint="@drawable/bottom_navigation_color_selector"
-            app:labelVisibilityMode="unlabeled"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:menu="@menu/bottom_navigation_menu" />
 
         <LinearLayout
             android:id="@+id/ll_restartOrQuit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:visibility="visible">
-
-
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/btn_restart3"
@@ -1130,7 +1111,6 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>
