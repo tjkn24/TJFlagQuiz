@@ -66,6 +66,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsFirstGameCompleted = false
     val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
     private var mIsSoundOn = true
+    private lateinit var mMenu: Menu
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,6 +114,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     // @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) {
+            this.mMenu = menu
+        }
         menuInflater.inflate(R.menu.options_menu, menu)
 //
 //        if (menu is MenuBuilder) {
@@ -126,15 +130,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // todo: tap effect on menu in app bar
         return when (item.itemId) {
 
-            R.id.ico_help -> {
+            R.id.menu_help -> {
                 displayInstruction()
                 true
             }
 
             // todo: mute sound
-            R.id.ico_mute -> {
-                Toast.makeText(this, "Todo: Mute Sound", Toast.LENGTH_SHORT).show()
-
+            R.id.menu_mute -> {
+                Toast.makeText(this, "mIsSoundOn: $mIsSoundOn", Toast.LENGTH_SHORT).show()
+                toggleMenuItemTitle(R.id.menu_mute)
                 if (mIsSoundOn) {
                     for (flag in mFlagTiles) {
                         flag.isSoundEffectsEnabled = false
@@ -156,22 +160,28 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     mIsSoundOn = true
                 }
-
-
-
                 true
             }
 
-            R.id.ico_restart -> {
+            R.id.menu_restart -> {
                 restartGame()
                 true
             }
 
-            R.id.ico_quit -> {
+            R.id.menu_quit -> {
                 quitGame()
                 true
             }
             else -> super.onContextItemSelected(item)
+        }
+    }
+
+    private fun toggleMenuItemTitle(menuItem: Int) {
+        val menuItem: MenuItem = mMenu.findItem(menuItem)
+        if (mIsSoundOn) {
+            menuItem.setTitle("Unmute")
+        } else {
+            menuItem.setTitle("Mute")
         }
     }
 

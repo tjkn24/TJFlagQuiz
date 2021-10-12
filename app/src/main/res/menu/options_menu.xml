@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/ico_help"
+        android:id="@+id/menu_help"
         android:title="Help"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/ico_mute"
+        android:id="@+id/menu_mute"
         android:title="Mute"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/ico_restart"
+        android:id="@+id/menu_restart"
         android:title="Restart"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/ico_quit"
+        android:id="@+id/menu_quit"
         android:title="Quit"
         app:showAsAction="ifRoom" />
 
