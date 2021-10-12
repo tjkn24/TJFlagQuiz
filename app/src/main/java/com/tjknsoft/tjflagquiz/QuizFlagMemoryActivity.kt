@@ -65,6 +65,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsBestTaps = false
     private var mIsFirstGameCompleted = false
     val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
+    private var mIsSoundOn = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,6 +78,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         // todo: tablet?
+        // todo: easy medium hard layouts
 
 
         // clearSharedPreferences()
@@ -131,7 +133,32 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             // todo: mute sound
             R.id.ico_mute -> {
-                Toast.makeText(this,"Todo: Mute Sound",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Todo: Mute Sound", Toast.LENGTH_SHORT).show()
+
+                if (mIsSoundOn) {
+                    for (flag in mFlagTiles) {
+                        flag.isSoundEffectsEnabled = false
+                    }
+
+                    for (country in mCountryTiles) {
+                        country.isSoundEffectsEnabled = false
+                    }
+
+                    mIsSoundOn = false
+                } else {
+                    for (flag in mFlagTiles) {
+                        flag.isSoundEffectsEnabled = true
+                    }
+
+                    for (country in mCountryTiles) {
+                        country.isSoundEffectsEnabled = true
+                    }
+
+                    mIsSoundOn = true
+                }
+
+
+
                 true
             }
 
@@ -317,13 +344,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     // if country is clicked less than 1.5 second of last time a pair clicked -> ignore
                     if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
-                        mSound.playShortResource(R.raw.tap)
-                        return@setOnClickListener
+                        if (mIsSoundOn) {
+                            mSound.playShortResource(R.raw.tap)
+                            return@setOnClickListener
+                        }
                     }
 
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedShortenedCountryName != "-1") {
-                        mSound.playShortResource(R.raw.tap)
+                        if (mIsSoundOn) {
+                            mSound.playShortResource(R.raw.tap)
+                        }
                     } else {
                         mCountryTiles[index].text = tile.shortenedCountryName
                         mTappedCountryTileIndex = index
@@ -402,13 +433,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     // if flag is clicked less than 1.5 second of last time a pair clicked -> ignore
                     if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
-                        mSound.playShortResource(R.raw.tap)
-                        return@setOnClickListener
+                        if (mIsSoundOn) {
+                            mSound.playShortResource(R.raw.tap)
+                            return@setOnClickListener
+                        }
                     }
 
                     // if a text tile was tapped before this one, play error sound
                     if (mTappedFlagResID != -1) {
-                        mSound.playShortResource(R.raw.tap)
+                        if (mIsSoundOn) {
+                            mSound.playShortResource(R.raw.tap)
+                        }
                     } else {
                         // if user tap on face-down flag imageview, it will reveal face-up flag side If tapped tile flag doesn't match with the tapped text tile, after 2 seconds, both tiles are face-down.
                         if (!tile.isFaceUp) mFlagTiles[index].setImageResource(tile.flagResId)
@@ -475,7 +510,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         { // matched pair
 
             // play correct sound:
-            mSound.playShortResource(R.raw.correct)
+            if (mIsSoundOn) {
+                mSound.playShortResource(R.raw.correct)
+            }
+
 
             // make both tiles blink:
             blinkView(mFlagTiles[mTappedFlagTileIndex], false)
@@ -483,14 +521,18 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             // both tiles must not be able to selected anymore; just play sound when tapped
             mFlagTiles[mTappedFlagTileIndex].setOnClickListener {
-                mSound.playShortResource(
-                    R.raw.tap
-                )
+                if (mIsSoundOn) {
+                    mSound.playShortResource(
+                        R.raw.tap
+                    )
+                }
             }
             mCountryTiles[mTappedCountryTileIndex].setOnClickListener {
-                mSound.playShortResource(
-                    R.raw.tap
-                )
+                if (mIsSoundOn) {
+                    mSound.playShortResource(
+                        R.raw.tap
+                    )
+                }
             }
 
             // disable long-click on text and flag tiles after they are matched and opened
@@ -900,12 +942,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun quitGame() {
-        mSound.release()
+        if (mIsSoundOn) {
+            mSound.release()
+        }
         finish()
     }
 
     private fun restartGame() {
-        mSound.release()
+        if (mIsSoundOn) {
+            mSound.release()
+        }
         val intent = Intent(this, SplashScreenActivity::class.java)
         startActivity(intent)
         finish()
