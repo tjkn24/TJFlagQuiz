@@ -56,8 +56,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mPreviousDuration = 0.0
     private lateinit var mTimerHandler: Handler
     private lateinit var mTimerRunnable: Runnable
-    private var mLastFlagClickTime: Long = 0 // variable to track event time for flag tile
-    private var mLastCountryClickTime: Long =
+    private var mFlagLastClickTime: Long = 0 // variable to track event time for flag tile
+    private var mCountryLastClickTime: Long =
         0 // variable to track event time for country name tile
     private var mLastPairClickTime: Long =
         0 // event time when second member of a pair (flag or country) is clicked
@@ -137,9 +137,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             // todo: mute sound
             R.id.menu_mute -> {
-                Toast.makeText(this, "mIsSoundOn: $mIsSoundOn", Toast.LENGTH_SHORT).show()
+
                 toggleMenuItemTitle(R.id.menu_mute)
                 if (mIsSoundOn) {
+                    Toast.makeText(this, "Audio: OFF", Toast.LENGTH_SHORT).show()
                     for (flag in mFlagTiles) {
                         flag.isSoundEffectsEnabled = false
                     }
@@ -150,6 +151,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     mIsSoundOn = false
                 } else {
+                    Toast.makeText(this, "Audio: ON", Toast.LENGTH_SHORT).show()
                     for (flag in mFlagTiles) {
                         flag.isSoundEffectsEnabled = true
                     }
@@ -350,12 +352,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mCountryTiles[index].setOnClickListener {
 
                     // save click time of a country tile
-                    mLastCountryClickTime = SystemClock.elapsedRealtime()
+                    mCountryLastClickTime = SystemClock.elapsedRealtime()
 
                     // if country is clicked less than 1.5 second of last time a pair clicked -> ignore
                     if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
+                        Log.i(
+                            "PANJUTA",
+                            "tap too fast"
+                        )
                         if (mIsSoundOn) {
                             mSound.playShortResource(R.raw.tap)
+                            return@setOnClickListener
+                        } else {
+                            // playDummyResource -> play zero volume audio resource
+                            // if this 'else' missing -> user can fast tap i.e more than 2 tiles can open at the same time
+                            // why -> ?
+                            mSound.playDummyResource(R.raw.tap)
                             return@setOnClickListener
                         }
                     }
@@ -439,12 +451,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mFlagTiles[index].setOnClickListener {
 
                     // save click time of a flag tile
-                    mLastFlagClickTime = SystemClock.elapsedRealtime()
+                    mFlagLastClickTime = SystemClock.elapsedRealtime()
 
                     // if flag is clicked less than 1.5 second of last time a pair clicked -> ignore
                     if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
+                        Log.i(
+                            "PANJUTA",
+                            "tap too fast"
+                        )
                         if (mIsSoundOn) {
                             mSound.playShortResource(R.raw.tap)
+                            return@setOnClickListener
+                        } else {
+                            // playDummyResource -> play zero volume audio resource
+                            // if this 'else' missing -> user can fast tap i.e more than 2 tiles can open at the same time
+                            // why -> ?
+                            mSound.playDummyResource(R.raw.tap)
                             return@setOnClickListener
                         }
                     }
@@ -617,7 +639,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             val ivIndex = mTappedFlagTileIndex
             val tvIndex = mTappedCountryTileIndex
 
-            // make both tiles face-down after 2 seconds:
+            // make both tiles face-down after n seconds:
             val timer = object : CountDownTimer(1500, 250) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
