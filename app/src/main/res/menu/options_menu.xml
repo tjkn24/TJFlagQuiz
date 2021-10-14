@@ -2,15 +2,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+
     <item
-        android:id="@+id/menu_help"
-        android:title="Help"
+        android:id="@+id/menu_theme"
+        android:title="Theme"
+        android:icon="@drawable/ic_light"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_mute"
         android:title="Mute"
-        android:icon="@drawable/ic_mute"
+        android:icon="@drawable/ic_unmute"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_help"
+        android:title="Help"
         app:showAsAction="ifRoom" />
 
     <item

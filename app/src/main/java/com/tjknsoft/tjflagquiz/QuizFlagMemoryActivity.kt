@@ -181,11 +181,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun toggleMenuItem(menuItem: Int) {
         val menuItem: MenuItem = mMenu.findItem(menuItem)
         if (mIsSoundOn) {
-            menuItem.setTitle("Unmute")
-            menuItem.setIcon(R.drawable.ic_unmute)
-        } else {
-            menuItem.setTitle("Mute")
+            menuItem.title = "Mute"
             menuItem.setIcon(R.drawable.ic_mute)
+        } else {
+            menuItem.title = "Unmute"
+            menuItem.setIcon(R.drawable.ic_unmute)
         }
     }
 
