@@ -138,7 +138,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             // todo: mute sound
             R.id.menu_mute -> {
 
-                toggleMenuItemTitle(R.id.menu_mute)
+                toggleMenuItem(R.id.menu_mute)
                 if (mIsSoundOn) {
                     Toast.makeText(this, "Audio: OFF", Toast.LENGTH_SHORT).show()
                     for (flag in mFlagTiles) {
@@ -178,12 +178,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun toggleMenuItemTitle(menuItem: Int) {
+    private fun toggleMenuItem(menuItem: Int) {
         val menuItem: MenuItem = mMenu.findItem(menuItem)
         if (mIsSoundOn) {
             menuItem.setTitle("Unmute")
+            menuItem.setIcon(R.drawable.ic_unmute)
         } else {
             menuItem.setTitle("Mute")
+            menuItem.setIcon(R.drawable.ic_mute)
         }
     }
 
@@ -332,6 +334,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun drawTiles() {
+        // todo: dark theme
 
         // draw tiles
         for ((index, tile) in mTileList.withIndex()) {
