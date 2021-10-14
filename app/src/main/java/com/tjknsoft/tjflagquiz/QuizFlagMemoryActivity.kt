@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatDelegate
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -130,12 +131,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // todo: tap effect on menu in app bar
         return when (item.itemId) {
 
-            R.id.menu_help -> {
-                displayInstruction()
+            R.id.menu_theme -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 true
             }
 
-            // todo: mute sound
             R.id.menu_mute -> {
 
                 toggleMenuItem(R.id.menu_mute)
@@ -162,6 +162,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                     mIsSoundOn = true
                 }
+                true
+            }
+
+            R.id.menu_help -> {
+                displayInstruction()
                 true
             }
 
