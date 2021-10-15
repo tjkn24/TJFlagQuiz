@@ -385,7 +385,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
 
-                    // if a text tile was tapped before this one, play error sound
+                    // if another text tile was tapped before this one, play error sound
                     if (mTappedShortenedCountryName != "-1") {
                         if (mIsSoundOn) {
                             mSound.playShortResource(R.raw.tap)
@@ -494,7 +494,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
 
-                    // if a text tile was tapped before this one, play error sound
+                    // if another flag tile was tapped before this one, play error sound
                     if (mTappedFlagResID != -1) {
                         if (mIsSoundOn) {
                             mSound.playShortResource(R.raw.tap)
