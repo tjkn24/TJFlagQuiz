@@ -68,6 +68,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
     private var mIsSoundOn = true
     private lateinit var mMenu: Menu
+    private var mIsLightTheme = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +81,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun onCreateHelper() {
 
         // todo: tablet?
+        // todo: dark theme
         // todo: easy medium hard layouts
 
 
@@ -132,7 +134,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         return when (item.itemId) {
 
             R.id.menu_theme -> {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                mIsLightTheme = !mIsLightTheme
+                drawTiles()
                 true
             }
 
@@ -205,6 +209,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "PANJUTA",
             "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
         )
+        mIsLightTheme = true
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -347,7 +352,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // tile displays shortened country name
                 mFlagTiles[index].setVisibility(View.GONE)
                 mCountryTiles[index].setVisibility(View.VISIBLE)
-                if (tile.isFaceUp == true) {
+                if (tile.isFaceUp) {
                     mCountryTiles[index].text = tile.shortenedCountryName
                 }
 
@@ -445,9 +450,19 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 mFlagTiles[index].setVisibility(View.VISIBLE)
 
                 if (tile.isFaceUp) {
+                    Log.i(
+                        "PANJUTA",
+                        "drawTiles(), index of mFlagTiles[index]: $index, tile.flagResId: ${tile.flagResId}"
+                    )
                     mFlagTiles[index].setImageResource(tile.flagResId)
                 } else {
-                    mFlagTiles[index].setImageResource(R.drawable.tv_background_primary)
+
+                    if (mIsLightTheme) {
+                        mFlagTiles[index].setImageResource(R.drawable.tv_background_primary)
+                    } else {
+                        mFlagTiles[index].setImageResource(R.drawable.tv_background_primary_dark)
+                    }
+
                 }
 
                 // closed flag tile cannot be long-pressed:
@@ -540,14 +555,20 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun compareTappedTiles(
         tappedShortenedCountryName: String,
-        tappedFlagResID: Int
-    ) {
+        tappedFlagResID: Int,
+        ) {
         Log.i(
             "PANJUTA",
-            "inside Compare, tappedShortenedCountryName: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoShortenedCountryName[tappedFlagResID]: ${mMapFlagResIDtoShortenedCountryName[tappedFlagResID]}"
+            "inside Compare, mTappedFlagTileIndex: $mTappedFlagTileIndex, tappedShortenedCountryName: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoShortenedCountryName[tappedFlagResID]: ${mMapFlagResIDtoShortenedCountryName[tappedFlagResID]}"
         )
         if (mMapFlagResIDtoShortenedCountryName[tappedFlagResID] == tappedShortenedCountryName) //correct pairs
         { // matched pair
+
+            mTileList[mTappedFlagTileIndex].isFaceUp = true
+            Log.i(
+                "PANJUTA",
+                "mTileList[$mTappedFlagTileIndex].isFaceUp: ${mTileList[mTappedFlagTileIndex].isFaceUp}"
+            )
 
             // play correct sound:
             if (mIsSoundOn) {
@@ -654,7 +675,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onFinish() {
                     // display text and flag tiles in close position
-                    mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary)
+                    if (mIsLightTheme){
+                        mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary)
+                    } else {
+                        mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary_dark)
+                    }
+
                     mCountryTiles[tvIndex].text = ""
 
                     // disable long-click on text and flag tiles after they are closed

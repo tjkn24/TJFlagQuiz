@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/rounded_background.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/toast_background.xml" value="0.23489583333333333" />
         <entry key="app/src/main/res/drawable/tv_background_primary.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/tv_background_primary_dark.xml" value="0.10986842105263157" />
         <entry key="app/src/main/res/drawable/tv_background_sacondary.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/tv_border.xml" value="0.1398148148148148" />
         <entry key="app/src/main/res/drawable/tv_border_correct.xml" value="0.15092592592592594" />
