@@ -134,7 +134,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         return when (item.itemId) {
 
             R.id.menu_theme -> {
-                // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 mIsLightTheme = !mIsLightTheme
                 drawTiles()
                 true
