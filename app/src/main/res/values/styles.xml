@@ -42,6 +42,7 @@
         <item name="android:layout_marginStart">@dimen/flag_horizontal_gap</item>
         <item name="android:layout_marginBottom">@dimen/flag_vertical_gap</item>
         <item name="cardCornerRadius">6dp</item>
+        <item name="backgroundColor">@color/black</item>
     </style>
 
     <style name="ImageViewTileStyle">

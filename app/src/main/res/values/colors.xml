@@ -8,10 +8,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorPrimary">#795548</color>
-    <color name="colorPrimaryDarkTheme">#BCAAA4</color>
+    <color name="colorPrimaryDarkTheme">#4E342E</color>
     <color name="colorAccent">#FFAA00</color>
     <color name="backgroundPage">#d9d9d9</color>
     <color name="backgroundPage2">#EFEBE9</color>
+    <color name="backgroundPage3">#6D4C41</color>
     <color name="grey">#808080</color>
     <color name="light_grey">#F8F8F8</color>
     <color name="medium_grey">#C5C5C5</color>

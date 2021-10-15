@@ -1,6 +1,7 @@
 package com.tjknsoft.tjflagquiz
 
 import android.app.Activity
+import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -23,6 +24,7 @@ import kotlin.math.floor
 import kotlin.random.Random
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -87,6 +89,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         // clearSharedPreferences()
 
+        setBackgroundColor()
+
         setVariables()
 
         if (!getCheckBoxStatus()) {
@@ -115,6 +119,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun setBackgroundColor() {
+        val gameBoard = findViewById<LinearLayout>(R.id.ll_game_board)
+        // val root = gameBoard.rootView
+        if (!mIsLightTheme) {
+            gameBoard.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        } else {
+            gameBoard.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage2))
+        }
+
+    }
+
     // @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         if (menu != null) {
@@ -136,6 +151,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             R.id.menu_theme -> {
                 // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 mIsLightTheme = !mIsLightTheme
+                setBackgroundColor()
                 drawTiles()
                 true
             }
@@ -352,6 +368,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // tile displays shortened country name
                 mFlagTiles[index].setVisibility(View.GONE)
                 mCountryTiles[index].setVisibility(View.VISIBLE)
+
+                if (mIsLightTheme) {
+                    mCountryTiles[index].setBackgroundColor(getResources().getColor(R.color.white))
+                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.grey))
+                } else {
+                    mCountryTiles[index].setBackground(getResources().getDrawable(R.drawable.round_corner))
+                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.light_grey))
+                }
+
                 if (tile.isFaceUp) {
                     mCountryTiles[index].text = tile.shortenedCountryName
                 }
@@ -556,7 +581,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private fun compareTappedTiles(
         tappedShortenedCountryName: String,
         tappedFlagResID: Int,
-        ) {
+    ) {
         Log.i(
             "PANJUTA",
             "inside Compare, mTappedFlagTileIndex: $mTappedFlagTileIndex, tappedShortenedCountryName: $tappedShortenedCountryName, tappedFlagResID: $tappedFlagResID, mMapFlagResIDtoShortenedCountryName[tappedFlagResID]: ${mMapFlagResIDtoShortenedCountryName[tappedFlagResID]}"
@@ -675,7 +700,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onFinish() {
                     // display text and flag tiles in close position
-                    if (mIsLightTheme){
+                    if (mIsLightTheme) {
                         mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary)
                     } else {
                         mFlagTiles[ivIndex].setImageResource(R.drawable.tv_background_primary_dark)
