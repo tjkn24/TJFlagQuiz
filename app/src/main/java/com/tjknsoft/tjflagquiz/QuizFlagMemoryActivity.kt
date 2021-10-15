@@ -150,6 +150,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.menu_theme -> {
                 // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                toggleMenuItem(R.id.menu_theme)
                 mIsLightTheme = !mIsLightTheme
                 setBackgroundColor()
                 drawTiles()
@@ -203,14 +204,24 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    private fun toggleMenuItem(menuItem: Int) {
-        val menuItem: MenuItem = mMenu.findItem(menuItem)
-        if (mIsSoundOn) {
-            menuItem.title = "Mute"
-            menuItem.setIcon(R.drawable.ic_mute)
-        } else {
-            menuItem.title = "Unmute"
-            menuItem.setIcon(R.drawable.ic_unmute)
+    private fun toggleMenuItem(menu: Int) {
+        val menuItem: MenuItem = mMenu.findItem(menu)
+        if (menu == R.id.menu_mute) {
+            if (mIsSoundOn) {
+                menuItem.title = "Mute"
+                menuItem.setIcon(R.drawable.ic_mute)
+            } else {
+                menuItem.title = "Unmute"
+                menuItem.setIcon(R.drawable.ic_unmute)
+            }
+        } else if (menu == R.id.menu_theme) {
+            if (mIsLightTheme) {
+                menuItem.title = "Dark"
+                menuItem.setIcon(R.drawable.ic_dark)
+            } else {
+                menuItem.title = "Light"
+                menuItem.setIcon(R.drawable.ic_light)
+            }
         }
     }
 
@@ -319,7 +330,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 val hundreths = (seconds - intSeconds) * 100.0
 
                 // tv_current_timer.setText("${minutes.toString()}:${seconds.toString()}")
-                tv_current_timer.text = String.format(
+                tv_time_current_timer.text = String.format(
                     "%02d:%02d:%02d",
                     intMinutes.toInt(),
                     intSeconds.toInt(),
@@ -374,7 +385,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mCountryTiles[index].setTextColor(getResources().getColor(R.color.grey))
                 } else {
                     mCountryTiles[index].setBackground(getResources().getDrawable(R.drawable.round_corner))
-                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.light_grey))
+                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.backgroundPage2))
                 }
 
                 if (tile.isFaceUp) {
@@ -574,7 +585,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun updateTaps() {
         mCurrentTaps++
-        tv_current_taps.text = mCurrentTaps.toString()
+        tv_taps_current_amount.text = mCurrentTaps.toString()
     }
 
 
@@ -790,8 +801,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             )
             editor.commit()
 
-            dimTextView(tv_best_timer)
-            blinkView(tv_current_timer, true)
+            dimTextView(tv_time_best_timer)
+            blinkView(tv_time_current_timer, true)
 
             mIsBestTime = true
 
@@ -814,7 +825,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         val intSeconds = floor(seconds)
         val hundredths = (seconds - intSeconds) * 100.0
 
-        tv_best_timer.text = String.format(
+        tv_time_best_timer.text = String.format(
             "%02d:%02d:%02d",
             intMinutes.toInt(),
             intSeconds.toInt(),
@@ -833,8 +844,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             editor.putInt("best_taps", score)
             editor.commit()
 
-            dimTextView(tv_best_taps)
-            blinkView(tv_current_taps, true)
+            dimTextView(tv_taps_best_amount)
+            blinkView(tv_taps_current_amount, true)
 
             mIsBestTaps = true
 
@@ -850,7 +861,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         // getting preferences
         val prefs = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
         mBestTaps = prefs.getInt("best_taps", 0) //0 is the default value
-        tv_best_taps.text = mBestTaps.toString()
+        tv_taps_best_amount.text = mBestTaps.toString()
     }
 
 

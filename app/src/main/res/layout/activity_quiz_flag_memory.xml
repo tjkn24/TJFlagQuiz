@@ -41,6 +41,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tv_time_label"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -64,12 +65,14 @@
                             android:padding="4dp">
 
                             <LinearLayout
+                                android:id="@+id/ll_time_best"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tv_time_best_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -78,7 +81,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_best_timer"
+                                    android:id="@+id/tv_time_best_timer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -101,12 +104,14 @@
                             android:padding="4dp">
 
                             <LinearLayout
+                                android:id="@+id/ll_time_current"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tv_time_current_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -115,7 +120,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_current_timer"
+                                    android:id="@+id/tv_time_current_timer"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -171,12 +176,14 @@
                             android:padding="4dp">
 
                             <LinearLayout
+                                android:id="@+id/ll_taps_current"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tv_taps_current_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -185,7 +192,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_current_taps"
+                                    android:id="@+id/tv_taps_current_amount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -208,12 +215,14 @@
                             android:padding="4dp">
 
                             <LinearLayout
+                                android:id="@+id/ll_taps_best"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
+                                    android:id="@+id/tv_taps_best_label"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -222,7 +231,7 @@
                                     android:textStyle="bold" />
 
                                 <TextView
-                                    android:id="@+id/tv_best_taps"
+                                    android:id="@+id/tv_taps_best_amount"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"

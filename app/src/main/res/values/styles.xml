@@ -42,7 +42,7 @@
         <item name="android:layout_marginStart">@dimen/flag_horizontal_gap</item>
         <item name="android:layout_marginBottom">@dimen/flag_vertical_gap</item>
         <item name="cardCornerRadius">6dp</item>
-        <item name="backgroundColor">@color/black</item>
+
     </style>
 
     <style name="ImageViewTileStyle">
@@ -62,7 +62,7 @@
         <item name="android:textSize">13sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:visibility">gone</item>
-        <item name="android:layout_margin">1dp</item>
+        <item name="android:layout_margin">0dp</item>
         <item name="android:hyphenationFrequency">full</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
