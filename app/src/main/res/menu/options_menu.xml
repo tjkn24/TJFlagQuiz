@@ -2,7 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
     <item
         android:id="@+id/menu_theme"
         android:title="Theme"
@@ -18,17 +17,29 @@
     <item
         android:id="@+id/menu_help"
         android:title="Help"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_help"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menu_restart"
         android:title="Restart"
+        android:icon="@drawable/ic_restart"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_quit"
         android:title="Quit"
+        android:icon="@drawable/ic_quit"
         app:showAsAction="ifRoom" />
+
+
+
+
+
+
+
+
+
 
 
 </menu>
