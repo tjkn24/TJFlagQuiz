@@ -120,12 +120,51 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setBackgroundColor() {
-        val gameBoard = findViewById<LinearLayout>(R.id.ll_game_board)
-        // val root = gameBoard.rootView
+//        val gameBoard = findViewById<LinearLayout>(R.id.ll_game_board)
+//
+//        val timeAppBar = findViewById<LinearLayout>(R.id.ll_time)
+//        val tapsAppBar = findViewById<LinearLayout>(R.id.ll_taps)
+
         if (!mIsLightTheme) {
-            gameBoard.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            ll_game_board.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+            
+            ll_time.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDarkTheme))
+            tv_time_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            ll_time_best.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            tv_time_best_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            tv_time_best_timer.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            ll_time_current.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            tv_time_current_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            tv_time_current_timer.setTextColor(getResources().getColor(R.color.backgroundPage2))
+
+            ll_taps.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDarkTheme))
+            tv_taps_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            ll_taps_best.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            tv_taps_best_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            tv_taps_best_amount.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            ll_taps_current.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            tv_taps_current_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
+            tv_taps_current_amount.setTextColor(getResources().getColor(R.color.backgroundPage2))
         } else {
-            gameBoard.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage2))
+            ll_game_board.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage2))
+            
+            ll_time.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_time_label.setTextColor(getResources().getColor(R.color.grey))
+            ll_time_best.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_time_best_label.setTextColor(getResources().getColor(R.color.grey))
+            tv_time_best_timer.setTextColor(getResources().getColor(R.color.grey))
+            ll_time_current.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_time_current_label.setTextColor(getResources().getColor(R.color.grey))
+            tv_time_current_timer.setTextColor(getResources().getColor(R.color.grey))
+
+            ll_taps.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_taps_label.setTextColor(getResources().getColor(R.color.grey))
+            ll_taps_best.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_taps_best_label.setTextColor(getResources().getColor(R.color.grey))
+            tv_taps_best_amount.setTextColor(getResources().getColor(R.color.grey))
+            ll_taps_current.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+            tv_taps_current_label.setTextColor(getResources().getColor(R.color.grey))
+            tv_taps_current_amount.setTextColor(getResources().getColor(R.color.grey))
         }
 
     }
@@ -385,7 +424,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mCountryTiles[index].setTextColor(getResources().getColor(R.color.grey))
                 } else {
                     mCountryTiles[index].setBackground(getResources().getDrawable(R.drawable.round_corner))
-                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.backgroundPage2))
+                    mCountryTiles[index].setTextColor(getResources().getColor(R.color.light_grey))
                 }
 
                 if (tile.isFaceUp) {
