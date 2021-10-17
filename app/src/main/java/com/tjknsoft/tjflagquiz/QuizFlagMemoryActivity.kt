@@ -24,7 +24,11 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import android.widget.Toast
+
+import android.content.DialogInterface
 
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
@@ -83,8 +87,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun onCreateHelper() {
 
-        // todo: tablet?
-        // todo: dark theme
         // todo: easy medium hard layouts
 
 
@@ -128,13 +130,18 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         if (!mIsLightTheme) {
             ll_game_board.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            
+
             ll_time.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDarkTheme))
             tv_time_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
             ll_time_best.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
             tv_time_best_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
             tv_time_best_timer.setTextColor(getResources().getColor(R.color.backgroundPage2))
-            ll_time_current.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            ll_time_current.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.backgroundPage3
+                )
+            )
             tv_time_current_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
             tv_time_current_timer.setTextColor(getResources().getColor(R.color.backgroundPage2))
 
@@ -143,12 +150,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             ll_taps_best.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
             tv_taps_best_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
             tv_taps_best_amount.setTextColor(getResources().getColor(R.color.backgroundPage2))
-            ll_taps_current.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage3))
+            ll_taps_current.setBackgroundColor(
+                ContextCompat.getColor(
+                    this,
+                    R.color.backgroundPage3
+                )
+            )
             tv_taps_current_label.setTextColor(getResources().getColor(R.color.backgroundPage2))
             tv_taps_current_amount.setTextColor(getResources().getColor(R.color.backgroundPage2))
         } else {
             ll_game_board.setBackgroundColor(ContextCompat.getColor(this, R.color.backgroundPage2))
-            
+
             ll_time.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
             tv_time_label.setTextColor(getResources().getColor(R.color.grey))
             ll_time_best.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
@@ -185,7 +197,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        // todo: tap effect on menu in app bar
+        // todo: when dialog box active, pause the timer
+        // todo: when game ends, change the menu order -> restart and quit should be in app bar
         return when (item.itemId) {
 
             R.id.menu_theme -> {
@@ -236,13 +249,53 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.menu_restart -> {
-                restartGame()
-                true
+                if (mIsGameRunning) {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setMessage("The game is in progress. Are you sure to restart?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes") { dialog, id ->
+                            restartGame()
+                        }
+                        .setNegativeButton(
+                            "No"
+                        ) { dialog, id -> //  Action for 'NO' Button
+                            dialog.cancel()
+                        }
+                    //Creating dialog box
+                    val alert = builder.create()
+                    //Setting the title manually
+                    alert.setTitle("Restart")
+                    alert.show()
+                    true
+                } else {
+                    restartGame()
+                    true
+                }
             }
 
             R.id.menu_quit -> {
-                quitGame()
-                true
+                if (mIsGameRunning) {
+                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+                    builder.setMessage("The game is in pogress. Are you sure to quit?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes") { dialog, id ->
+                            quitGame()
+                        }
+                        .setNegativeButton(
+                            "No"
+                        ) { dialog, id -> //  Action for 'NO' Button
+                            dialog.cancel()
+                        }
+                    //Creating dialog box
+                    val alert = builder.create()
+                    //Setting the title manually
+                    alert.setTitle("Quit")
+                    alert.show()
+                    true
+                } else {
+                    quitGame()
+                    true
+                }
             }
             else -> super.onContextItemSelected(item)
         }
@@ -419,7 +472,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun drawTiles() {
-        // todo: dark theme
 
         // draw tiles
         for ((index, tile) in mTileList.withIndex()) {
@@ -696,7 +748,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     flag.setOnClickListener(null)
                     setGreyTint(flag)
                 }
-                for (country in mCountryTiles){
+                for (country in mCountryTiles) {
                     // country.isClickable = false
                     country.setOnClickListener(null)
                     // country.setBackgroundColor(getResources().getColor(R.color.grey))
