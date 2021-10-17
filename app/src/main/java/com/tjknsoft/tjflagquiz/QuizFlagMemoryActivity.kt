@@ -1,10 +1,11 @@
 package com.tjknsoft.tjflagquiz
 
 import android.app.Activity
-import android.app.PendingIntent.getActivity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.graphics.Rect
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -23,7 +24,6 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 
 
@@ -71,6 +71,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsSoundOn = true
     private lateinit var mMenu: Menu
     private var mIsLightTheme = true
+    private var mIsGameRunning = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -189,40 +190,44 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.menu_theme -> {
                 // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                toggleMenuItem(R.id.menu_theme)
-                mIsLightTheme = !mIsLightTheme
-                setBackgroundColor()
-                drawTiles()
-                true
+                if (mIsGameRunning) {
+                    toggleMenuItem(R.id.menu_theme)
+                    mIsLightTheme = !mIsLightTheme
+                    setBackgroundColor()
+                    drawTiles()
+                    true
+                } else false
             }
 
             R.id.menu_mute -> {
 
-                toggleMenuItem(R.id.menu_mute)
-                if (mIsSoundOn) {
-                    Toast.makeText(this, "Audio: OFF", Toast.LENGTH_SHORT).show()
-                    for (flag in mFlagTiles) {
-                        flag.isSoundEffectsEnabled = false
-                    }
+                if (mIsGameRunning) {
+                    toggleMenuItem(R.id.menu_mute)
+                    if (mIsSoundOn) {
+                        Toast.makeText(this, "Audio: OFF", Toast.LENGTH_SHORT).show()
+                        for (flag in mFlagTiles) {
+                            flag.isSoundEffectsEnabled = false
+                        }
 
-                    for (country in mCountryTiles) {
-                        country.isSoundEffectsEnabled = false
-                    }
+                        for (country in mCountryTiles) {
+                            country.isSoundEffectsEnabled = false
+                        }
 
-                    mIsSoundOn = false
-                } else {
-                    Toast.makeText(this, "Audio: ON", Toast.LENGTH_SHORT).show()
-                    for (flag in mFlagTiles) {
-                        flag.isSoundEffectsEnabled = true
-                    }
+                        mIsSoundOn = false
+                    } else {
+                        Toast.makeText(this, "Audio: ON", Toast.LENGTH_SHORT).show()
+                        for (flag in mFlagTiles) {
+                            flag.isSoundEffectsEnabled = true
+                        }
 
-                    for (country in mCountryTiles) {
-                        country.isSoundEffectsEnabled = true
-                    }
+                        for (country in mCountryTiles) {
+                            country.isSoundEffectsEnabled = true
+                        }
 
-                    mIsSoundOn = true
-                }
-                true
+                        mIsSoundOn = true
+                    }
+                    true
+                } else false
             }
 
             R.id.menu_help -> {
@@ -247,11 +252,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         val menuItem: MenuItem = mMenu.findItem(menu)
         if (menu == R.id.menu_mute) {
             if (mIsSoundOn) {
-                menuItem.title = "Mute"
-                menuItem.setIcon(R.drawable.ic_mute)
+                menuItem.title = "Sound ON"
+                menuItem.setIcon(R.drawable.ic_audio_off)
             } else {
-                menuItem.title = "Unmute"
-                menuItem.setIcon(R.drawable.ic_unmute)
+                menuItem.title = "Sound OFF"
+                menuItem.setIcon(R.drawable.ic_audio_on)
             }
         } else if (menu == R.id.menu_theme) {
             if (mIsLightTheme) {
@@ -276,6 +281,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "resetVariables: mIsFirstGameCompleted: $mIsFirstGameCompleted"
         )
         mIsLightTheme = true
+        mIsGameRunning = true
+
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -395,8 +402,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        mOnResumeTime = System.currentTimeMillis().toDouble()
-        mTimerHandler.postDelayed(mTimerRunnable, 0)
+        if (mIsGameRunning) {
+            mOnResumeTime = System.currentTimeMillis().toDouble()
+            mTimerHandler.postDelayed(mTimerRunnable, 0)
+        }
     }
 
     private fun getAndMapData() {
@@ -678,6 +687,20 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mMatchedPairs++
 
             if (mMatchedPairs == mNumberOfTiles / 2) { // game ends
+
+                mIsGameRunning = false
+
+                // disable all tiles
+                for (flag in mFlagTiles) {
+                    // flag.isClickable = false
+                    flag.setOnClickListener(null)
+                    setGreyTint(flag)
+                }
+                for (country in mCountryTiles){
+                    // country.isClickable = false
+                    country.setOnClickListener(null)
+                    // country.setBackgroundColor(getResources().getColor(R.color.grey))
+                }
 
                 // store to prefs that user has completed first game
                 val prefs = getSharedPreferences("mIsFirstGameCompletedKey", Context.MODE_PRIVATE)
@@ -1166,7 +1189,19 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             animation.repeatMode = Animation.RESTART
             view.startAnimation(animation)
         }
+    }
 
+    private fun setGreyTint(v: ImageView) {
+        val matrix = ColorMatrix()
+        matrix.setSaturation(0f) //0 means grayscale
+        val cf = ColorMatrixColorFilter(matrix)
+        v.colorFilter = cf
+        v.imageAlpha = 128 // 128 = 0.5
+    }
+
+    fun clearGreyTint(v: ImageView) {
+        v.colorFilter = null
+        v.imageAlpha = 255
     }
 
     private fun addViewsToViewList() {
