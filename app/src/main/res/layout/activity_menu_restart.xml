@@ -1,0 +1,71 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="start"
+    android:background="@color/light_grey"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_menu_restart_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="RESTART"
+        android:textSize="26dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/view_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view_top"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@id/tv_menu_restart_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_menu_restart_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_menu_restart_title" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_restart_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardElevation="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_top">
+
+        <TextView
+            style="@style/TextViewInstructionStyle"
+            android:text="The game is in progess. Are you sure to restart it?" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btn_menu_restart_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="YES"
+        app:layout_constraintEnd_toEndOf="@id/cv_restart_message"
+        app:layout_constraintTop_toBottomOf="@id/cv_restart_message" />
+
+    <Button
+        android:id="@+id/btn_menu_restart_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:text="NO"
+        app:layout_constraintEnd_toStartOf="@id/btn_menu_restart_yes"
+        app:layout_constraintTop_toBottomOf="@id/cv_restart_message" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -132,7 +132,6 @@
             app:layout_constraintEnd_toEndOf="@id/ll_how_items"
             android:layout_marginTop="20dp"
             android:text="OK"
-
             />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
