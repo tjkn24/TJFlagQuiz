@@ -211,7 +211,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.menu_mute -> {
-
                 if (mIsGameRunning) {
                     toggleMenuItem(R.id.menu_mute)
                     if (mIsSoundOn) {
@@ -234,7 +233,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                         for (country in mCountryTiles) {
                             country.isSoundEffectsEnabled = true
                         }
-
                         mIsSoundOn = true
                     }
                     true
@@ -264,7 +262,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //                    //Setting the title manually
 //                    alert.setTitle("Restart")
 //                    alert.show()
-//                    true
                     displayActivityAsDialog("menu_restart")
                     true
                 } else {
@@ -275,22 +272,23 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
             R.id.menu_quit -> {
                 if (mIsGameRunning) {
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                    builder.setMessage("The game is in pogress. Are you sure to quit?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes") { dialog, id ->
-                            quitGame()
-                        }
-                        .setNegativeButton(
-                            "No"
-                        ) { dialog, id -> //  Action for 'NO' Button
-                            dialog.cancel()
-                        }
-                    //Creating dialog box
-                    val alert = builder.create()
-                    //Setting the title manually
-                    alert.setTitle("Quit")
-                    alert.show()
+//                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+//                    builder.setMessage("The game is in pogress. Are you sure to quit?")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes") { dialog, id ->
+//                            quitGame()
+//                        }
+//                        .setNegativeButton(
+//                            "No"
+//                        ) { dialog, id -> //  Action for 'NO' Button
+//                            dialog.cancel()
+//                        }
+//                    //Creating dialog box
+//                    val alert = builder.create()
+//                    //Setting the title manually
+//                    alert.setTitle("Quit")
+//                    alert.show()
+                    displayActivityAsDialog("menu_quit")
                     true
                 } else {
                     quitGame()
@@ -382,7 +380,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 intent = Intent(this, RestartActivity::class.java)
                 mIntentRequestCode = 1
             }
-
+            "menu_quit" -> {
+                intent = Intent(this, QuitActivity::class.java)
+                mIntentRequestCode = 2
+            }
 
         }
 
@@ -413,6 +414,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 val restartStatus = data!!.getStringExtra("KeyRestart")
                 if (restartStatus == "Yes"){
                     restartGame()
+                }
+            } else if (mIntentRequestCode == 2){
+                val quitStatus = data!!.getStringExtra("KeyQuit")
+                if (quitStatus == "Yes"){
+                    quitGame()
                 }
             }
         }
