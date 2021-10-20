@@ -4,7 +4,11 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/light_grey"
-    android:padding="8dp">
+    android:paddingStart="32dp"
+    android:paddingEnd="32dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="16dp"
+    >
 
     <TextView
         android:id="@+id/tv_restart_title"

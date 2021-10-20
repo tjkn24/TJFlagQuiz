@@ -373,7 +373,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         var intent = Intent()
 
-        when (dialog){
+        when (dialog) {
             "menu_help" -> {
                 intent = Intent(this, InstructionActivity::class.java)
                 mIntentRequestCode = 0
@@ -399,24 +399,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
 
         // Check that it is the SecondActivity with an OK result
-        if (requestCode == mIntentRequestCode) {
-            if (resultCode == Activity.RESULT_OK) {
-
+        if (requestCode == mIntentRequestCode && resultCode == Activity.RESULT_OK) {
+            if (mIntentRequestCode == 0) {
                 // Get String data from Intent
                 val checkBoxStatus = data!!.getBooleanExtra("KeyCheckBox", false)
-
-                Log.i(
-                    "PANJUTA",
-                    "Back to FlagMemoryActivity; checkBoxStatus: $checkBoxStatus"
-                )
-
+//                Log.i(
+//                    "PANJUTA",
+//                    "Back to FlagMemoryActivity; checkBoxStatus: $checkBoxStatus"
+//                )
                 storeCheckBoxStatus(checkBoxStatus)
 
-            } else {
-                Log.i(
-                    "PANJUTA",
-                    "resultCode != Activity.RESULT_OK; resultCode: $resultCode"
-                )
+            } else if (mIntentRequestCode == 1){
+                val restartStatus = data!!.getStringExtra("KeyRestart")
+                if (restartStatus == "Yes"){
+                    restartGame()
+                }
             }
         }
     }

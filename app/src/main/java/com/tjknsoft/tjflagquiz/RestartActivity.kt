@@ -46,6 +46,9 @@ class RestartActivity : AppCompatActivity(), View.OnClickListener {
             )
             finish()
         } else {
+            val intent = Intent()
+            intent.putExtra("KeyRestart", "No")
+            setResult(Activity.RESULT_OK, intent)
             finish()
         }
 
