@@ -2,54 +2,55 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="start"
+    android:layout_gravity="center"
     android:background="@color/light_grey"
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tv_menu_restart_title"
+        android:id="@+id/tv_restart_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
         android:text="RESTART"
-        android:textSize="26dp"
+        android:textSize="18dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/view_top"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view_top"
+        android:id="@+id/restart_view_top"
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:layout_marginTop="4dp"
         android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="@id/tv_menu_restart_title"
-        app:layout_constraintStart_toStartOf="@+id/tv_menu_restart_title"
-        app:layout_constraintTop_toBottomOf="@id/tv_menu_restart_title" />
+        app:layout_constraintEnd_toEndOf="@id/tv_restart_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_restart_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_restart_title" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cv_restart_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         app:cardElevation="4dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_top">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/restart_view_top">
 
         <TextView
             style="@style/TextViewInstructionStyle"
-            android:text="The game is in progess. Are you sure to restart it?" />
+            android:text="The game is in progess. \nAre you sure to restart it?" />
 
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/btn_menu_restart_yes"
+        android:id="@+id/btn_restart_yes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -58,13 +59,14 @@
         app:layout_constraintTop_toBottomOf="@id/cv_restart_message" />
 
     <Button
-        android:id="@+id/btn_menu_restart_no"
+        android:id="@+id/btn_restart_no"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="12dp"
         android:text="NO"
-        app:layout_constraintEnd_toStartOf="@id/btn_menu_restart_yes"
+
+        app:layout_constraintStart_toStartOf="@id/cv_restart_message"
         app:layout_constraintTop_toBottomOf="@id/cv_restart_message" />
 
 

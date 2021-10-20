@@ -28,8 +28,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import android.widget.Toast
 
-import android.content.DialogInterface
-
 
 class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -71,7 +69,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsBestTime = false
     private var mIsBestTaps = false
     private var mIsFirstGameCompleted = false
-    val mINSTRUCTION_ACTIVITY_REQUEST_CODE = 0
+    var mIntentRequestCode = 0
     private var mIsSoundOn = true
     private lateinit var mMenu: Menu
     private var mIsLightTheme = true
@@ -97,7 +95,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         setVariables()
 
         if (!getCheckBoxStatus()) {
-            displayInstruction()
+            displayActivityAsDialog("menu_help")
         }
 
         setTimer()
@@ -244,28 +242,30 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             R.id.menu_help -> {
-                displayInstruction()
+                displayActivityAsDialog("menu_help")
                 true
             }
 
             R.id.menu_restart -> {
                 if (mIsGameRunning) {
-                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-                    builder.setMessage("The game is in progress. Are you sure to restart?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes") { dialog, id ->
-                            restartGame()
-                        }
-                        .setNegativeButton(
-                            "No"
-                        ) { dialog, id -> //  Action for 'NO' Button
-                            dialog.cancel()
-                        }
-                    //Creating dialog box
-                    val alert = builder.create()
-                    //Setting the title manually
-                    alert.setTitle("Restart")
-                    alert.show()
+//                    val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+//                    builder.setMessage("The game is in progress. Are you sure to restart?")
+//                        .setCancelable(false)
+//                        .setPositiveButton("Yes") { dialog, id ->
+//                            restartGame()
+//                        }
+//                        .setNegativeButton(
+//                            "No"
+//                        ) { dialog, id -> //  Action for 'NO' Button
+//                            dialog.cancel()
+//                        }
+//                    //Creating dialog box
+//                    val alert = builder.create()
+//                    //Setting the title manually
+//                    alert.setTitle("Restart")
+//                    alert.show()
+//                    true
+                    displayActivityAsDialog("menu_restart")
                     true
                 } else {
                     restartGame()
@@ -350,7 +350,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         return prefs.getBoolean("cb_status", false)
     }
 
-    private fun displayInstruction() {
+    private fun displayActivityAsDialog(dialog: String) {
 
 //        // below code is from https://www.codingdemos.com/android-custom-alertdialog/
 //        val myBuilder: android.app.AlertDialog.Builder =
@@ -371,9 +371,22 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //            }
 //        })
 
+        var intent = Intent()
 
-        val intent = Intent(this, InstructionActivity::class.java)
-        startActivityForResult(intent, mINSTRUCTION_ACTIVITY_REQUEST_CODE)
+        when (dialog){
+            "menu_help" -> {
+                intent = Intent(this, InstructionActivity::class.java)
+                mIntentRequestCode = 0
+            }
+            "menu_restart" -> {
+                intent = Intent(this, RestartActivity::class.java)
+                mIntentRequestCode = 1
+            }
+
+
+        }
+
+        startActivityForResult(intent, mIntentRequestCode)
     }
 
     // This method is called when the InstructionActivity finishes
@@ -386,7 +399,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
 
         // Check that it is the SecondActivity with an OK result
-        if (requestCode == mINSTRUCTION_ACTIVITY_REQUEST_CODE) {
+        if (requestCode == mIntentRequestCode) {
             if (resultCode == Activity.RESULT_OK) {
 
                 // Get String data from Intent

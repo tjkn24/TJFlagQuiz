@@ -16,13 +16,13 @@
         android:text="HOW TO PLAY"
         android:textSize="26dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/view_top"
+        app:layout_constraintBottom_toTopOf="@+id/restart_view_top"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view_top"
+        android:id="@+id/restart_view_top"
         android:layout_width="0dp"
         android:layout_height="3dp"
         android:background="@color/colorPrimary"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_top">
+        app:layout_constraintTop_toBottomOf="@id/restart_view_top">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_how_01"
@@ -48,7 +48,7 @@
             android:layout_marginBottom="4dp"
             app:cardElevation="4dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/view_top">
+            app:layout_constraintTop_toBottomOf="@id/restart_view_top">
 
             <TextView
                 style="@style/TextViewInstructionStyle"

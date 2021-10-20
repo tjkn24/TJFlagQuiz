@@ -20,6 +20,10 @@
             android:excludeFromRecents="true"
             android:theme="@style/CustomDialog" />
         <activity
+            android:name=".RestartActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/CustomDialog" />
+        <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
