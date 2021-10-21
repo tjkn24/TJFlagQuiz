@@ -1089,44 +1089,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-
-        <LinearLayout
-            android:id="@+id/ll_restartOrQuit2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/btn_restart3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="RESTART"
-                android:textColor="@color/design_default_color_background"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btn_quit3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimary"
-                android:text="QUIT"
-                android:textColor="@color/design_default_color_background"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
 

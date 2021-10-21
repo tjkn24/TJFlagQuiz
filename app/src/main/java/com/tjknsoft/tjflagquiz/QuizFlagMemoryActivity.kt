@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random
 import android.view.MenuItem
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import android.widget.Toast
 
@@ -79,7 +78,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_quiz_flag_memory)
+        setContentView(R.layout.activity_quiz_flag_memory_hard)
 
         onCreateHelper()
     }

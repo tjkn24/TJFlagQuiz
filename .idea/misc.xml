@@ -35,6 +35,9 @@
         <entry key="app/src/main/res/layout/activity_quiz_choosename.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_mastermind.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory_easy.xml" value="0.226171875" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory_hard.xml" value="0.226171875" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory_medium.xml" value="0.226171875" />
         <entry key="app/src/main/res/layout/activity_quiz_memoryflag.xml" value="0.1440972222222222" />
         <entry key="app/src/main/res/layout/activity_quiz_questions.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_quiz_time_attack.xml" value="0.22083333333333333" />
