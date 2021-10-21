@@ -27,7 +27,7 @@
         android:id="@+id/quit_view_top"
         android:layout_width="0dp"
         android:layout_height="3dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="@id/tv_quit_title"
         app:layout_constraintStart_toStartOf="@+id/tv_quit_title"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         app:cardElevation="4dp"
@@ -48,26 +48,31 @@
 
         <TextView
             style="@style/TextViewInstructionStyle"
-            android:text="The game is in progess. \nAre you sure to quit?" />
+            android:text="The game is in progess. \nAre you sure you want to quit?"
+            android:textSize="18sp"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"/>
 
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/btn_quit_yes"
+        android:id="@+id/btn_quit_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="YES"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="42dp"
+        android:text="Quit"
         app:layout_constraintEnd_toEndOf="@id/cv_quit_message"
         app:layout_constraintTop_toBottomOf="@id/cv_quit_message" />
 
     <Button
-        android:id="@+id/btn_quit_no"
+        android:id="@+id/btn_quit_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:text="NO"
+        android:layout_marginTop="18dp"
+        android:layout_marginStart="42dp"
+        android:backgroundTint="@color/grey"
+        android:text="Cancel"
         app:layout_constraintStart_toStartOf="@id/cv_quit_message"
         app:layout_constraintTop_toBottomOf="@id/cv_quit_message" />
 

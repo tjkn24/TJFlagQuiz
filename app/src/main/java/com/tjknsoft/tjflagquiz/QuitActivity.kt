@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 
@@ -19,22 +18,22 @@ class QuitActivity : AppCompatActivity(), View.OnClickListener {
         // from https://stackoverflow.com/questions/54139503/pause-activity-when-the-alertdialog-is-shown
         this.setFinishOnTouchOutside(false)
 
-        val btnQuitYes = findViewById<Button>(R.id.btn_quit_yes)
-        btnQuitYes.setOnClickListener(this)
-        val btnQuitNo = findViewById<Button>(R.id.btn_quit_no)
-        btnQuitNo.setOnClickListener(this)
+        val btnQuitOk = findViewById<Button>(R.id.btn_quit_ok)
+        btnQuitOk.setOnClickListener(this)
+        val btnQuitCancel = findViewById<Button>(R.id.btn_quit_cancel)
+        btnQuitCancel.setOnClickListener(this)
 
     }
 
     override fun onClick(view: View?) {
-        if (view?.id == R.id.btn_quit_yes) {
+        if (view?.id == R.id.btn_quit_ok) {
             val intent = Intent()
-            intent.putExtra("KeyQuit", "Yes")
+            intent.putExtra("KeyQuit", "Quit")
             setResult(Activity.RESULT_OK, intent)
             finish()
         } else {
             val intent = Intent()
-            intent.putExtra("KeyQuit", "No")
+            intent.putExtra("KeyQuit", "Cancel")
             setResult(Activity.RESULT_OK, intent)
             finish()
         }

@@ -74,6 +74,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var mMenu: Menu
     private var mIsLightTheme = true
     private var mIsGameRunning = true
+    private var mIsMenuComplete = true
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -186,6 +187,12 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             this.mMenu = menu
         }
         menuInflater.inflate(R.menu.options_menu, menu)
+
+        if (!mIsMenuComplete){
+            mMenu.findItem(R.id.menu_theme).isVisible = false
+            mMenu.findItem(R.id.menu_mute).isVisible = false
+            mMenu.findItem(R.id.menu_help).isVisible = false
+        }
 //
 //        if (menu is MenuBuilder) {
 //            menu.setOptionalIconsVisible(true)
@@ -195,8 +202,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        // todo: when dialog box active, pause the timer
-        // todo: when game ends, change the menu order -> restart and quit should be in app bar
         return when (item.itemId) {
 
             R.id.menu_theme -> {
@@ -333,7 +338,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         )
         mIsLightTheme = true
         mIsGameRunning = true
-
+        mIsMenuComplete = true
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -410,14 +415,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //                )
                 storeCheckBoxStatus(checkBoxStatus)
 
-            } else if (mIntentRequestCode == 1){
+            } else if (mIntentRequestCode == 1) {
                 val restartStatus = data!!.getStringExtra("KeyRestart")
-                if (restartStatus == "Yes"){
+                if (restartStatus == "Restart") {
                     restartGame()
                 }
-            } else if (mIntentRequestCode == 2){
+            } else if (mIntentRequestCode == 2) {
                 val quitStatus = data!!.getStringExtra("KeyQuit")
-                if (quitStatus == "Yes"){
+                if (quitStatus == "Quit") {
                     quitGame()
                 }
             }
@@ -778,6 +783,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 checkBestTime()
                 checkBestTaps(mCurrentTaps)
+
+                // todo: when game ends, change the menu order -> restart and quit should be in app bar
+                // only show 'restart' and 'quit' menu item
+                invalidateOptionsMenu()
+                mIsMenuComplete = false
 
                 Log.i(
                     "PANJUTA",
