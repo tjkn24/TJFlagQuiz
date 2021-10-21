@@ -4,10 +4,10 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="@color/light_grey"
-    android:paddingStart="32dp"
-    android:paddingEnd="32dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="16dp"
+    android:paddingStart="6dp"
+    android:paddingEnd="6dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="12dp"
     >
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="0dp"
         android:text="RESTART"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
         app:cardElevation="4dp"
@@ -50,9 +50,9 @@
         <TextView
             style="@style/TextViewInstructionStyle"
             android:text="The game is in progess. \nAre you sure you want to restart?"
-            android:textSize="18sp"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"/>
+            android:textSize="16sp"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"/>
 
     </com.google.android.material.card.MaterialCardView>
 
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:layout_marginEnd="44dp"
+        android:layout_marginEnd="24dp"
         android:text="Restart"
         app:layout_constraintEnd_toEndOf="@id/cv_restart_message"
         app:layout_constraintTop_toBottomOf="@id/cv_restart_message" />
@@ -71,7 +71,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:layout_marginStart="44dp"
+        android:layout_marginStart="24dp"
         android:text="Cancel"
         android:backgroundTint="@color/grey"
         app:layout_constraintStart_toStartOf="@id/cv_restart_message"
