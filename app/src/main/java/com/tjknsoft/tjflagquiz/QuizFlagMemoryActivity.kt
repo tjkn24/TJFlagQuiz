@@ -19,7 +19,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_quiz_flag_memory.*
+import kotlinx.android.synthetic.main.activity_quiz_flag_memory_hard.*
 import kotlinx.android.synthetic.main.toast_image_layout.*
 import kotlin.math.floor
 import kotlin.random.Random

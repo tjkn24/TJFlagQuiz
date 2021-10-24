@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_splash_screen.*
 class SplashScreenActivity : AppCompatActivity() {
 
     companion object {
-        val context = App.context
+        val context by lazy { App.context }
         val mAllFlagsResID: ArrayList<Int> = arrayListOf()
     }
 
@@ -33,7 +33,17 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        btn_start3.setOnClickListener {
+        btn_memory_easy.setOnClickListener {
+            val intent = Intent(this, QuizFlagMemoryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        btn_memory_medium.setOnClickListener {
+            val intent = Intent(this, QuizFlagMemoryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+        btn_memory_hard.setOnClickListener {
             val intent = Intent(this, QuizFlagMemoryActivity::class.java)
             startActivity(intent)
             finish()
