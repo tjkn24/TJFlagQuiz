@@ -37,12 +37,12 @@
         <entry key="app/src/main/res/layout/activity_quiz_flag_memory.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_memory_easy.xml" value="0.226171875" />
         <entry key="app/src/main/res/layout/activity_quiz_flag_memory_hard.xml" value="0.226171875" />
-        <entry key="app/src/main/res/layout/activity_quiz_flag_memory_medium.xml" value="0.226171875" />
+        <entry key="app/src/main/res/layout/activity_quiz_flag_memory_medium.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_quiz_memoryflag.xml" value="0.1440972222222222" />
         <entry key="app/src/main/res/layout/activity_quiz_questions.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_quiz_time_attack.xml" value="0.22083333333333333" />
         <entry key="app/src/main/res/layout/activity_restart.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.22604166666666667" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1701388888888889" />
         <entry key="app/src/main/res/layout/dialog_instruction.xml" value="0.18333333333333332" />
         <entry key="app/src/main/res/layout/splash_screen_activity.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/toast_image_layout.xml" value="0.33" />

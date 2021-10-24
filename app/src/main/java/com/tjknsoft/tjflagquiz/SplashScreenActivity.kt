@@ -35,16 +35,19 @@ class SplashScreenActivity : AppCompatActivity() {
         }
         btn_memory_easy.setOnClickListener {
             val intent = Intent(this, QuizFlagMemoryActivity::class.java)
+            intent.putExtra("memory", 30)
             startActivity(intent)
             finish()
         }
         btn_memory_medium.setOnClickListener {
             val intent = Intent(this, QuizFlagMemoryActivity::class.java)
+            intent.putExtra("memory", 40)
             startActivity(intent)
             finish()
         }
         btn_memory_hard.setOnClickListener {
             val intent = Intent(this, QuizFlagMemoryActivity::class.java)
+            intent.putExtra("memory", 50)
             startActivity(intent)
             finish()
         }
