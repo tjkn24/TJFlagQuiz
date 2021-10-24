@@ -88,7 +88,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             "onCreate(): mNumberOfTiles: $mNumberOfTiles"
         )
 
-        when (mNumberOfTiles){
+        when (mNumberOfTiles) {
             30 -> setContentView(R.layout.activity_quiz_flag_memory_easy)
             40 -> setContentView(R.layout.activity_quiz_flag_memory_medium)
             50 -> setContentView(R.layout.activity_quiz_flag_memory_hard)
@@ -201,7 +201,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         }
         menuInflater.inflate(R.menu.options_menu, menu)
 
-        if (!mIsMenuComplete){
+        if (!mIsMenuComplete) {
             mMenu.findItem(R.id.menu_theme).isVisible = false
             mMenu.findItem(R.id.menu_mute).isVisible = false
             mMenu.findItem(R.id.menu_help).isVisible = false
@@ -1326,26 +1326,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mFlagTiles.add(27, iv_tile_28)
         mFlagTiles.add(28, iv_tile_29)
         mFlagTiles.add(29, iv_tile_30)
-        mFlagTiles.add(30, iv_tile_31)
-        mFlagTiles.add(31, iv_tile_32)
-        mFlagTiles.add(32, iv_tile_33)
-        mFlagTiles.add(33, iv_tile_34)
-        mFlagTiles.add(34, iv_tile_35)
-        mFlagTiles.add(35, iv_tile_36)
-        mFlagTiles.add(36, iv_tile_37)
-        mFlagTiles.add(37, iv_tile_38)
-        mFlagTiles.add(38, iv_tile_39)
-        mFlagTiles.add(39, iv_tile_40)
-        mFlagTiles.add(40, iv_tile_41)
-        mFlagTiles.add(41, iv_tile_42)
-        mFlagTiles.add(42, iv_tile_43)
-        mFlagTiles.add(43, iv_tile_44)
-        mFlagTiles.add(44, iv_tile_45)
-        mFlagTiles.add(45, iv_tile_46)
-        mFlagTiles.add(46, iv_tile_47)
-        mFlagTiles.add(47, iv_tile_48)
-        mFlagTiles.add(48, iv_tile_49)
-        mFlagTiles.add(49, iv_tile_50)
 
         mCountryTiles.add(0, tv_tile_01)
         mCountryTiles.add(1, tv_tile_02)
@@ -1377,27 +1357,55 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mCountryTiles.add(27, tv_tile_28)
         mCountryTiles.add(28, tv_tile_29)
         mCountryTiles.add(29, tv_tile_30)
-        mCountryTiles.add(30, tv_tile_31)
-        mCountryTiles.add(31, tv_tile_32)
-        mCountryTiles.add(32, tv_tile_33)
-        mCountryTiles.add(33, tv_tile_34)
-        mCountryTiles.add(34, tv_tile_35)
-        mCountryTiles.add(35, tv_tile_36)
-        mCountryTiles.add(36, tv_tile_37)
-        mCountryTiles.add(37, tv_tile_38)
-        mCountryTiles.add(38, tv_tile_39)
-        mCountryTiles.add(39, tv_tile_40)
-        mCountryTiles.add(40, tv_tile_41)
-        mCountryTiles.add(41, tv_tile_42)
-        mCountryTiles.add(42, tv_tile_43)
-        mCountryTiles.add(43, tv_tile_44)
-        mCountryTiles.add(44, tv_tile_45)
-        mCountryTiles.add(45, tv_tile_46)
-        mCountryTiles.add(46, tv_tile_47)
-        mCountryTiles.add(47, tv_tile_48)
-        mCountryTiles.add(48, tv_tile_49)
-        mCountryTiles.add(49, tv_tile_50)
-    }
 
+        if (mNumberOfTiles > 30) {
+            mFlagTiles.add(30, iv_tile_31)
+            mFlagTiles.add(31, iv_tile_32)
+            mFlagTiles.add(32, iv_tile_33)
+            mFlagTiles.add(33, iv_tile_34)
+            mFlagTiles.add(34, iv_tile_35)
+            mFlagTiles.add(35, iv_tile_36)
+            mFlagTiles.add(36, iv_tile_37)
+            mFlagTiles.add(37, iv_tile_38)
+            mFlagTiles.add(38, iv_tile_39)
+            mFlagTiles.add(39, iv_tile_40)
+
+            mCountryTiles.add(30, tv_tile_31)
+            mCountryTiles.add(31, tv_tile_32)
+            mCountryTiles.add(32, tv_tile_33)
+            mCountryTiles.add(33, tv_tile_34)
+            mCountryTiles.add(34, tv_tile_35)
+            mCountryTiles.add(35, tv_tile_36)
+            mCountryTiles.add(36, tv_tile_37)
+            mCountryTiles.add(37, tv_tile_38)
+            mCountryTiles.add(38, tv_tile_39)
+            mCountryTiles.add(39, tv_tile_40)
+        }
+
+        if (mNumberOfTiles > 40){
+            mFlagTiles.add(40, iv_tile_41)
+            mFlagTiles.add(41, iv_tile_42)
+            mFlagTiles.add(42, iv_tile_43)
+            mFlagTiles.add(43, iv_tile_44)
+            mFlagTiles.add(44, iv_tile_45)
+            mFlagTiles.add(45, iv_tile_46)
+            mFlagTiles.add(46, iv_tile_47)
+            mFlagTiles.add(47, iv_tile_48)
+            mFlagTiles.add(48, iv_tile_49)
+            mFlagTiles.add(49, iv_tile_50)
+
+            mCountryTiles.add(40, tv_tile_41)
+            mCountryTiles.add(41, tv_tile_42)
+            mCountryTiles.add(42, tv_tile_43)
+            mCountryTiles.add(43, tv_tile_44)
+            mCountryTiles.add(44, tv_tile_45)
+            mCountryTiles.add(45, tv_tile_46)
+            mCountryTiles.add(46, tv_tile_47)
+            mCountryTiles.add(47, tv_tile_48)
+            mCountryTiles.add(48, tv_tile_49)
+            mCountryTiles.add(49, tv_tile_50)
+        }
+
+    }
 
 }
