@@ -79,7 +79,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bundle = intent.extras
+        val bundle = intent.extras // intent from splash activity
         if (bundle != null) {
             mNumberOfTiles = bundle.getInt("memory");
         }
@@ -992,8 +992,19 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         if (mBestTaps == 0 || mCurrentTaps < mBestTaps) { // set a new best taps
 
             //setting preferences
-            val prefs = getSharedPreferences("mBestTapsKey", Context.MODE_PRIVATE)
-            val editor: SharedPreferences.Editor = prefs.edit()
+            var prefs: SharedPreferences? = null
+            when (mNumberOfTiles) {
+                30 -> {
+                    prefs = getSharedPreferences("mBestTapsKey_Easy", MODE_PRIVATE)
+                }
+                40 -> {
+                    prefs = getSharedPreferences("mBestTapsKey_Medium", MODE_PRIVATE)
+                }
+                50 -> {
+                    prefs = getSharedPreferences("mBestTapsKey_Hard", MODE_PRIVATE)
+                }
+            }
+            val editor: SharedPreferences.Editor = prefs!!.edit()
             editor.putInt("best_taps", score)
             editor.commit()
 
@@ -1011,9 +1022,20 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateBestTapsTexView() {
-        // getting preferences
-        val prefs = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
-        mBestTaps = prefs.getInt("best_taps", 0) //0 is the default value
+        var prefs: SharedPreferences? = null
+        when (mNumberOfTiles) {
+            30 -> {
+                prefs = getSharedPreferences("mBestTapsKey_Easy", MODE_PRIVATE)
+            }
+            40 -> {
+                prefs = getSharedPreferences("mBestTapsKey_Medium", MODE_PRIVATE)
+            }
+            50 -> {
+                prefs = getSharedPreferences("mBestTapsKey_Hard", MODE_PRIVATE)
+            }
+        }
+
+        mBestTaps = prefs!!.getInt("best_taps", 0) //0 is the default value
         tv_taps_best_amount.text = mBestTaps.toString()
     }
 
