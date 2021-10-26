@@ -891,25 +891,57 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun clearSharedPreferences() {
-        val sharedPreferences = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.remove("best_taps")
-        editor.commit()
+        val sharedPreferences_bestTap = getSharedPreferences("mBestTapsKey", MODE_PRIVATE)
+        val editor_bestTap = sharedPreferences_bestTap.edit()
+        editor_bestTap.remove("best_taps")
+        editor_bestTap.commit()
 
-        val sharedPreferences2 = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
-        val editor2 = sharedPreferences2.edit()
-        editor2.remove("best_time")
-        editor2.commit()
+        val sharedPreferences_bestTap_Easy = getSharedPreferences("mBestTapsKey_Easy", MODE_PRIVATE)
+        val editor_bestTap_Easy = sharedPreferences_bestTap_Easy.edit()
+        editor_bestTap_Easy.remove("best_taps")
+        editor_bestTap_Easy.commit()
 
-        val sharedPreferences3 = getSharedPreferences("mIsFirstGameCompletedKey", MODE_PRIVATE)
-        val editor3 = sharedPreferences3.edit()
-        editor3.remove("first_game_completed")
-        editor3.commit()
+        val sharedPreferences_bestTap_Medium = getSharedPreferences("mBestTapsKey_Medium", MODE_PRIVATE)
+        val editor_bestTap_Medium = sharedPreferences_bestTap_Medium.edit()
+        editor_bestTap_Medium.remove("best_taps")
+        editor_bestTap_Medium.commit()
 
-        val sharedPreferences4 = getSharedPreferences("CheckItem", MODE_PRIVATE)
-        val editor4 = sharedPreferences4.edit()
-        editor4.remove("item")
-        editor4.commit()
+        val sharedPreferences_bestTap_Hard = getSharedPreferences("mBestTapsKey_Hard", MODE_PRIVATE)
+        val editor_bestTap_Hard = sharedPreferences_bestTap_Hard.edit()
+        editor_bestTap_Hard.remove("best_taps")
+        editor_bestTap_Hard.commit()
+
+
+        val sharedPreferences_bestTime = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
+        val editor_bestTime = sharedPreferences_bestTime.edit()
+        editor_bestTime.remove("best_time")
+        editor_bestTime.commit()
+
+        val sharedPreferences_bestTime_Easy = getSharedPreferences("mBestTimeKey_Easy", MODE_PRIVATE)
+        val editor_bestTime_Easy = sharedPreferences_bestTime_Easy.edit()
+        editor_bestTime_Easy.remove("best_time")
+        editor_bestTime_Easy.commit()
+
+        val sharedPreferences_bestTime_Medium = getSharedPreferences("mBestTimeKey_Medium", MODE_PRIVATE)
+        val editor_bestTime_Medium = sharedPreferences_bestTime_Medium.edit()
+        editor_bestTime_Medium.remove("best_time")
+        editor_bestTime_Medium.commit()
+
+        val sharedPreferences_bestTime_Hard = getSharedPreferences("mBestTimeKey_Hard", MODE_PRIVATE)
+        val editor_bestTime_Hard = sharedPreferences_bestTime_Hard.edit()
+        editor_bestTime_Hard.remove("best_time")
+        editor_bestTime_Hard.commit()
+
+
+        val sharedPreferences_firstGame = getSharedPreferences("mIsFirstGameCompletedKey", MODE_PRIVATE)
+        val editor_firstGame = sharedPreferences_firstGame.edit()
+        editor_firstGame.remove("first_game_completed")
+        editor_firstGame.commit()
+
+        val sharedPreferences_checkBoxInstruction = getSharedPreferences("CheckItem", MODE_PRIVATE)
+        val editor__checkBoxInstruction = sharedPreferences_checkBoxInstruction.edit()
+        editor__checkBoxInstruction.remove("item")
+        editor__checkBoxInstruction.commit()
 
     }
 
@@ -941,10 +973,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         if (mBestTime == 0.0 || mCurrentTime < mBestTime) {
 
             //setting preferences
-            val prefs = getSharedPreferences("mBestTimeKey", Context.MODE_PRIVATE)
-            val editor: SharedPreferences.Editor = prefs.edit()
 
-            // editor.putInt("best_time", mCurrentTime.toInt())
+            var prefs: SharedPreferences? = null
+            when (mNumberOfTiles) {
+                30 -> {
+                    prefs = getSharedPreferences("mBestTimeKey_Easy", MODE_PRIVATE)
+                }
+                40 -> {
+                    prefs = getSharedPreferences("mBestTimeKey_Medium", MODE_PRIVATE)
+                }
+                50 -> {
+                    prefs = getSharedPreferences("mBestTimeKey_Hard", MODE_PRIVATE)
+                }
+            }
+            val editor: SharedPreferences.Editor = prefs!!.edit()
+
             // sharedPreferences cannot store double values (mCurrentTime) so use this function
             // from https://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
             putDoubleToPrefs(editor, "best_time", mCurrentTime)
@@ -964,13 +1007,23 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun updateBestTimeTexView() {
-        // getting preferences
-        val prefs = getSharedPreferences("mBestTimeKey", MODE_PRIVATE)
 
-        // mBestTime = prefs.getInt("best_time", 0) //0 is the default value
+        var prefs: SharedPreferences? = null
+        when (mNumberOfTiles) {
+            30 -> {
+                prefs = getSharedPreferences("mBestTimeKey_Easy", MODE_PRIVATE)
+            }
+            40 -> {
+                prefs = getSharedPreferences("mBestTimeKey_Medium", MODE_PRIVATE)
+            }
+            50 -> {
+                prefs = getSharedPreferences("mBestTimeKey_Hard", MODE_PRIVATE)
+            }
+        }
+
         // sharedPreferences cannot store double values (mCurrentTime) so use this function
         // from https://stackoverflow.com/questions/16319237/cant-put-double-sharedpreferences
-        mBestTime = getDoubleFromPrefs(prefs, "best_time", 0.0)
+        mBestTime = getDoubleFromPrefs(prefs!!, "best_time", 0.0)
 
         val minutes = mBestTime / 60000
         val intMinutes = floor(minutes.toDouble())
