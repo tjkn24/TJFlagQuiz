@@ -104,6 +104,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         // clearSharedPreferences()
 
+        setAppBarTitle()
+
         setBackgroundColor()
 
         setVariables()
@@ -132,6 +134,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         mSound = SoundPoolPlayer(this)
 
+    }
+
+    private fun setAppBarTitle() {
+        var title = ""
+        when (mNumberOfTiles) {
+            30 -> title = "Flag Memory - EASY"
+            40 -> title = "Flag Memory - MEDIUM"
+            50 -> title = "Flag Memory - HARD"
+        }
+        setTitle(title)
     }
 
     private fun setBackgroundColor() {
