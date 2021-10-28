@@ -74,6 +74,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsLightTheme = true
     private var mIsGameRunning = true
     private var mIsMenuComplete = true
+    private var mIsPairMatched = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -364,6 +365,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mIsLightTheme = true
         mIsGameRunning = true
         mIsMenuComplete = true
+        mIsPairMatched = false
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -543,14 +545,21 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     false
                 }
 
-                // set text tiles' onClickListener
+                // set country tiles' onClickListener
                 mCountryTiles[index].setOnClickListener {
 
                     // save click time of a country tile
                     mCountryLastClickTime = SystemClock.elapsedRealtime()
 
-                    // if country is clicked less than 1.5 second of last time a pair clicked -> ignore
-                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
+                    var tapsWaitTime = 0
+                    if (mIsPairMatched){
+                        tapsWaitTime = 1000 // if last pair is matched, wait 1 second
+                    } else {
+                        tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
+                    }
+
+                    // if country is clicked less than n second of last time a pair clicked -> ignore
+                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < tapsWaitTime) {
                         Log.i(
                             "PANJUTA",
                             "tap too fast"
@@ -658,8 +667,15 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     // save click time of a flag tile
                     mFlagLastClickTime = SystemClock.elapsedRealtime()
 
+                    var tapsWaitTime = 0
+                    if (mIsPairMatched){
+                        tapsWaitTime = 1000 // if last pair is matched, wait 1 second
+                    } else {
+                        tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
+                    }
+
                     // if flag is clicked less than 1.5 second of last time a pair clicked -> ignore
-                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < 1500) {
+                    if (SystemClock.elapsedRealtime() - mLastPairClickTime < tapsWaitTime) {
                         Log.i(
                             "PANJUTA",
                             "tap too fast"
@@ -751,6 +767,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 "PANJUTA",
                 "mTileList[$mTappedFlagTileIndex].isFaceUp: ${mTileList[mTappedFlagTileIndex].isFaceUp}"
             )
+            mIsPairMatched = true
 
             // play correct sound:
             if (mIsSoundOn) {
@@ -865,12 +882,14 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
         } else { // wrong pairs
 
+            mIsPairMatched = false
+
             // the tapped index should be stored, so that in timer's onFinish() different indexes generated from user's fast tap can be avoided
             val ivIndex = mTappedFlagTileIndex
             val tvIndex = mTappedCountryTileIndex
 
             // make both tiles face-down after n seconds:
-            val timer = object : CountDownTimer(1500, 250) {
+            val timer = object : CountDownTimer(1250, 250) {
                 override fun onTick(millisUntilFinished: Long) {
                 }
 
@@ -1362,7 +1381,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 1.0F,
                 0.25F
             )
-            animation.repeatCount = 2
+            animation.repeatCount = 1
             animation.duration = 350
             animation.repeatMode = Animation.RESTART
             view.startAnimation(animation)
