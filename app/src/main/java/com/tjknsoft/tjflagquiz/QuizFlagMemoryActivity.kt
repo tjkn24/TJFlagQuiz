@@ -75,6 +75,9 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsGameRunning = true
     private var mIsMenuComplete = true
     private var mIsPairMatched = false
+    private val mIdleDelayMinutes = .25
+    private lateinit var mIdleHandler: Handler
+    private lateinit var mIdleRunnable: Runnable
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -366,6 +369,17 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         mIsGameRunning = true
         mIsMenuComplete = true
         mIsPairMatched = false
+
+        mIdleHandler = Handler()
+        mIdleRunnable = object : Runnable {
+            override fun run() {
+                Toast.makeText(
+                    applicationContext,
+                    "Do you want to continue the game?",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     private fun storeCheckBoxStatus(isChecked: Boolean) {
@@ -552,7 +566,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mCountryLastClickTime = SystemClock.elapsedRealtime()
 
                     var tapsWaitTime = 0
-                    if (mIsPairMatched){
+                    if (mIsPairMatched) {
                         tapsWaitTime = 1000 // if last pair is matched, wait 1 second
                     } else {
                         tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
@@ -668,7 +682,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mFlagLastClickTime = SystemClock.elapsedRealtime()
 
                     var tapsWaitTime = 0
-                    if (mIsPairMatched){
+                    if (mIsPairMatched) {
                         tapsWaitTime = 1000 // if last pair is matched, wait 1 second
                     } else {
                         tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
@@ -932,7 +946,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor_bestTap_Easy.remove("best_taps")
         editor_bestTap_Easy.commit()
 
-        val sharedPreferences_bestTap_Medium = getSharedPreferences("mBestTapsKey_Medium", MODE_PRIVATE)
+        val sharedPreferences_bestTap_Medium =
+            getSharedPreferences("mBestTapsKey_Medium", MODE_PRIVATE)
         val editor_bestTap_Medium = sharedPreferences_bestTap_Medium.edit()
         editor_bestTap_Medium.remove("best_taps")
         editor_bestTap_Medium.commit()
@@ -948,23 +963,27 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         editor_bestTime.remove("best_time")
         editor_bestTime.commit()
 
-        val sharedPreferences_bestTime_Easy = getSharedPreferences("mBestTimeKey_Easy", MODE_PRIVATE)
+        val sharedPreferences_bestTime_Easy =
+            getSharedPreferences("mBestTimeKey_Easy", MODE_PRIVATE)
         val editor_bestTime_Easy = sharedPreferences_bestTime_Easy.edit()
         editor_bestTime_Easy.remove("best_time")
         editor_bestTime_Easy.commit()
 
-        val sharedPreferences_bestTime_Medium = getSharedPreferences("mBestTimeKey_Medium", MODE_PRIVATE)
+        val sharedPreferences_bestTime_Medium =
+            getSharedPreferences("mBestTimeKey_Medium", MODE_PRIVATE)
         val editor_bestTime_Medium = sharedPreferences_bestTime_Medium.edit()
         editor_bestTime_Medium.remove("best_time")
         editor_bestTime_Medium.commit()
 
-        val sharedPreferences_bestTime_Hard = getSharedPreferences("mBestTimeKey_Hard", MODE_PRIVATE)
+        val sharedPreferences_bestTime_Hard =
+            getSharedPreferences("mBestTimeKey_Hard", MODE_PRIVATE)
         val editor_bestTime_Hard = sharedPreferences_bestTime_Hard.edit()
         editor_bestTime_Hard.remove("best_time")
         editor_bestTime_Hard.commit()
 
 
-        val sharedPreferences_firstGame = getSharedPreferences("mIsFirstGameCompletedKey", MODE_PRIVATE)
+        val sharedPreferences_firstGame =
+            getSharedPreferences("mIsFirstGameCompletedKey", MODE_PRIVATE)
         val editor_firstGame = sharedPreferences_firstGame.edit()
         editor_firstGame.remove("first_game_completed")
         editor_firstGame.commit()
@@ -1401,6 +1420,16 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         v.imageAlpha = 255
     }
 
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        delayedIdle()
+    }
+
+    private fun delayedIdle() {
+        mIdleHandler.removeCallbacks(mIdleRunnable);
+        mIdleHandler.postDelayed(mIdleRunnable, ((mIdleDelayMinutes * 1000 * 60).toLong()));
+    }
+
     private fun addViewsToViewList() {
         mFlagTiles.add(0, iv_tile_01)
         mFlagTiles.add(1, iv_tile_02)
@@ -1488,7 +1517,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mCountryTiles.add(39, tv_tile_40)
         }
 
-        if (mNumberOfTiles > 40){
+        if (mNumberOfTiles > 40) {
             mFlagTiles.add(40, iv_tile_41)
             mFlagTiles.add(41, iv_tile_42)
             mFlagTiles.add(42, iv_tile_43)
