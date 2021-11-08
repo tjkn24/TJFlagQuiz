@@ -520,6 +520,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
         if (mIsGameRunning) {
             mOnResumeTime = System.currentTimeMillis().toDouble()
             mTimerHandler.postDelayed(mTimerRunnable, 0)
+
+            delayedIdle()
         }
     }
 
