@@ -16,7 +16,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:text="QUIT"
+        android:text="IDLE ACTIVITY"
         android:textSize="18dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view_quit_top"
+        android:id="@+id/view_idle_top"
         android:layout_width="0dp"
         android:layout_height="2dp"
         android:layout_marginTop="3dp"
@@ -44,11 +44,11 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/view_quit_top">
+        app:layout_constraintTop_toBottomOf="@id/view_idle_top">
 
         <TextView
             style="@style/TextViewInstructionStyle"
-            android:text="The game is in progess. \nAre you sure you want to quit?"
+            android:text="There is no game activity. \nAre you sure you want to continue?"
             android:textSize="16sp"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"/>
@@ -56,24 +56,16 @@
     </com.google.android.material.card.MaterialCardView>
 
     <Button
-        android:id="@+id/btn_quit_ok"
+        android:id="@+id/btn_idle_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="28dp"
-        android:text="Quit"
-        app:layout_constraintEnd_toEndOf="@id/cv_idle_message"
+        android:text="Continue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_idle_message" />
 
-    <Button
-        android:id="@+id/btn_quit_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:layout_marginStart="28dp"
-        android:backgroundTint="@color/grey"
-        android:text="Cancel"
-        app:layout_constraintStart_toStartOf="@id/cv_idle_message"
-        app:layout_constraintTop_toBottomOf="@id/cv_idle_message" />
+    s
 
 </androidx.constraintlayout.widget.ConstraintLayout>

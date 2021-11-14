@@ -378,6 +378,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     "Do you want to continue the game?",
                     Toast.LENGTH_LONG
                 ).show()
+
+                displayActivityAsDialog("user_idle")
             }
         }
     }
@@ -430,6 +432,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 intent = Intent(this, QuitActivity::class.java)
                 mIntentRequestCode = 2
             }
+            "user_idle" -> {
+                intent = Intent(this, IdleActivity::class.java)
+                mIntentRequestCode = 3
+            }
 
         }
 
@@ -465,6 +471,11 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 val quitStatus = data!!.getStringExtra("KeyQuit")
                 if (quitStatus == "Quit") {
                     quitGame()
+                }
+            } else if (mIntentRequestCode == 3) {
+                val idleStatus = data!!.getStringExtra("KeyIdle")
+                if (idleStatus == "TimeIsUp") {
+                    restartGame()
                 }
             }
         }

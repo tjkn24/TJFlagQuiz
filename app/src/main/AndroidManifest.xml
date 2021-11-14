@@ -28,6 +28,10 @@
             android:excludeFromRecents="true"
             android:theme="@style/CustomDialog" />
         <activity
+            android:name=".IdleActivity"
+            android:excludeFromRecents="true"
+            android:theme="@style/CustomDialog" />
+        <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait"
