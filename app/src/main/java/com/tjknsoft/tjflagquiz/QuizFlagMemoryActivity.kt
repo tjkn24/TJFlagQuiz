@@ -475,7 +475,8 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             } else if (mIntentRequestCode == 3) {
                 val idleStatus = data!!.getStringExtra("KeyIdle")
                 if (idleStatus == "TimeIsUp") {
-                    restartGame()
+                    mIdleHandler.removeCallbacks(mIdleRunnable)
+                    quitGame()
                 }
             }
         }

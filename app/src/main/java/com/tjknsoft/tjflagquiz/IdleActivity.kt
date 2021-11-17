@@ -1,14 +1,19 @@
 package com.tjknsoft.tjflagquiz
 
 import android.app.Activity
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.widget.Button
 
+private var countdown_time = 0L
+lateinit var countdown_timer: CountDownTimer
 
 class IdleActivity : AppCompatActivity(), View.OnClickListener {
+
+    private var mButtonContinue: Button? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +23,31 @@ class IdleActivity : AppCompatActivity(), View.OnClickListener {
         // from https://stackoverflow.com/questions/54139503/pause-activity-when-the-alertdialog-is-shown
         this.setFinishOnTouchOutside(false)
 
-        val btnIdleContinue = findViewById<Button>(R.id.btn_idle_continue)
-        btnIdleContinue.setOnClickListener(this)
+        mButtonContinue = findViewById(R.id.btn_idle_continue)
+        mButtonContinue?.setOnClickListener(this)
 
+        startTimer()
+    }
+
+    private fun startTimer() {
+        countdown_timer = object : CountDownTimer(10000L, 1000) {
+            override fun onTick(p0: Long) {
+                countdown_time = p0/1000
+                mButtonContinue?.text = "Continue  (" + countdown_time.toString() +")"
+            }
+
+            override fun onFinish() {
+                Log.i(
+                        "PANJUTA",
+                        "IdleActivity.kt, onFinish() called"
+                )
+                intent.putExtra("KeyIdle", "TimeIsUp")
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+
+            }
+        }
+        countdown_timer.start()
     }
 
     override fun onClick(view: View?) {
