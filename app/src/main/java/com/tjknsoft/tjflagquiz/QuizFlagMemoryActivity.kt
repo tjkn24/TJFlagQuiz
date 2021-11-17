@@ -465,11 +465,13 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             } else if (mIntentRequestCode == 1) {
                 val restartStatus = data!!.getStringExtra("KeyRestart")
                 if (restartStatus == "Restart") {
+                    mIdleHandler.removeCallbacks(mIdleRunnable)
                     restartGame()
                 }
             } else if (mIntentRequestCode == 2) {
                 val quitStatus = data!!.getStringExtra("KeyQuit")
                 if (quitStatus == "Quit") {
+                    mIdleHandler.removeCallbacks(mIdleRunnable)
                     quitGame()
                 }
             } else if (mIntentRequestCode == 3) {
@@ -493,6 +495,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                 // if game time reach 60 minutes -> restart the game
                 if (minutes > 60) {
                     mTimerHandler.removeCallbacks(mTimerRunnable)
+                    mIdleHandler.removeCallbacks(mIdleRunnable)
                     // btn_restart3.performClick()
                     restartGame()
                 }
@@ -832,6 +835,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             if (mMatchedPairs == mNumberOfTiles / 2) { // game ends
 
                 mIsGameRunning = false
+                mIdleHandler.removeCallbacks(mIdleRunnable)
 
                 // disable all tiles
                 for (flag in mFlagTiles) {
