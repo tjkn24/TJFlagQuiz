@@ -75,7 +75,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsGameRunning = true
     private var mIsMenuComplete = true
     private var mIsPairMatched = false
-    private val mIdleDelayMinutes = 10
+    private val mIdleDelayMinutes:Int = 10
     private lateinit var mIdleHandler: Handler
     private lateinit var mIdleRunnable: Runnable
 
