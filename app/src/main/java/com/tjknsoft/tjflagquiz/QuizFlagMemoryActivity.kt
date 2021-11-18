@@ -75,7 +75,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     private var mIsGameRunning = true
     private var mIsMenuComplete = true
     private var mIsPairMatched = false
-    private val mIdleDelayMinutes = .25
+    private val mIdleDelayMinutes = 10
     private lateinit var mIdleHandler: Handler
     private lateinit var mIdleRunnable: Runnable
 
@@ -417,29 +417,30 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 //            }
 //        })
 
-        var intent = Intent()
+        var myIntent = Intent()
 
         when (dialog) {
             "menu_help" -> {
-                intent = Intent(this, InstructionActivity::class.java)
+                myIntent = Intent(this, InstructionActivity::class.java)
                 mIntentRequestCode = 0
             }
             "menu_restart" -> {
-                intent = Intent(this, RestartActivity::class.java)
+                myIntent = Intent(this, RestartActivity::class.java)
                 mIntentRequestCode = 1
             }
             "menu_quit" -> {
-                intent = Intent(this, QuitActivity::class.java)
+                myIntent = Intent(this, QuitActivity::class.java)
                 mIntentRequestCode = 2
             }
             "user_idle" -> {
-                intent = Intent(this, IdleActivity::class.java)
+                myIntent = Intent(this, IdleActivity::class.java)
+                myIntent.putExtra("idleDelayedMinutes", mIdleDelayMinutes)
                 mIntentRequestCode = 3
             }
 
         }
 
-        startActivityForResult(intent, mIntentRequestCode)
+        startActivityForResult(myIntent, mIntentRequestCode)
     }
 
     // This method is called when the InstructionActivity finishes
