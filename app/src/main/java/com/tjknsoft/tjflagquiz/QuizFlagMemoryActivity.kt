@@ -83,7 +83,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bundle = intent.extras // intent from splash activity
+        val bundle = intent.extras // intent from splash screen activity
         if (bundle != null) {
             mNumberOfTiles = bundle.getInt("memory");
         }
@@ -102,8 +102,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun onCreateHelper() {
-
-        // todo: easy medium hard layouts
 
 
         // clearSharedPreferences()
@@ -151,10 +149,6 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setBackgroundColor() {
-//        val gameBoard = findViewById<LinearLayout>(R.id.ll_game_board)
-//
-//        val timeAppBar = findViewById<LinearLayout>(R.id.ll_time)
-//        val tapsAppBar = findViewById<LinearLayout>(R.id.ll_taps)
 
         if (!mIsLightTheme) {
             ll_game_board.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
@@ -222,10 +216,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
             mMenu.findItem(R.id.menu_mute).isVisible = false
             mMenu.findItem(R.id.menu_help).isVisible = false
         }
-//
-//        if (menu is MenuBuilder) {
-//            menu.setOptionalIconsVisible(true)
-//        }
+
         return true
     }
 
@@ -572,6 +563,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mCountryTiles[index].text = tile.shortenedCountryName
                 }
 
+                // name tiles is closed initially - see populateTileList()
                 // closed text tile cannot be long-pressed:
                 mCountryTiles[index].setOnLongClickListener {
                     false
@@ -584,10 +576,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mCountryLastClickTime = SystemClock.elapsedRealtime()
 
                     var tapsWaitTime = 0
-                    if (mIsPairMatched) {
-                        tapsWaitTime = 1000 // if last pair is matched, wait 1 second
+                    tapsWaitTime = if (mIsPairMatched) {
+                        1000 // if last pair is matched, wait 1 second
                     } else {
-                        tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
+                        1250 // if last pair is not matched, wait 1.25 second
                     }
 
                     // if country is clicked less than n second of last time a pair clicked -> ignore
@@ -688,6 +680,7 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
 
                 }
 
+                // flag tiles is closed initially - see populateTileList()
                 // closed flag tile cannot be long-pressed:
                 mFlagTiles[index].setOnLongClickListener {
                     false
@@ -700,10 +693,10 @@ class QuizFlagMemoryActivity : AppCompatActivity(), View.OnClickListener {
                     mFlagLastClickTime = SystemClock.elapsedRealtime()
 
                     var tapsWaitTime = 0
-                    if (mIsPairMatched) {
-                        tapsWaitTime = 1000 // if last pair is matched, wait 1 second
+                    tapsWaitTime = if (mIsPairMatched) {
+                        1000 // if last pair is matched, wait 1 second
                     } else {
-                        tapsWaitTime = 1250 // if last pair is not matched, wait 1.25 second
+                        1250 // if last pair is not matched, wait 1.25 second
                     }
 
                     // if flag is clicked less than 1.5 second of last time a pair clicked -> ignore

@@ -51,17 +51,17 @@ class SplashScreenActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        loadFlagsResIDfrommDrawable()
+        loadFlagsResIDfromDrawable()
     }
 
     // load only flag pngs from drawables
-    private fun loadFlagsResIDfrommDrawable() {
+    private fun loadFlagsResIDfromDrawable() {
         mAllFlagsResID.clear()
-        for (identifier in R.drawable.flag_afghanistan..R.drawable.flag_zimbabwe) {
-            val name = context?.resources?.getResourceEntryName(identifier.toInt())
-            //name is the file name without the extension, identifier is the resource ID
-            mAllFlagsResID.add(identifier)
-            Log.i("PANJUTA", "Splash Activity; File name & Resource Id: $name $identifier")
+        for (flagResID: Int in R.drawable.flag_afghanistan..R.drawable.flag_zimbabwe) {
+            val flagName = context?.resources?.getResourceEntryName(flagResID)
+            //name is the file name without the extension, flagResID is the resource ID of the flag
+            mAllFlagsResID.add(flagResID)
+            Log.i("PANJUTA", "Splash Activity; File name & Resource Id: $flagName $flagResID")
 
         }
         // for (flagIdentifier in mAllFlags) {
